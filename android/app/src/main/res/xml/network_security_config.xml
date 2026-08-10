@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  پیکربندی نسخه منتشرشده: هیچ ترافیک رمزنگاری‌نشده‌ای مجاز نیست.
+
+  استثناهای سرور توسعه در src/debug/res/xml/ همین نام هستند و فقط روی
+  build دیباگ سوار می‌شوند. اگر روزی وسوسه شدید برای رفع یک مشکل موقت
+  استثنایی اینجا اضافه کنید، بدانید که در نسخه کاربر هم می‌ماند.
+-->
+<network-security-config>
+    <base-config cleartextTrafficPermitted="false" />
+</network-security-config>

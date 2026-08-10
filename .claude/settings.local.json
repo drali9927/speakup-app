@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(adb devices *)",
+      "Read(//Users/alikavyani/Library/Android/sdk/platform-tools/**)",
+      "Bash(/Users/alikavyani/Library/Android/sdk/platform-tools/adb devices *)",
+      "Bash(export ADB=/Users/alikavyani/Library/Android/sdk/platform-tools/adb)",
+      "Bash(/Users/alikavyani/Library/Android/sdk/platform-tools/adb shell *)",
+      "Bash(./gradlew :app:assembleDebug)"
+    ]
+  }
+}

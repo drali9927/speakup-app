@@ -1,0 +1,38 @@
+# --- خروجی ساخت ---
+build/
+.gradle/
+*.apk
+*.aab
+local.properties
+node_modules/
+dist/
+
+# --- تصاویر تولیدشده (روی سرور منتشر شده‌اند، نه در مخزن) ---
+content/_originals/
+content/_images_all/
+content/_old_kids/
+content/_styletest/
+content/imagegen-preview.html
+
+# --- بسته‌های محتوای ساخته‌شده روی سرور ---
+# از content/*.py و اکسل‌ها دوباره ساخته می‌شوند:
+#   python3 content/build_level.py --level B1 && python3 content/export_to_app.py --level B1
+backend/content/
+
+# --- داده دستگاه و حساب کاربر ---
+# این فایل‌ها پیشرفت و شماره تلفن حساب آزمایشی را دارند
+*.db
+*.db-shm
+*.db-wal
+
+# --- مواد استخراج‌شده از اپ رقیب ---
+#
+# عمداً بیرون از مخزن می‌ماند: apk/ شامل کد و دارایی‌های دیکامپایل‌شده
+# لرنیت است و **دو کلید API گوگل که مال ما نیست**. انتشارشان هم افشای
+# اعتبارنامه شخص ثالث است و هم بازتوزیع دارایی اختصاصی او.
+# خلاصه یافته‌ها در docs/02-معماری-اطلاعات.md هست و همان کافی است.
+_analysis/apk/
+_analysis/screens/
+_analysis/ui/
+
+.DS_Store

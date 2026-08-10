@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  فقط در build دیباگ.
+
+  این فایل عمداً در src/debug است و نه src/main: اگر در main بماند، اجازه
+  HTTP رمزنگاری‌نشده در نسخه منتشرشده هم می‌ماند — چیزی که در بازبینی
+  امنیتی و کافه‌بازار ایراد گرفته می‌شود و هیچ دلیلی هم ندارد.
+
+  نشانی 127.0.0.1 با `adb reverse tcp:8099 tcp:8099` به لپ‌تاپ می‌رسد.
+  عمداً IP شبکه محلی ننوشتیم؛ IP با هر بار تمدید DHCP عوض می‌شود و
+  هر بار باید هم این فایل و هم build.gradle دست می‌خورد.
+-->
+<network-security-config>
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="false">127.0.0.1</domain>
+        <domain includeSubdomains="false">localhost</domain>
+        <!-- شبیه‌ساز اندروید، میزبان را با این نشانی می‌بیند -->
+        <domain includeSubdomains="false">10.0.2.2</domain>
+    </domain-config>
+    <base-config cleartextTrafficPermitted="false" />
+</network-security-config>
