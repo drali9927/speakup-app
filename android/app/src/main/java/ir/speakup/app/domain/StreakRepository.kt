@@ -29,17 +29,32 @@ class StreakRepository @Inject constructor(
     suspend fun state(): StreakEntity = streakDao.get() ?: StreakEntity()
 
     /** وضعیت ۷ روز اخیر برای نوار هفتگی، از قدیمی به جدید */
-    suspend fun lastWeek(): List<DayCell> {
+    /**
+     * هفته جاری شمسی، از شنبه تا جمعه.
+     *
+     * پیش‌تر «هفت روز گذشته» برمی‌گشت که امروز آخرینش بود — یک پنجره
+     * غلتان و نه یک هفته. کاربر تقویم نمی‌دید: امروز همیشه روی یک لبه
+     * می‌نشست، روزهای پیشِ‌رو اصلاً دیده نمی‌شدند، و اینکه «این هفته چقدرش
+     * مانده» از صفحه درنمی‌آمد. سند ۰۳ هم همین را خواسته بود:
+     * «۷ روز اخیر با تقویم شمسی، **شنبه‌محور**، RTL».
+     *
+     * روزهای نیامده هم برمی‌گردند تا هفته کامل دیده شود؛ تفکیکشان با
+     * [DayCell.isFuture] است.
+     */
+    suspend fun currentWeek(): List<DayCell> {
         val today = time.today()
-        val stored = streakDao.daysSince(shiftDays(today, -6)).associateBy { it.date }
-        return (6 downTo 0).map { back ->
-            val date = shiftDays(today, -back)
+        // شنبه = ۰، پس با کم کردن همین عدد به ابتدای هفته می‌رسیم
+        val saturday = shiftDays(today, -JalaliDate.weekDayIndex(epochOf(today)))
+        val stored = streakDao.daysSince(saturday).associateBy { it.date }
+        return (0..6).map { i ->
+            val date = shiftDays(saturday, i)
             DayCell(
                 date = date,
                 jalali = JalaliDate.fromEpoch(epochOf(date)),
-                weekDayIndex = JalaliDate.weekDayIndex(epochOf(date)),
+                weekDayIndex = i,
                 status = stored[date]?.status?.let { runCatching { StreakDayStatus.valueOf(it) }.getOrNull() },
                 isToday = date == today,
+                isFuture = date > today,
             )
         }
     }
@@ -127,6 +142,8 @@ class StreakRepository @Inject constructor(
         val weekDayIndex: Int,
         val status: StreakDayStatus?,
         val isToday: Boolean,
+        /** روزی از همین هفته که هنوز نرسیده — خالی و کم‌رنگ نشان داده می‌شود */
+        val isFuture: Boolean = false,
     )
 
     sealed interface CheckInResult {

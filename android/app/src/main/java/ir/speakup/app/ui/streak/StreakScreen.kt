@@ -176,23 +176,41 @@ fun StreakScreen(vm: StreakViewModel = hiltViewModel()) {
 
 @Composable
 private fun WeekStrip(week: List<StreakRepository.DayCell>) {
-    Row(
-        Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceEvenly,
-    ) {
-        week.forEach { d ->
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Text(
-                    // حرف اول روز، نه نام کاملش: «سه‌شنبه» در ستون باریک
-                    // به دو خط می‌شکست و کل ردیف را به هم می‌ریخت.
-                    JalaliDate.WEEK_DAYS[d.weekDayIndex].take(1),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = if (d.isToday) MaterialTheme.colorScheme.onSurface
-                    else MaterialTheme.colorScheme.onSurfaceVariant,
-                    fontWeight = if (d.isToday) FontWeight.Bold else FontWeight.Normal,
-                )
-                Spacer(Modifier.size(8.dp))
-                DayDot(d)
+    Column(Modifier.fillMaxWidth()) {
+        // نام ماه، تا نوار «تقویم» خوانده شود و نه یک ردیف دایره.
+        // ماهِ امروز ملاک است؛ هفته‌ای که وسط دو ماه بیفتد هم همین را
+        // می‌گیرد، چون آنچه کاربر دنبالش است «الان کجای ماهم» است.
+        week.firstOrNull { it.isToday }?.let { t ->
+            Text(
+                "${JalaliDate.MONTHS[t.jalali.month - 1]} ${t.jalali.year.toPersianDigits()}",
+                Modifier.fillMaxWidth(),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+            )
+            Spacer(Modifier.size(12.dp))
+        }
+
+        Row(
+            Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceEvenly,
+        ) {
+            week.forEach { d ->
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Text(
+                        // حرف اول روز، نه نام کاملش: «سه‌شنبه» در ستون باریک
+                        // به دو خط می‌شکست و کل ردیف را به هم می‌ریخت.
+                        JalaliDate.WEEK_DAYS[d.weekDayIndex].take(1),
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = if (d.isToday) MaterialTheme.colorScheme.onSurface
+                        else MaterialTheme.colorScheme.onSurfaceVariant,
+                        fontWeight = if (d.isToday) FontWeight.Bold else FontWeight.Normal,
+                    )
+                    Spacer(Modifier.size(8.dp))
+                    // شماره روزِ ماه داخل خودِ دایره می‌آید؛ ردیف دومِ تاریخ
+                    // لازم نیست و فقط تکرار است.
+                    DayDot(d)
+                }
             }
         }
     }
@@ -205,6 +223,13 @@ private fun DayDot(d: StreakRepository.DayCell) {
         StreakDayStatus.FROZEN -> FreezeBlue to "❄"
         StreakDayStatus.MISSED -> MaterialTheme.colorScheme.surfaceVariant to ""
         null -> MaterialTheme.colorScheme.surfaceVariant to ""
+    }
+    // روزِ نیامده کم‌رنگ‌تر است تا «مانده تا آخر هفته» از خودِ نوار خوانده
+    // شود — همان چیزی که نوارِ غلتانِ قبلی اصلاً نشان نمی‌داد.
+    val dayColor = when {
+        d.status != null -> Color.White
+        d.isFuture -> MaterialTheme.colorScheme.outlineVariant
+        else -> MaterialTheme.colorScheme.onSurfaceVariant
     }
     Box(
         Modifier
@@ -220,7 +245,7 @@ private fun DayDot(d: StreakRepository.DayCell) {
         Text(
             content.ifEmpty { d.jalali.day.toPersianDigits() },
             style = MaterialTheme.typography.bodyLarge,
-            color = if (d.status == null) MaterialTheme.colorScheme.onSurfaceVariant else Color.White,
+            color = dayColor,
             fontWeight = if (d.isToday) FontWeight.Bold else FontWeight.Normal,
         )
     }

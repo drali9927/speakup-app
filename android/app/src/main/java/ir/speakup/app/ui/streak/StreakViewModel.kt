@@ -36,7 +36,7 @@ class StreakViewModel @Inject constructor(
                 currentLength = s.currentLength,
                 longestLength = s.longestLength,
                 freezeCount = s.freezeCount,
-                week = repo.lastWeek(),
+                week = repo.currentWeek(),
             )
         }
     }
