@@ -71,10 +71,16 @@ object Routes {
     const val STREAK = "streak"
     const val PROFILE = "profile"
     const val LESSON = "lesson/{lessonId}"
-    const val PLAYER = "player/{activityId}"
+    // شمارش پاسخ‌های درستِ بخش، همراه ناوبری جابه‌جا می‌شود.
+    //
+    // فعالیت‌های یک بخش زنجیرند و هر کدام ViewModel خودش را دارد، پس
+    // آماری که در پایان بخش نشان می‌دهیم باید از فعالیت قبلی منتقل شود؛
+    // وگرنه صفحه پایانِ بخشِ گرامر آمارِ فقط **آخرین** تمرین را می‌گوید.
+    const val PLAYER = "player/{activityId}?correct={correct}&total={total}"
 
     fun lesson(id: String) = "lesson/$id"
-    fun player(id: String) = "player/$id"
+    fun player(id: String, correct: Int = 0, total: Int = 0) =
+        "player/$id?correct=$correct&total=$total"
 }
 
 private data class Tab(val route: String, val label: String, val icon: ImageVector)
@@ -252,15 +258,19 @@ fun AppNav(nav: NavHostController = rememberNavController()) {
 
                 composable(
                     Routes.PLAYER,
-                    arguments = listOf(navArgument("activityId") { type = NavType.StringType }),
+                    arguments = listOf(
+                        navArgument("activityId") { type = NavType.StringType },
+                        navArgument("correct") { type = NavType.IntType; defaultValue = 0 },
+                        navArgument("total") { type = NavType.IntType; defaultValue = 0 },
+                    ),
                 ) {
                     PlayerScreen(
                         onClose = { nav.popBackStack() },
                         // تمرین بعدی **جایگزین** تمرین فعلی می‌شود و رویش
                         // نمی‌نشیند؛ وگرنه بعد از شش تمرین، دکمه بازگشت
                         // باید شش بار زده شود تا کاربر به فهرست درس برسد.
-                        onNext = { next ->
-                            nav.navigate(Routes.player(next)) {
+                        onNext = { next, correct, total ->
+                            nav.navigate(Routes.player(next, correct, total)) {
                                 popUpTo(Routes.PLAYER) { inclusive = true }
                             }
                         },

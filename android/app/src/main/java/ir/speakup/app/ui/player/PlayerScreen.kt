@@ -90,7 +90,7 @@ private val Red = Color(0xFFC62828)
 @Composable
 fun PlayerScreen(
     onClose: () -> Unit,
-    onNext: (String) -> Unit,
+    onNext: (String, Int, Int) -> Unit,
     vm: PlayerViewModel = hiltViewModel(),
 ) {
     val s by vm.state.collectAsStateWithLifecycle()
@@ -221,21 +221,33 @@ fun PlayerScreen(
     // فرسایش است. بازخوردِ درست/غلط را همان‌جا زیر سوال دیده و همین کافی
     // است — جشن برای پایان بخش می‌ماند.
     val skipFinish = s.finished && s.nextInSection != null && s.items.size <= 2
+    // آمار بخش با هر پرش جمع می‌شود. فقط فعالیت‌های نمره‌دار شمرده می‌شوند:
+    // کارت واژه و آموزش سوالی نمی‌پرسند و «۰ از ۱۰» برایشان بی‌معناست.
+    val tallyCorrect = s.sectionCorrect + if (s.type.isScored) s.correctCount else 0
+    val tallyTotal = s.sectionTotal + if (s.type.isScored) s.items.size else 0
     LaunchedEffect(skipFinish) {
-        if (skipFinish) s.nextInSection?.let { vm.speech.stop(); onNext(it) }
+        if (skipFinish) s.nextInSection?.let {
+            vm.speech.stop()
+            onNext(it, tallyCorrect, tallyTotal)
+        }
     }
 
     if (s.finished && !skipFinish) {
         FinishedView(
-            correct = s.correctCount,
-            total = s.items.size,
-            scored = s.type.isScored,
+            // در پایان بخش، آمارِ **کل بخش** — نه فقط آخرین تمرین.
+            // بدون این، بخش گرامر که هفت سوال دارد در پایان «۱ از ۱ پاسخ
+            // درست» می‌گفت، چون آخرین تمرینش تک‌آیتمی است.
+            correct = if (s.nextInSection == null) tallyCorrect else s.correctCount,
+            total = if (s.nextInSection == null) tallyTotal else s.items.size,
+            scored = if (s.nextInSection == null) tallyTotal > 0 else s.type.isScored,
             earnedXp = s.earnedXp,
             goalReached = s.goalReached,
             step = s.stepInSection,
             steps = s.stepsInSection,
             nextInSection = s.nextInSection,
-            onNext = { s.nextInSection?.let { vm.speech.stop(); onNext(it) } },
+            onNext = {
+                s.nextInSection?.let { vm.speech.stop(); onNext(it, tallyCorrect, tallyTotal) }
+            },
             onClose = onClose,
         )
         return

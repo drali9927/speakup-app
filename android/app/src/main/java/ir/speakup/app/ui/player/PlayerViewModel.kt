@@ -120,6 +120,9 @@ data class PlayerUiState(
     /** شماره فعالیت جاری در بخش و تعداد کل — «۳ از ۴» روی صفحه پایان */
     val stepInSection: Int = 0,
     val stepsInSection: Int = 0,
+    /** آمار بخش تا پیش از این فعالیت — برای جمع‌بندیِ پایان بخش */
+    val sectionCorrect: Int = 0,
+    val sectionTotal: Int = 0,
     /** روایت صوتی صفحه آموزش در حال پخش است */
     val narrating: Boolean = false,
     val narrationRate: Float = 1.0f,
@@ -141,6 +144,16 @@ class PlayerViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val activityId: String = checkNotNull(savedState["activityId"])
+
+    /**
+     * پاسخ‌های درست و کلِ سوال‌های بخش، تا پیش از این فعالیت.
+     *
+     * از فعالیت قبلیِ همین بخش می‌آید. صفحه پایانِ بخش با این، آمارِ کلِ
+     * بخش را می‌گوید و نه آمارِ تنها آخرین تمرین — که در گرامر «۱ از ۱»
+     * می‌شد، برای بخشی که کاربر هفت سوالش را جواب داده بود.
+     */
+    private val carriedCorrect: Int = savedState["correct"] ?: 0
+    private val carriedTotal: Int = savedState["total"] ?: 0
 
     /** وقتی چند کارت آموزشی یکجا نمایش داده می‌شوند، همه باید تمام‌شده علامت بخورند */
     private var siblingTeachingIds: List<String> = emptyList()
@@ -189,6 +202,8 @@ class PlayerViewModel @Inject constructor(
                 nextInSection = siblings.getOrNull(at + 1)?.id,
                 stepInSection = at + 1,
                 stepsInSection = siblings.size,
+                sectionCorrect = carriedCorrect,
+                sectionTotal = carriedTotal,
             ).withItemSetup()
             repo.markActivityStarted(activityId, resumeAt)
             autoSpeak()
