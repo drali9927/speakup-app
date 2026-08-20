@@ -12,6 +12,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.Serializable
@@ -46,6 +48,9 @@ data class PlacementUiState(
     val correctById: Map<String, Boolean> = emptyMap(),
     val finished: Boolean = false,
     val suggested: String? = null,
+    /** برای صفحه نتیجه: هدف روزانه و انگیزه‌ای که کاربر انتخاب کرده */
+    val goalXp: Int = 50,
+    val motive: String? = null,
 ) {
     val current: Placement.Question? get() = questions.getOrNull(index)
     val total: Int get() = questions.size
@@ -65,6 +70,17 @@ class PlacementViewModel @Inject constructor(
 
     init {
         analytics.track(EV_START)
+        // `update` و نه `_state.value = _state.value.copy(...)`.
+        //
+        // این دو کوروتین هم‌زمان اجرا می‌شوند. با خواندن-تغییر-نوشتنِ
+        // معمولی، این یکی می‌توانست مقدارِ پیش از بارگذاری را بخواند و
+        // بعد از آن بنویسد — یعنی `loading = false` را پاک کند و صفحه
+        // برای همیشه روی چرخنده بماند. روی گوشی دقیقاً همین شد.
+        viewModelScope.launch {
+            val goal = prefs.dailyGoalXp.first()
+            val motive = prefs.motive.first()
+            _state.update { it.copy(goalXp = goal, motive = motive) }
+        }
         viewModelScope.launch {
             val bank = withContext(Dispatchers.IO) {
                 runCatching {
@@ -79,7 +95,7 @@ class PlacementViewModel @Inject constructor(
                     Placement.Question(it.id, it.level, it.text, it.options, it.answer, it.explanationFa)
                 },
             )
-            _state.value = _state.value.copy(loading = false, questions = qs)
+            _state.update { it.copy(loading = false, questions = qs) }
         }
     }
 

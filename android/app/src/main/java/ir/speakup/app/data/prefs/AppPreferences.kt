@@ -38,6 +38,7 @@ class AppPreferences @Inject constructor(
         val INSTALL_ID = stringPreferencesKey("install_id")
         val PLACED = booleanPreferencesKey("placement_done")
         val THEME = stringPreferencesKey("theme_mode")
+        val MOTIVE = stringPreferencesKey("motive")
     }
 
     val onboarded: Flow<Boolean> = context.dataStore.data.map { it[Keys.ONBOARDED] ?: false }
@@ -103,6 +104,20 @@ class AppPreferences @Inject constructor(
      * رقیب هم کلید مستقل دارد.
      */
     val themeMode: Flow<String> = context.dataStore.data.map { it[Keys.THEME] ?: "SYSTEM" }
+
+    /**
+     * انگیزه کاربر از یادگیری — کار، سفر، تحصیل، مهاجرت یا علاقه.
+     *
+     * فعلاً فقط در متن‌های انگیزشی به کار می‌رود. نگهش می‌داریم چون
+     * وقتی داده کافی جمع شد، مهم‌ترین ورودی برای تصمیم «چه محتوایی
+     * بعد بسازیم» همین است — و اگر از روز اول جمع نشود، بعداً هم
+     * نمی‌شود بازسازی‌اش کرد.
+     */
+    val motive: Flow<String?> = context.dataStore.data.map { it[Keys.MOTIVE] }
+
+    suspend fun setMotive(v: String) {
+        context.dataStore.edit { it[Keys.MOTIVE] = v }
+    }
 
     suspend fun setThemeMode(mode: String) {
         context.dataStore.edit { it[Keys.THEME] = mode }

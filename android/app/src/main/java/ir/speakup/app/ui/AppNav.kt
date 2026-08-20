@@ -36,6 +36,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import ir.speakup.app.data.prefs.AppPreferences
 import ir.speakup.app.ui.auth.AuthScreen
 import ir.speakup.app.ui.onboarding.OnboardingScreen
+import ir.speakup.app.ui.personalize.PersonalizeScreen
 import ir.speakup.app.ui.placement.PlacementScreen
 import ir.speakup.app.ui.paywall.PaywallScreen
 import kotlinx.coroutines.launch
@@ -68,6 +69,7 @@ import androidx.compose.material.icons.filled.EmojiEvents
 object Routes {
     const val ONBOARDING = "onboarding"
     const val AUTH = "auth"
+    const val PERSONALIZE = "personalize"
     const val PLACEMENT = "placement"
     const val PAYWALL = "paywall"
     const val LESSONS = "lessons"
@@ -143,10 +145,10 @@ fun AppNav(nav: NavHostController = rememberNavController()) {
             when {
                 !onboarded -> Routes.ONBOARDING
                 token.isNullOrBlank() -> Routes.AUTH
-                // تعیین سطح بعد از ورود می‌آید و نه پیش از آن: نتیجه‌اش
+                // شخصی‌سازی و تعیین سطح، هر دو بعد از ورود: نتیجه‌شان
                 // باید به حساب کاربر بچسبد، و کاربری که هنوز وارد نشده
                 // ممکن است اصلاً ادامه ندهد.
-                !placed -> Routes.PLACEMENT
+                !placed -> Routes.PERSONALIZE
                 else -> Routes.LESSONS
             }
         }
@@ -240,6 +242,16 @@ fun AppNav(nav: NavHostController = rememberNavController()) {
                     })
                 }
 
+                composable(Routes.PERSONALIZE) {
+                    PersonalizeScreen(onDone = { needsPlacement ->
+                        val next = if (needsPlacement) Routes.PLACEMENT else Routes.LESSONS
+                        if (!needsPlacement) scope.launch { prefs.setPlaced() }
+                        nav.navigate(next) {
+                            popUpTo(Routes.PERSONALIZE) { inclusive = true }
+                        }
+                    })
+                }
+
                 composable(Routes.PLACEMENT) {
                     PlacementScreen(onDone = {
                         nav.navigate(Routes.LESSONS) {
@@ -251,7 +263,7 @@ fun AppNav(nav: NavHostController = rememberNavController()) {
                 composable(Routes.AUTH) {
                     AuthScreen(onDone = {
                         // پس از ورود، اگر هنوز تعیین سطح نشده، همان‌جا برود
-                        val next = if (placed == false) Routes.PLACEMENT else Routes.LESSONS
+                        val next = if (placed == false) Routes.PERSONALIZE else Routes.LESSONS
                         nav.navigate(next) { popUpTo(Routes.AUTH) { inclusive = true } }
                     })
                 }

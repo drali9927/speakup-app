@@ -26,18 +26,15 @@ def paths(level):
     )
 
 LEVELS = [
-    # نام فارسی، نتیجه‌ای است که کاربر می‌گیرد و نه برچسب آموزشی. «سطح
-    # استارتر» و «سطح مقدماتی ۲» به کسی نمی‌گویند آن‌جا چه خبر است.
-    #
-    # اما کد CEFR در نام انگلیسی ماند و حذف نشد: نام‌های تازه ترتیب را
-    # نمی‌رسانند — از «روان حرف بزن» و «طبیعی و دقیق» معلوم نیست کدام
-    # جلوتر است — و کاربر در انتخابگر سطح دقیقاً همین را می‌خواهد بداند.
-    {"code": "starter", "titleFa": "شروع از صفر",      "titleEn": "Starter",           "sortOrder": 0},
-    {"code": "A1",      "titleFa": "اولین جمله‌های تو", "titleEn": "A1 · Elementary 1",  "sortOrder": 1},
-    {"code": "A2",      "titleFa": "مکالمه‌های واقعی",  "titleEn": "A2 · Elementary 2",  "sortOrder": 2},
-    {"code": "B1",      "titleFa": "روان حرف بزن",     "titleEn": "B1 · Intermediate 1","sortOrder": 3},
-    {"code": "B2",      "titleFa": "طبیعی و دقیق",     "titleEn": "B2 · Intermediate 2","sortOrder": 4},
-    {"code": "C1",      "titleFa": "تسلط حرفه‌ای",      "titleEn": "C1 · Advanced",      "sortOrder": 5},
+    # نام فارسی همان اصطلاح آشنای کلاس زبان است. کاربر ایرانی «مقدماتی ۲» را
+    # از قبل می‌شناسد و ترتیبش را هم می‌فهمد؛ نام‌های توصیفی هیچ‌کدام را
+    # نمی‌رساندند.
+    {"code": "starter", "titleFa": "پیش‌مقدماتی", "titleEn": "Starter",           "sortOrder": 0},
+    {"code": "A1",      "titleFa": "مقدماتی ۱",  "titleEn": "A1 · Elementary 1",  "sortOrder": 1},
+    {"code": "A2",      "titleFa": "مقدماتی ۲",  "titleEn": "A2 · Elementary 2",  "sortOrder": 2},
+    {"code": "B1",      "titleFa": "متوسط ۱",    "titleEn": "B1 · Intermediate 1","sortOrder": 3},
+    {"code": "B2",      "titleFa": "متوسط ۲",    "titleEn": "B2 · Intermediate 2","sortOrder": 4},
+    {"code": "C1",      "titleFa": "پیشرفته",    "titleEn": "C1 · Advanced",      "sortOrder": 5},
 ]
 
 # رنگ شش‌ضلعی شماره درس — ریتم بصری لیست (سند ۰۲ بخش ۲.۳)

@@ -35,6 +35,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import ir.speakup.app.domain.toPersianDigits
+import ir.speakup.app.ui.personalize.PersonalizeViewModel
 import ir.speakup.app.ui.theme.ltr
 
 private val Green = Color(0xFF58CC02)
@@ -70,7 +71,12 @@ fun PlacementScreen(
     }
 
     if (s.finished) {
-        Result(level = s.suggested, onStart = { vm.accept(onDone) })
+        Result(
+            level = s.suggested,
+            goalXp = s.goalXp,
+            motive = s.motive,
+            onStart = { vm.accept(onDone) },
+        )
         return
     }
 
@@ -184,9 +190,24 @@ fun PlacementScreen(
 }
 
 @Composable
-private fun Result(level: String?, onStart: () -> Unit) {
+private fun Result(
+    level: String?,
+    goalXp: Int,
+    motive: String?,
+    onStart: () -> Unit,
+) {
     val scheme = MaterialTheme.colorScheme
-    val titleFa = LEVEL_FA[level] ?: "اولین جمله‌های تو"
+    val titleFa = LEVEL_FA[level] ?: "مقدماتی ۱"
+
+    // برآورد هفته‌ها: هر سطح حدود ۷ ساعت، و هدف روزانه دقیقه‌های روز را
+    // تعیین می‌کند. عدد گردشده است و عمداً «حدود» نوشته می‌شود — وعده
+    // دقیق دادن درباره یادگیری زبان، وعده‌ای است که نمی‌شود پایش ایستاد.
+    val minutesPerDay = when {
+        goalXp <= 20 -> 5
+        goalXp <= 50 -> 10
+        else -> 20
+    }
+    val weeks = ((LEVELS_LEFT[level] ?: 4) * 7 * 60 / minutesPerDay / 7).coerceAtLeast(4)
 
     Column(
         Modifier
@@ -203,11 +224,8 @@ private fun Result(level: String?, onStart: () -> Unit) {
         ) { Text("🎯", style = MaterialTheme.typography.displaySmall) }
 
         Spacer(Modifier.height(20.dp))
-        Text(
-            "از اینجا شروع کن",
-            style = MaterialTheme.typography.headlineSmall,
-            fontWeight = FontWeight.Bold,
-        )
+        Text("مسیر تو", style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold)
+
         Spacer(Modifier.height(8.dp))
         Text(
             titleFa,
@@ -215,10 +233,21 @@ private fun Result(level: String?, onStart: () -> Unit) {
             fontWeight = FontWeight.Bold,
             color = Green,
         )
+
+        Spacer(Modifier.height(22.dp))
+        // جمله‌ای که همه‌چیز را به هم وصل می‌کند: سطح، وقتی که خودش
+        // گفته، و دلیلی که خودش گفته. این همان «برای من ساخته شده» است.
+        Text(
+            "با روزی ${minutesPerDay.toPersianDigits()} دقیقه، تا حدود " +
+                "${weeks.toPersianDigits()} هفته دیگر می‌توانی " +
+                PersonalizeViewModel.motiveLine(motive) + ".",
+            style = MaterialTheme.typography.titleMedium,
+            textAlign = TextAlign.Center,
+            modifier = Modifier.fillMaxWidth(),
+        )
+
         Spacer(Modifier.height(10.dp))
         Text(
-            // سطح قابل تغییر است و کاربر باید همین‌جا بداند؛ وگرنه
-            // نتیجه آزمون شبیه حکمِ نهایی به نظر می‌رسد.
             "هر وقت خواستی می‌توانی از بالای صفحه دروس سطح را عوض کنی.",
             style = MaterialTheme.typography.bodyMedium,
             color = scheme.onSurfaceVariant,
@@ -234,9 +263,12 @@ private fun Result(level: String?, onStart: () -> Unit) {
     }
 }
 
+/** چند سطح تا پایان محتوا مانده — برای برآورد هفته‌ها */
+private val LEVELS_LEFT = mapOf("A1" to 4, "A2" to 3, "B1" to 2, "B2" to 1)
+
 private val LEVEL_FA = mapOf(
-    "A1" to "اولین جمله‌های تو",
-    "A2" to "مکالمه‌های واقعی",
-    "B1" to "روان حرف بزن",
-    "B2" to "طبیعی و دقیق",
+    "A1" to "مقدماتی ۱",
+    "A2" to "مقدماتی ۲",
+    "B1" to "متوسط ۱",
+    "B2" to "متوسط ۲",
 )
