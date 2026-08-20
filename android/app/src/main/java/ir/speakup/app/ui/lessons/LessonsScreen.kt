@@ -33,7 +33,6 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import ir.speakup.app.ui.common.StatsHeader
-import ir.speakup.app.ui.common.UnitBanner
 import ir.speakup.app.ui.theme.ltr
 import ir.speakup.app.domain.toPersianDigits
 
@@ -118,12 +117,24 @@ fun LessonsScreen(
                             onXp = onOpenLeague,
                         )
                     }
+                    // برنامه امروز، پیش از بنر سطح.
+                    //
+                    // بالاترین چیزِ قابل کنش باید نخستین چیزی باشد که
+                    // دیده می‌شود؛ بنر سطح تزئین است و کنشی ندارد.
                     item {
-                        UnitBanner(
-                            title = state.levelTitle,
-                            subtitle = "${state.completedLessonIds.size.toPersianDigits()} از " +
-                                "${state.lessons.size.toPersianDigits()} درس انجام شده",
-                            modifier = Modifier.padding(top = 8.dp, bottom = 4.dp),
+                        val current = state.lessons.firstOrNull {
+                            it.id !in state.completedLessonIds
+                        }
+                        TodayPlan(
+                            lesson = current,
+                            lessonsDone = state.completedLessonIds.size,
+                            lessonsTotal = state.lessons.size,
+                            dueCount = state.dueCount,
+                            todayXp = state.todayXp,
+                            goalXp = state.goalXp,
+                            onOpenLesson = { current?.let(onOpenLesson) },
+                            onOpenReview = onOpenReview,
+                            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
                         )
                     }
                     // نخستین درسی که هنوز تمام نشده = درس جاری
