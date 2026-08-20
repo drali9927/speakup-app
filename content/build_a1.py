@@ -392,6 +392,13 @@ DLG = {
      ("B","No, she's a nurse. And that's my father.","نه، او پرستار است. و آن پدر من است."),
      ("A","Your family is very nice.","خانواده‌ات خیلی خوب است."),
      ("B","Thank you!","ممنون!")],
+ 7: [("A","What is your job, Ali?","علی، شغلت چیست؟"),
+     ("B","I'm a nurse. I work in a hospital.","من پرستارم. در یک بیمارستان کار می‌کنم."),
+     ("A","Is it hard work?","کار سختی است؟"),
+     ("B","Yes, but I like it. And you?","بله، اما دوستش دارم. تو چطور؟"),
+     ("A","I'm an engineer. My office is near the school.","من مهندسم. دفترم نزدیک مدرسه است."),
+     ("B","Is your boss busy today?","رئیست امروز شلوغ است؟"),
+     ("A","Very busy. But the work is easy for me.","خیلی شلوغ. اما کار برای من آسان است.")],
  8: [("A","What do you do every day?","هر روز چه کار می‌کنی؟"),
      ("B","I wake up at six and I study English.","ساعت شش بیدار می‌شوم و انگلیسی می‌خوانم."),
      ("A","Do you go to school?","به مدرسه می‌روی؟"),
@@ -410,6 +417,12 @@ DLG = {
      ("B","Yes, he is very tall.","بله، خیلی قدبلند است."),
      ("A","And who is that girl?","و آن دختر کیست؟"),
      ("B","She is his daughter. She is happy today.","او دخترش است. امروز خوشحال است.")],
+ 5: [("A","How old are you, Ali?","علی، چند سالته؟"),
+     ("B","I'm twenty. And you?","من بیست سالمه. تو چطور؟"),
+     ("A","I'm nineteen. When is your birthday?","من نوزده سالمه. تولدت کِی است؟"),
+     ("B","It's in May. We have a party every year.","در ماه مه است. هر سال یک مهمانی داریم."),
+     ("A","Nice! How many people come?","چه خوب! چند نفر می‌آیند؟"),
+     ("B","About twenty. My sister brings a big gift.","حدود بیست نفر. خواهرم یک هدیه بزرگ می‌آورد.")],
  6: [("A","Where are you from?","اهل کجایی؟"),
      ("B","I am from Iran. And you?","من اهل ایرانم. تو چطور؟"),
      ("A","I am from a small city near Shiraz.","من اهل شهر کوچکی نزدیک شیرازم."),
@@ -731,6 +744,20 @@ if STORIES:
         for _q, _qfa, _ans, _opts, _hint in _qs:
             ws.append([_ln, _title, "پرسش", _q, _qfa, _ans, " | ".join(_opts), _hint, "آماده"])
     finish(ws, 9, wrap_cols=(4, 5, 7, 8))
+
+# --- محافظ: هیچ درسی نباید بخش خالی داشته باشد
+#
+# این محافظ نبود و درس‌های ۵ و ۷ **هیچ مکالمه‌ای نداشتند** — کسی
+# ننوشته بودشان و هیچ‌جا خطا نمی‌داد، چون نبودِ کلید در دیکشنری خطا
+# نیست. درس ۵ رایگان هم هست، یعنی کاربر تازه خیلی زود به آن می‌رسید و
+# بخش مکالمه‌اش را خالی می‌دید.
+_holes = []
+for _n, *_ in SYLLABUS:
+    for _label, _table in (("واژگان", V), ("مکالمه", DLG), ("گرامر", GR), ("تمرین", EX)):
+        if not _table.get(_n):
+            _holes.append(f"درس {_n}: بخش «{_label}» خالی است")
+if _holes:
+    raise SystemExit("درسِ ناقص:\n  " + "\n  ".join(_holes))
 
 wb.save(OUT)
 
