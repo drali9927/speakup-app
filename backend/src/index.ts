@@ -29,6 +29,8 @@ import {
   users as adminUsers,
   grantSubscription,
   revokeSubscriptions,
+  usersCsv,
+  bulkCreateUsers,
 } from './lib/admin.js'
 import { checkIn, getStreak } from './lib/streak.js'
 import { productiveAccuracy, pull, push } from './lib/sync.js'
@@ -459,6 +461,27 @@ export function createApp(db: Db, config = loadConfig()) {
       const data = body(z.object({ phone: z.string().min(10).max(15) }), req, res)
       if (!data) return
       res.json(revokeSubscriptions(db, data.phone.replace(/[^0-9]/g, '')))
+    })
+
+    // خروجی CSV همه کاربران.
+    //
+    // توکن اینجا از query هم پذیرفته می‌شود چون دانلود با یک لینک ساده
+    // انجام می‌شود و مرورگر سرصفحه Authorization نمی‌فرستد.
+    app.get('/admin/api/users.csv', adminOnly, (_req, res) => {
+      const stamp = new Date().toISOString().slice(0, 10)
+      res.setHeader('Content-Type', 'text/csv; charset=utf-8')
+      res.setHeader('Content-Disposition', `attachment; filename="speakup-users-${stamp}.csv"`)
+      res.send(usersCsv(db))
+    })
+
+    // ساخت گروهی کاربر از متن فایل.
+    //
+    // سقف یک مگابایت: بیش از این یعنی اشتباهی فایل دیگری فرستاده شده.
+    // صد هزار شماره هم زیر این سقف جا می‌شود.
+    app.post('/admin/api/users/bulk', adminOnly, (req, res) => {
+      const data = body(z.object({ text: z.string().min(1).max(1_000_000) }), req, res)
+      if (!data) return
+      res.json(bulkCreateUsers(db, data.text))
     })
 
     // خودِ صفحه — بدون توکن باز می‌شود و توکن را از کاربر می‌گیرد،

@@ -100,10 +100,40 @@
   </div>
 
   <div class="card">
+    <h2>ساخت گروهی کاربر</h2>
+    <p style="color:var(--dim);margin-top:0">
+      فایل CSV یا متنی بده، یا شماره‌ها را همین‌جا بچسبان — هر خط یک نفر.
+      برای ثبت هم‌زمان اشتراک، بعد از شماره کد اشتراک و در صورت نیاز
+      تعداد روز را با کاما بنویس:
+    </p>
+    <pre style="background:var(--bg);padding:10px;border-radius:8px;direction:ltr;text-align:left;overflow-x:auto;margin:0 0 12px">09121234567
+09127654321,yearly
+09121112233,manual,45</pre>
+    <p style="color:var(--dim);margin-top:0">
+      شماره تکراری خطا نیست و رد می‌شود، پس می‌شود یک فایل را با خیال
+      راحت دوباره فرستاد. کاربرِ ساخته‌شده «آخرین بازدید» نمی‌گیرد تا
+      آمار کاربران فعال را جابه‌جا نکند.
+    </p>
+    <div class="row" style="margin-bottom:10px">
+      <input type="file" id="bulkFile" accept=".csv,.txt" onchange="readBulkFile()">
+    </div>
+    <textarea id="bulkText" rows="6" placeholder="۰۹۱۲۳۴۵۶۷۸۹"
+      style="width:100%;box-sizing:border-box;direction:ltr;text-align:left;font-family:monospace;
+             padding:10px;border-radius:10px;border:1px solid var(--line)"></textarea>
+    <div class="row" style="margin-top:10px">
+      <button onclick="bulkCreate()">ساخت کاربران</button>
+      <button class="ghost" onclick="document.getElementById('bulkText').value='';say('bMsg',true,'')">پاک کن</button>
+    </div>
+    <div id="bMsg" class="msg"></div>
+    <div id="bRows" style="margin-top:10px;max-height:260px;overflow:auto"></div>
+  </div>
+
+  <div class="card">
     <h2>کاربران</h2>
     <div class="row" style="margin-bottom:12px">
       <input id="q" placeholder="جست‌وجوی شماره" style="flex:1;direction:ltr;text-align:left">
       <button class="ghost" onclick="page=0;loadUsers()">جست‌وجو</button>
+      <button class="ghost" onclick="exportCsv()">خروجی CSV</button>
     </div>
     <div style="overflow-x:auto">
       <table>
@@ -259,6 +289,57 @@ async function revoke() {
   if (!confirm('همه اشتراک‌های فعال این شماره لغو شود؟')) return;
   const r = await api('/subscription/revoke', { method: 'POST', body: JSON.stringify({ phone }) });
   say('gMsg', r.ok, r.ok ? `${fa(r.changed)} اشتراک لغو شد` : 'کاربر پیدا نشد');
+  loadAll();
+}
+
+/**
+ * دانلود CSV.
+ *
+ * با fetch و نه لینک ساده: لینک، توکن را در نوار آدرس و تاریخچه مرورگر
+ * می‌گذارد. این‌طور توکن در سرصفحه می‌رود و فایل از blob ساخته می‌شود.
+ */
+async function exportCsv() {
+  const r = await fetch('/admin/api/users.csv', {
+    headers: { Authorization: 'Bearer ' + token },
+  });
+  if (r.status === 401) { logout(); return; }
+  const blob = await r.blob();
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'speakup-users-' + new Date().toISOString().slice(0, 10) + '.csv';
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(a.href);
+}
+
+function readBulkFile() {
+  const f = document.getElementById('bulkFile').files[0];
+  if (!f) return;
+  const rd = new FileReader();
+  rd.onload = () => { document.getElementById('bulkText').value = rd.result; };
+  // UTF-8 صریح: فایل اکسل فارسی بدون این، به‌هم‌ریخته خوانده می‌شود
+  rd.readAsText(f, 'utf-8');
+}
+
+async function bulkCreate() {
+  const text = document.getElementById('bulkText').value.trim();
+  if (!text) return say('bMsg', false, 'چیزی وارد نشده');
+  say('bMsg', true, 'در حال ساخت…');
+  const r = await api('/users/bulk', { method: 'POST', body: JSON.stringify({ text }) });
+  say('bMsg', r.errors === 0,
+    `${num(r.created)} ساخته شد · ${num(r.existed)} از قبل بود · ` +
+    `${num(r.granted)} اشتراک ثبت شد · ${num(r.errors)} خطا`);
+
+  // فقط خطاها فهرست می‌شوند. در فایل هزارتایی، فهرست کردن موفق‌ها
+  // چیزی به کسی نمی‌گوید و خطاها را زیر خودش دفن می‌کند.
+  const bad = (r.rows || []).filter(x => x.status === 'error');
+  document.getElementById('bRows').innerHTML = bad.length
+    ? '<table><thead><tr><th>خط</th><th>شماره</th><th>مشکل</th></tr></thead><tbody>' +
+      bad.map(x => `<tr><td>${fa(x.line)}</td>` +
+        `<td style="direction:ltr;text-align:left">${x.phone || '—'}</td>` +
+        `<td>${x.detail || ''}</td></tr>`).join('') + '</tbody></table>'
+    : '';
   loadAll();
 }
 

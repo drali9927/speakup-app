@@ -1,6 +1,7 @@
 import type { Database as Db } from 'better-sqlite3'
 import { nowSec } from '../db/index.js'
 import { PLANS } from './purchase.js'
+import { normalizePhone } from './auth.js'
 
 /**
  * پرس‌وجوهای پنل ادمین.
@@ -239,4 +240,201 @@ export function revokeSubscriptions(db: Db, phone: string): { ok: boolean; chang
     .prepare(`UPDATE subscriptions SET status = 'expired' WHERE user_id = ? AND status = 'active'`)
     .run(user.id)
   return { ok: true, changed: r.changes }
+}
+
+// ---------------------------------------------------------------- خروجی CSV
+
+/**
+ * همه کاربران، برای خروجی CSV.
+ *
+ * بدون صفحه‌بندی: خروجی گرفتن یعنی می‌خواهی **همه** را داشته باشی، و
+ * جدول کاربران در این مقیاس (ده‌ها هزار ردیف) در یک پرس‌وجو جا می‌شود.
+ */
+export function allUsers(db: Db): UserRow[] {
+  return db
+    .prepare(
+      `SELECT u.id, u.phone, u.created_at AS createdAt, u.last_seen_at AS lastSeenAt,
+              u.current_level AS level,
+              COALESCE(st.current_length, 0) AS streak,
+              (SELECT COUNT(*) FROM user_progress p
+                WHERE p.user_id = u.id AND p.status = 'COMPLETED') AS activitiesDone,
+              s.plan_code AS plan, s.expires_at AS expiresAt, s.gateway AS gateway
+         FROM users u
+         LEFT JOIN streaks st ON st.user_id = u.id
+         LEFT JOIN subscriptions s ON s.id = (
+              SELECT id FROM subscriptions
+               WHERE user_id = u.id AND status = 'active'
+                 AND (expires_at IS NULL OR expires_at > ${nowSec()})
+               ORDER BY expires_at DESC LIMIT 1)
+        WHERE u.is_demo = 0
+        ORDER BY u.created_at DESC`,
+    )
+    .all() as UserRow[]
+}
+
+const iso = (t: number | null): string => (t ? new Date(t * 1000).toISOString().slice(0, 19).replace('T', ' ') : '')
+
+/**
+ * CSV برای اکسل.
+ *
+ * دو نکته که بدون آن‌ها فایل در اکسل خراب باز می‌شود:
+ *
+ * **۱. BOM لازم است.** بدون آن اکسل ویندوز فایل را با کدگذاری محلی
+ * می‌خواند و ستون‌های فارسی به هم می‌ریزند.
+ *
+ * **۲. شماره تلفن باید متن بماند.** «09121234567» بدون محافظت به عدد
+ * تبدیل و صفرِ اول حذف می‌شود؛ کل ستون شماره خراب می‌شود. با `="..."`
+ * اکسل مجبور می‌شود متن نگهش دارد.
+ */
+export function usersCsv(db: Db): string {
+  const head = [
+    'شماره', 'سطح', 'زنجیره', 'فعالیت انجام‌شده',
+    'اشتراک', 'انقضای اشتراک', 'درگاه', 'آخرین بازدید', 'تاریخ عضویت',
+  ]
+  const esc = (v: string): string => `"${v.replace(/"/g, '""')}"`
+  const lines = [head.map(esc).join(',')]
+
+  for (const u of allUsers(db)) {
+    lines.push([
+      `="${u.phone}"`,
+      esc(u.level),
+      String(u.streak),
+      String(u.activitiesDone),
+      esc(u.plan ?? ''),
+      esc(iso(u.expiresAt)),
+      esc(u.gateway ?? ''),
+      esc(iso(u.lastSeenAt)),
+      esc(iso(u.createdAt)),
+    ].join(','))
+  }
+  // \r\n و نه \n: اکسل ویندوز با خط‌شکن یونیکسی گاهی همه را یک ردیف می‌بیند
+  return '﻿' + lines.join('\r\n') + '\r\n'
+}
+
+// --------------------------------------------------------- ساخت گروهی کاربر
+
+export interface BulkLineResult {
+  line: number
+  phone: string
+  status: 'created' | 'existed' | 'granted' | 'error'
+  detail?: string
+}
+
+export interface BulkResult {
+  created: number
+  existed: number
+  granted: number
+  errors: number
+  rows: BulkLineResult[]
+}
+
+/**
+ * ساخت گروهی کاربر از یک فایل.
+ *
+ * هر خط: `شماره` یا `شماره,کد اشتراک` یا `شماره,کد اشتراک,روز`
+ *
+ * سه تصمیم که ارزش توضیح دارند:
+ *
+ * **۱. `last_seen_at` خالی می‌ماند.** کاربری که ما دستی ساخته‌ایم هنوز
+ * اپ را باز نکرده. اگر مثل ورود عادی مهر زمان بخورد، همان لحظه در آمار
+ * «فعال امروز» می‌نشیند و عدد فعال‌ها را به اندازه کل فایل باد می‌کند.
+ *
+ * **۲. تکراری خطا نیست.** اجرای دوباره همان فایل نباید نصفش را خطا
+ * بدهد؛ شماره‌ای که هست رد می‌شود و اگر اشتراک خواسته شده، همان اعمال
+ * می‌شود. یعنی می‌شود فایل را با خیال راحت دوباره فرستاد.
+ *
+ * **۳. خطای یک خط بقیه را نمی‌خواباند.** در فایل صد نفره، یک شماره
+ * غلط نباید ۹۹ نفر دیگر را عقب بیندازد. گزارش خط‌به‌خط برمی‌گردد.
+ */
+export function bulkCreateUsers(db: Db, text: string): BulkResult {
+  const out: BulkResult = { created: 0, existed: 0, granted: 0, errors: 0, rows: [] }
+  const ts = nowSec()
+
+  const lines = text.split(/\r?\n/)
+  lines.forEach((raw, i) => {
+    const line = raw.trim()
+    if (!line) return
+    // سطر عنوان فایل‌های اکسل، اگر بود، رد شود
+    if (i === 0 && !/[0-9۰-۹]/.test(line)) return
+
+    const parts = line.split(/[,;\t]/).map((p) => p.trim().replace(/^="?|"?$/g, ''))
+    const phone = normalizePhone(toLatinDigits(parts[0] ?? ''))
+    const n = i + 1
+
+    if (!phone) {
+      out.errors++
+      out.rows.push({ line: n, phone: parts[0] ?? '', status: 'error', detail: 'شماره نامعتبر' })
+      return
+    }
+
+    try {
+      const existing = db.prepare(`SELECT id, is_demo FROM users WHERE phone = ?`).get(phone) as
+        | { id: number; is_demo: number } | undefined
+
+      // کاربر نمایشی را دست نزن.
+      //
+      // شماره‌های نمایشیِ جدول لیگ در بازه‌ای هستند که با پیش‌شماره
+      // واقعی هم می‌تواند برخورد کند. اگر ادمین چنین شماره‌ای را وارد
+      // کند و ما در سکوت اشتراک را روی حساب قلابی بنشانیم، کاربر واقعی
+      // اشتراکش را نمی‌گیرد و هیچ‌کس هم نمی‌فهمد چرا.
+      if (existing?.is_demo) {
+        out.errors++
+        out.rows.push({
+          line: n, phone, status: 'error',
+          detail: 'این شماره به حساب نمایشی لیگ خورده — دستی بررسی کن',
+        })
+        return
+      }
+
+      if (existing) {
+        out.existed++
+        out.rows.push({ line: n, phone, status: 'existed' })
+      } else {
+        // last_seen_at عمداً NULL — این کاربر هنوز اپ را باز نکرده
+        db.prepare(
+          `INSERT INTO users (phone, referral_code, created_at, last_seen_at) VALUES (?, ?, ?, NULL)`,
+        ).run(phone, makeReferralCode(db), ts)
+        out.created++
+        out.rows.push({ line: n, phone, status: 'created' })
+      }
+
+      const planCode = parts[1] || ''
+      const row = out.rows[out.rows.length - 1]!
+      if (planCode) {
+        const days = parts[2] ? Number(toLatinDigits(parts[2])) : null
+        const g = grantSubscription(db, phone, planCode, days && days > 0 ? days : null, 'ورود گروهی')
+        if (g.ok) {
+          out.granted++
+          row.detail = `${g.days} روز ${g.plan}`
+        } else {
+          out.errors++
+          row.status = 'error'
+          row.detail = g.error
+        }
+      }
+    } catch (e) {
+      out.errors++
+      out.rows.push({ line: n, phone, status: 'error', detail: String((e as Error).message) })
+    }
+  })
+
+  return out
+}
+
+/** رقم فارسی و عربی به لاتین — شماره‌ها از اکسل فارسی می‌آیند */
+function toLatinDigits(s: string): string {
+  return s.replace(/[۰-۹]/g, (d) => String('۰۱۲۳۴۵۶۷۸۹'.indexOf(d)))
+    .replace(/[٠-٩]/g, (d) => String('٠١٢٣٤٥٦٧٨٩'.indexOf(d)))
+}
+
+/** همان الگوریتم auth، چون ساخت کاربر اینجا از مسیر ورود نمی‌گذرد */
+function makeReferralCode(db: Db): string {
+  const alphabet = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'
+  for (let attempt = 0; attempt < 40; attempt++) {
+    let code = ''
+    for (let i = 0; i < 6; i++) code += alphabet[Math.floor(Math.random() * alphabet.length)]
+    const taken = db.prepare(`SELECT 1 FROM users WHERE referral_code = ?`).get(code)
+    if (!taken) return code
+  }
+  throw new Error('ساخت کد معرف یکتا ممکن نشد')
 }
