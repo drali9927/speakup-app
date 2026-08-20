@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- زمینه ابزارک: سفید با گوشه گرد، تا روی هر تصویر پس‌زمینه‌ای خوانا بماند -->
+<!--
+  زمینه ابزارک — کرمِ گرم، نه سفیدِ خالی.
+
+  تصویر شعله رنگی است و برای دیده شدن، زمینه روشن می‌خواهد؛ اما سفیدِ محض
+  ابزارک را بی‌روح و شبیه یادداشت می‌کرد. یک گرادیان کرمِ ملایم، هم تصویر
+  را نگه می‌دارد و هم به کارت گرما می‌دهد.
+-->
 <shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
-    <solid android:color="#FFFFFF" />
-    <corners android:radius="20dp" />
+    <gradient android:startColor="#FFF6E6" android:endColor="#FFFFFF" android:angle="270" />
+    <corners android:radius="24dp" />
 </shape>

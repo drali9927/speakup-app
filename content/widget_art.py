@@ -39,11 +39,15 @@ ART = {
         "Rich amber and orange gradient with a pale yellow core, a soft warm glow. "
         "The shape leans slightly and feels alive and energetic."
     ),
+    # سخت‌گیری روی «فقط شعله»: تلاش اول برای نسخه خاموش، هیزم هم کشید و
+    # جفت به هم خورد — شکل موقع تعویض حالت می‌پرید.
     "widget_flame_off": STYLE + (
-        "The same single campfire flame shape, but unlit and dormant. "
-        "Cool neutral grey and pale slate tones, completely desaturated, no warm colour "
-        "at all, no glow. Same silhouette and same size as the burning version so the "
-        "two read as one pair, but visibly asleep and waiting."
+        "ONLY a flame shape and nothing else. Absolutely no logs, no firewood, "
+        "no sticks, no ground, no base, no sparks, no smoke — just the flame itself, "
+        "floating alone. The flame is unlit and dormant: cool neutral grey and pale "
+        "slate tones, completely desaturated, no warm colour at all, no glow. "
+        "Exactly the same silhouette, proportion and size as a burning flame, so it "
+        "reads as the same object simply switched off."
     ),
 }
 

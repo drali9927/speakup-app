@@ -98,16 +98,16 @@ class StreakWidget : AppWidgetProvider() {
             val activeToday = streak?.lastActiveDate == today
 
             return RemoteViews(app.packageName, R.layout.widget_streak).apply {
-                setTextViewText(
-                    R.id.widget_streak,
-                    "${(streak?.currentLength ?: 0).toPersianDigits()} روز",
-                )
-                // شعله خاموش = کارِ امروز مانده. تنها نشانه‌ای که از فاصله
-                // چند متری هم خوانده می‌شود، پس باید برداری و پررنگ باشد و
-                // نه اموجی که روی هر گوشی شکل دیگری دارد.
+                // عدد تنها، بدون واحد: «روز پشت‌سرهم» زیرش نوشته شده و
+                // تکرارش در خودِ عدد، قهرمانیِ عدد را می‌گیرد.
+                setTextViewText(R.id.widget_streak, (streak?.currentLength ?: 0).toPersianDigits())
+
+                // حالِ کار را خودِ تصویر می‌گوید: شعلهٔ رنگی یا خاکستری.
+                // همین «نگاهِ بی‌واسطه» است که ابزارک را از یک میان‌بُر
+                // ساده جدا می‌کند.
                 setImageViewResource(
                     R.id.widget_flame,
-                    if (activeToday) R.drawable.ic_flame_lit else R.drawable.ic_flame_dim,
+                    if (activeToday) R.drawable.img_flame_on else R.drawable.img_flame_off,
                 )
                 setTextViewText(R.id.widget_message, message(activeToday, todayXp, goal, due))
 

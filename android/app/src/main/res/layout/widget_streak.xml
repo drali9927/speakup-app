@@ -1,15 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ابزارک صفحه خانه.
+  ابزارک صفحه خانه — بازطراحی.
 
-  RemoteViews است و نه Glance: افزودن Glance یک وابستگی تازه می‌خواهد و
-  این ابزارک آن‌قدر ساده است که ارزشش را ندارد.
+  نسخه اول کارت سفیدی بود با سه خط متن خاکستریِ هم‌وزن و یک اموجی ریز؛
+  شبیه رسید، نه ابزارک. سه چیز عوض شد:
 
-  نوار پیشرفت حتماً ProgressBar است و نه دو View روی هم: RemoteViews
-  نمی‌تواند عرضِ یک View را در زمان اجرا عوض کند، اما setProgressBar را
-  مستقیم پشتیبانی می‌کند.
+  ۱. **تصویر شعله قهرمان شد** — ۶۰dp، تصویرسازی واقعی به‌جای اموجی. حالِ
+     کار را همین تصویر می‌گوید: شعله رنگی یعنی امروز تمرین کرده‌ای،
+     خاکستری یعنی نه. از فاصله چند متری هم خوانده می‌شود.
+  ۲. **عدد زنجیره بزرگ شد** (۴۰sp) و کنار تصویر نشست. پیش‌تر ۲۴sp بود و
+     زیر دست بقیه متن‌ها گم می‌شد.
+  ۳. **سلسله‌مراتب متن**: یک پیامِ پررنگ و یک زیرنویسِ کم‌رنگ، به‌جای سه
+     خط هم‌وزن. وقتی همه‌چیز ۱۲spِ خاکستری باشد، هیچ‌چیز مهم نیست.
 
-  چیدمان راست‌به‌چپ است تا با بقیه اپ بخواند.
+  زمینه کرمِ ملایم است و نه سفید محض: تصویر رنگی زمینه روشن می‌خواهد، اما
+  سفیدِ خالی کارت را بی‌روح می‌کرد.
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/widget_root"
@@ -17,63 +22,78 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:layoutDirection="rtl"
-    android:gravity="center_vertical"
-    android:padding="12dp"
+    android:gravity="center"
+    android:padding="14dp"
     android:background="@drawable/widget_bg">
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical">
 
-        <!-- شعله برداری، نه اموجی: اموجی روی هر گوشی شکل دیگری دارد -->
         <ImageView
             android:id="@+id/widget_flame"
-            android:layout_width="38dp"
-            android:layout_height="38dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:contentDescription="@string/widget_description"
-            android:src="@drawable/ic_flame_dim" />
+            android:src="@drawable/img_flame_off" />
 
-        <TextView
-            android:id="@+id/widget_streak"
-            android:layout_width="0dp"
-            android:layout_weight="1"
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="6dp"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:maxLines="1"
-            android:text="۰ روز"
-            android:textColor="#FF8C00" />
+            android:layout_marginStart="10dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/widget_streak"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="40sp"
+                android:textStyle="bold"
+                android:maxLines="1"
+                android:includeFontPadding="false"
+                android:text="۰"
+                android:textColor="#E8730C" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:maxLines="1"
+                android:text="روز پشت‌سرهم"
+                android:textColor="#9A8F7E" />
+        </LinearLayout>
     </LinearLayout>
 
     <TextView
         android:id="@+id/widget_message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:textSize="12sp"
+        android:layout_marginTop="12dp"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        android:gravity="center"
         android:maxLines="2"
         android:text="برای شروع بزن"
-        android:textColor="#5A5A5A" />
+        android:textColor="#4A4238" />
 
     <ProgressBar
         android:id="@+id/widget_bar"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
-        android:layout_height="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_height="10dp"
+        android:layout_marginTop="10dp"
         android:max="100"
         android:progressDrawable="@drawable/widget_progress" />
 
     <TextView
         android:id="@+id/widget_goal"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="6dp"
         android:textSize="11sp"
         android:maxLines="1"
         android:text="SpeakUp"
-        android:textColor="#8A8A8A" />
+        android:textColor="#9A8F7E" />
 </LinearLayout>
