@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import ir.speakup.app.data.local.ActivityItemEntity
 import ir.speakup.app.data.local.ContentDao
-import ir.speakup.app.data.local.optionKey
+import ir.speakup.app.data.local.glossKey
 import ir.speakup.app.data.model.ActivityType
 import ir.speakup.app.domain.AnswerChecker
 import ir.speakup.app.domain.LearningRepository
@@ -716,13 +716,18 @@ class PlayerViewModel @Inject constructor(
         val answer = item?.promptFa?.trim()?.takeIf { it.isNotEmpty() } ?: return emptyList()
         val here = all.indexOfFirst { it.id == item.id }.coerceAtLeast(0)
 
-        // یکتایی روی شکل دیداری، نه رشته خام: دو معنی ممکن است فقط در
-        // نیم‌فاصله یا «ي» عربی فرق کنند و روی صفحه دقیقاً یکی دیده شوند.
-        val seen = mutableSetOf(answer.optionKey())
+        // یکتایی روی **معنی پایه** و نه رشته خام.
+        //
+        // دو دلیل جدا: معنی‌ها ممکن است فقط در نیم‌فاصله یا «ي» عربی فرق
+        // کنند و روی صفحه یکی دیده شوند؛ و مهم‌تر، «سلام» و «سلام
+        // (خودمانی)» برای زبان‌آموز یک چیزند. با آمدن هر دو در گزینه‌ها،
+        // آزمون از سنجش به حدس‌زدن تبدیل می‌شد — و این در درس اول A1
+        // اتفاق می‌افتاد، نخستین آزمونی که کاربر می‌بیند.
+        val seen = mutableSetOf(answer.glossKey())
         val distractors = ArrayList<String>(2)
         for (step in 1 until all.size) {
             val cand = all[(here + step) % all.size].promptFa?.trim().orEmpty()
-            if (cand.isEmpty() || !seen.add(cand.optionKey())) continue
+            if (cand.isEmpty() || !seen.add(cand.glossKey())) continue
             distractors += cand
             if (distractors.size == 2) break
         }
