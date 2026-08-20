@@ -305,10 +305,10 @@ private fun SectionCardView(
                                 card.isComplete -> "انجام شد"
                                 next == null -> "${total.toPersianDigits()} گام"
                                 card.completedCount == 0 ->
-                                    "${total.toPersianDigits()} گام · شروع: ${labelFor(next)}"
+                                    "${total.toPersianDigits()} گام، شروع: ${labelFor(next)}"
                                 else ->
                                     "گام ${(card.completedCount + 1).toPersianDigits()} از " +
-                                        "${total.toPersianDigits()} · ${labelFor(next)}"
+                                        "${total.toPersianDigits()}، ${labelFor(next)}"
                             },
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,

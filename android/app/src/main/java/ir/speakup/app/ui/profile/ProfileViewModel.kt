@@ -92,7 +92,11 @@ class ProfileViewModel @Inject constructor(
                 cal.add(java.util.Calendar.DAY_OF_YEAR, -6)
                 val bars = (0 until 7).map {
                     val key = fmt.format(cal.time)
-                    val idx = (cal.get(java.util.Calendar.DAY_OF_WEEK) + 5) % 7
+                    // Calendar.SATURDAY برابر ۷ است، پس باقیمانده بر ۷
+                    // مستقیماً شنبه را به خانه صفر می‌برد. فرمول قبلی
+                    // «+۵» داشت و **هر هفت روز را جابه‌جا می‌کرد**:
+                    // پنج‌شنبه با برچسب «س» نشان داده می‌شد.
+                    val idx = cal.get(java.util.Calendar.DAY_OF_WEEK) % 7
                     cal.add(java.util.Calendar.DAY_OF_YEAR, 1)
                     DayBar(dayNames[idx], byDay[key] ?: 0)
                 }

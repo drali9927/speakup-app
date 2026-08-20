@@ -237,7 +237,9 @@ fun LessonRow(
                         modifier = Modifier.weight(1f, fill = false),
                     )
                     Text(
-                        "·",
+                        // «،» و نه «·» — صفر فارسی خودش یک نقطه است و
+                        // نقطه کنار عدد، جزئی از همان عدد دیده می‌شود.
+                        "،",
                         style = MaterialTheme.typography.bodyMedium,
                         color = scheme.onSurfaceVariant,
                     )

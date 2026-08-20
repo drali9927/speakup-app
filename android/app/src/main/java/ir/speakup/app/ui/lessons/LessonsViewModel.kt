@@ -167,7 +167,7 @@ class LessonsViewModel @Inject constructor(
                         val h = contentDao.levelMinutes(lv.code) / 60
                         lv.code to when {
                             n == 0 -> "به‌زودی"
-                            h > 0 -> "${n.toPersianDigits()} درس · حدود ${h.toPersianDigits()} ساعت"
+                            h > 0 -> "${n.toPersianDigits()} درس، حدود ${h.toPersianDigits()} ساعت"
                             else -> "${n.toPersianDigits()} درس"
                         }
                     },

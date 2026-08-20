@@ -127,7 +127,10 @@ fun TodayPlan(
                 PlanRow(
                     icon = "📘",
                     title = lesson.themeFa.ifBlank { lesson.titleEn },
-                    subtitle = "درس ${lesson.number.toPersianDigits()} · " +
+                    // «،» و نه «·»: صفر فارسی خودش یک نقطه است و
+                    // «درس ۱ · ۱۴ دقیقه» روی صفحه شبیه «۱۴۰۱» دیده
+                    // می‌شد — دو عدد با یک نقطه بینشان، بدترین حالت.
+                    subtitle = "درس ${lesson.number.toPersianDigits()}، " +
                         "${lesson.estimatedMinutes.toPersianDigits()} دقیقه",
                     done = false,
                     onClick = onOpenLesson,

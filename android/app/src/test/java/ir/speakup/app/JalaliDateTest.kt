@@ -69,3 +69,27 @@ class PersianGroupingTest {
         org.junit.Assert.assertEquals("۰", 0.toPersianGrouped())
     }
 }
+
+/**
+ * برچسب روزهای نمودار هفتگی کارنامه.
+ *
+ * این یک بار غلط بود و همه هفت روز را جابه‌جا نشان می‌داد: پنج‌شنبه با
+ * برچسب «س» می‌آمد. چون خطا نمی‌دهد و فقط «کمی عجیب» به نظر می‌رسد،
+ * بدون آزمون دوباره برمی‌گردد.
+ */
+class WeekdayLabelTest {
+    private val names = listOf("ش", "ی", "د", "س", "چ", "پ", "ج")
+
+    /** همان محاسبه‌ای که ProfileViewModel انجام می‌دهد */
+    private fun label(calendarDayOfWeek: Int) = names[calendarDayOfWeek % 7]
+
+    @org.junit.Test fun `هر روز هفته برچسب درست می‌گیرد`() {
+        org.junit.Assert.assertEquals("ش", label(java.util.Calendar.SATURDAY))
+        org.junit.Assert.assertEquals("ی", label(java.util.Calendar.SUNDAY))
+        org.junit.Assert.assertEquals("د", label(java.util.Calendar.MONDAY))
+        org.junit.Assert.assertEquals("س", label(java.util.Calendar.TUESDAY))
+        org.junit.Assert.assertEquals("چ", label(java.util.Calendar.WEDNESDAY))
+        org.junit.Assert.assertEquals("پ", label(java.util.Calendar.THURSDAY))
+        org.junit.Assert.assertEquals("ج", label(java.util.Calendar.FRIDAY))
+    }
+}
