@@ -359,9 +359,9 @@ class PlayerViewModel @Inject constructor(
      * منتظر آماده شدنش می‌مانیم، اما فقط اگر کاربر هنوز همان‌جا مانده باشد —
      * وگرنه چند ثانیه بعد صدای کارتی پخش می‌شود که رد شده است.
      */
-    private fun speakWhenReady(text: String, id: String, pitch: Float = 1.0f) {
+    private fun speakWhenReady(text: String, id: String) {
         if (speech.status.value == SpeechService.Status.Ready) {
-            speech.speak(text, id, pitch = pitch)
+            speech.speak(text, id)
             return
         }
         autoSpeakJob?.cancel()
@@ -369,7 +369,7 @@ class PlayerViewModel @Inject constructor(
             val ready = withTimeoutOrNull(AUTO_SPEAK_WAIT_MS) {
                 speech.status.first { it != SpeechService.Status.Initializing }
             }
-            if (ready == SpeechService.Status.Ready && stillOn(id)) speech.speak(text, id, pitch = pitch)
+            if (ready == SpeechService.Status.Ready && stillOn(id)) speech.speak(text, id)
         }
     }
 
@@ -536,7 +536,7 @@ class PlayerViewModel @Inject constructor(
                 val item = items[i]
                 _state.value = _state.value.copy(dialogueLine = i)
                 val id = "dlg-${item.id}"
-                speech.speak(item.ttsText ?: item.prompt, id, pitch = dialoguePitch(i))
+                speech.speak(item.ttsText ?: item.prompt, id, speaker = dialogueSpeaker(item, i))
                 // منتظر شروع، سپس منتظر پایان همان خط
                 withTimeoutOrNull(2_000) { speech.speakingId.first { it == id } }
                 speech.speakingId.first { it != id }
@@ -886,12 +886,18 @@ class PlayerViewModel @Inject constructor(
 }
 
 /**
- * گام صدای هر نوبت مکالمه.
+ * گوینده هر نوبت مکالمه.
  *
- * گوینده از ترتیب خط درمی‌آید و نه از داده: مکالمه‌ها در محتوا همیشه
- * یک‌درمیان‌اند (نفر اول، نفر دوم، نفر اول…). ستون «صدای TTS» در کاربرگ
- * هم همین را می‌گوید، اما به بسته خروجی منتقل نمی‌شود؛ تا وقتی منتقل
- * شود، ترتیب خط همان اطلاعات را بدون تغییر شِما می‌دهد.
+ * اول از خود محتوا (`voice` = F یا M) و تنها در نبودش از ترتیب خط.
+ *
+ * چرا ترتیب خط به‌تنهایی کافی نبود: فرضش این است که نوبت‌ها همیشه
+ * یک‌درمیان‌اند. امروز در هر چهار سطح درست است، ولی اولین مکالمه‌ای که
+ * دو خط پشت‌سرهم از یک نفر داشته باشد آن را می‌شکند — و بی‌سروصدا هم
+ * می‌شکند، چون هیچ خطایی نمی‌دهد و فقط صداها جابه‌جا می‌شوند.
  */
-private fun dialoguePitch(index: Int): Float =
-    if (index % 2 == 0) SpeechService.PITCH_A else SpeechService.PITCH_B
+private fun dialogueSpeaker(item: ActivityItemEntity, index: Int): SpeechService.Speaker =
+    when (item.voice?.uppercase()) {
+        "F" -> SpeechService.Speaker.A
+        "M" -> SpeechService.Speaker.B
+        else -> if (index % 2 == 0) SpeechService.Speaker.A else SpeechService.Speaker.B
+    }

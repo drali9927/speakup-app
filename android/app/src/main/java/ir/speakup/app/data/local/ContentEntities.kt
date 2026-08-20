@@ -104,6 +104,7 @@ data class ActivityItemEntity(
     /** گزینه‌های چندگزینه‌ای، جداشده با | */
     val options: String? = null,
     val hintFa: String? = null,
+    val voice: String? = null,
     val imageFile: String? = null,     // a1_l01_w01_hello.png
     val ttsText: String? = null,       // متن ورودی موتور صوت
     val targetWord: String? = null,    // برای لایتنر خودکار

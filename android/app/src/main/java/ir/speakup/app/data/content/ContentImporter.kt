@@ -118,6 +118,7 @@ class ContentImporter @Inject constructor(
                 exampleEn = it.exampleEn, exampleFa = it.exampleFa,
                 correctAnswer = it.correctAnswer,
                 alternatives = it.alternatives, options = it.options, hintFa = it.hintFa,
+                voice = it.voice,
                 imageFile = it.imageFile, ttsText = it.ttsText, targetWord = it.targetWord,
                 checkPrompt = it.checkPrompt, checkAnswer = it.checkAnswer,
                 checkOptions = it.checkOptions, checkTips = it.checkTips,

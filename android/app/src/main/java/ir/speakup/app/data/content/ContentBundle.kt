@@ -86,6 +86,8 @@ data class ItemDto(
     val alternatives: String? = null,
     val options: String? = null,
     val hintFa: String? = null,
+    /** جنسیت گوینده مکالمه: F یا M — برای انتخاب صدا */
+    val voice: String? = null,
     val imageFile: String? = null,
     val ttsText: String? = null,
     val targetWord: String? = null,
