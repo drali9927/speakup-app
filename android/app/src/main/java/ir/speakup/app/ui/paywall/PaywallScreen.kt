@@ -48,6 +48,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import ir.speakup.app.data.remote.RemotePlan
 import ir.speakup.app.domain.toPersianDigits
+import ir.speakup.app.domain.toPersianGrouped
 import ir.speakup.app.ui.common.DuoButton
 import ir.speakup.app.ui.common.DuoButtonBox
 import ir.speakup.app.ui.common.DuoButtonStyle
@@ -56,11 +57,21 @@ private val Green = Color(0xFF2E7D32)
 
 private data class Perk(val icon: ImageVector, val label: String)
 
-private val PERKS = listOf(
-    Perk(Icons.Default.School, "همه درس‌ها"),
-    Perk(Icons.Default.Book, "کتاب‌های داستان"),
+/**
+ * آنچه با اشتراک باز می‌شود — با **عدد**، نه با صفت.
+ *
+ * نسخه قبل می‌گفت «همه درس‌ها» و «بدون محدودیت تمرین». این‌ها هیچ‌چیز
+ * به کاربر نمی‌گویند: «همه» یعنی چند تا؟ کسی که می‌خواهد یازده هزار
+ * تومان بدهد، حق دارد بداند در ازایش چه می‌گیرد.
+ *
+ * و صادقانه بودنش خودش مزیت است: «۱۲۰ درس، حدود ۲۹ ساعت» هم دقیق است و
+ * هم چیزی وعده نمی‌دهد که نتوانیم پایش بایستیم.
+ */
+private fun perks(lessons: Int, words: Int, hours: Int) = listOf(
+    Perk(Icons.Default.School, "${lessons.toPersianDigits()} درس در ۴ سطح"),
+    Perk(Icons.Default.Verified, "${words.toPersianGrouped()} واژه با تصویر و صدا"),
+    Perk(Icons.Default.Book, "حدود ${hours.toPersianDigits()} ساعت تمرین"),
     Perk(Icons.Default.CloudDownload, "استفاده آفلاین"),
-    Perk(Icons.Default.Verified, "بدون محدودیت تمرین"),
 )
 
 @Composable
@@ -100,7 +111,7 @@ fun PaywallScreen(
             )
 
             Spacer(Modifier.size(18.dp))
-            PERKS.chunked(2).forEach { row ->
+            perks(s.lessons, s.words, s.hours).chunked(2).forEach { row ->
                 Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                     row.forEach { p ->
                         Surface(

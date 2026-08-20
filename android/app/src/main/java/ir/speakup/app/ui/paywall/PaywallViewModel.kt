@@ -35,6 +35,16 @@ data class PaywallUiState(
     val busy: Boolean = false,
     val message: String? = null,
     val purchased: Boolean = false,
+    /**
+     * اندازه واقعی محتوا، از خودِ دیتابیس.
+     *
+     * عدد ثابت ننوشتیم چون با هر سطح تازه‌ای که اضافه شود کهنه می‌شود و
+     * کسی هم یادش نمی‌ماند دستی درستش کند — و آن‌وقت روی صفحه پرداخت،
+     * عددی می‌ماند که دیگر راست نیست.
+     */
+    val lessons: Int = 0,
+    val words: Int = 0,
+    val hours: Int = 0,
 )
 
 @HiltViewModel
@@ -42,12 +52,21 @@ class PaywallViewModel @Inject constructor(
     private val api: Api,
     private val billing: BillingService,
     private val subscriptions: SubscriptionRepository,
+    private val contentDao: ir.speakup.app.data.local.ContentDao,
+    private val dictionaryDao: ir.speakup.app.data.local.DictionaryDao,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(PaywallUiState())
     val state: StateFlow<PaywallUiState> = _state.asStateFlow()
 
     init {
+        viewModelScope.launch {
+            _state.value = _state.value.copy(
+                lessons = contentDao.lessonCount(),
+                words = dictionaryDao.entryCount(),
+                hours = contentDao.totalMinutes() / 60,
+            )
+        }
         viewModelScope.launch {
             // قیمت از سرور می‌آید تا تغییرش نیازمند انتشار نسخه نباشد
             runCatching { api.plans() }

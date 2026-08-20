@@ -3,6 +3,7 @@ package ir.speakup.app
 import ir.speakup.app.domain.JalaliDate
 import ir.speakup.app.domain.daysBetween
 import ir.speakup.app.domain.toPersianDigits
+import ir.speakup.app.domain.toPersianGrouped
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
@@ -47,5 +48,24 @@ class JalaliDateTest {
         assertEquals("۰", 0.toPersianDigits())
         assertEquals("۱۲۳", 123.toPersianDigits())
         assertEquals("۱۴۰۵", 1405.toPersianDigits())
+    }
+}
+
+/** جداکننده هزارگان — عددهایی که قرار است خوانده شوند، نه شمرده */
+class PersianGroupingTest {
+    @org.junit.Test fun `سه رقم بدون جداکننده می‌ماند`() {
+        org.junit.Assert.assertEquals("۱۲۰", 120.toPersianGrouped())
+    }
+
+    @org.junit.Test fun `چهار رقم یک جداکننده می‌گیرد`() {
+        org.junit.Assert.assertEquals("۲٬۰۸۸", 2088.toPersianGrouped())
+    }
+
+    @org.junit.Test fun `هفت رقم دو جداکننده می‌گیرد`() {
+        org.junit.Assert.assertEquals("۱٬۲۳۴٬۵۶۷", 1234567.toPersianGrouped())
+    }
+
+    @org.junit.Test fun `صفر درست می‌ماند`() {
+        org.junit.Assert.assertEquals("۰", 0.toPersianGrouped())
     }
 }

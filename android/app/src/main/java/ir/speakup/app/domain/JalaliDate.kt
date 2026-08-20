@@ -74,4 +74,16 @@ data class JalaliDate(val year: Int, val month: Int, val day: Int) {
 /** ارقام فارسی برای نمایش — اپ در همه‌جا اعداد فارسی نشان می‌دهد */
 fun Int.toPersianDigits(): String = toString().map { PERSIAN_DIGITS[it - '0'] }.joinToString("")
 
+/**
+ * عدد با جداکننده هزارگان — «۲٬۰۸۸» و نه «۲۰۸۸».
+ *
+ * برای عددهای چهاررقمی به بالا که قرار است **خوانده** شوند، نه شمرده.
+ * «۲۰۸۸ واژه» روی صفحه پرداخت یک رشته رقم است؛ چشم اندازه‌اش را
+ * نمی‌گیرد و همان کاری را نمی‌کند که از عدد انتظار داریم.
+ */
+fun Int.toPersianGrouped(): String =
+    toString().reversed().chunked(3).joinToString("\u066C").reversed()
+        .map { if (it in '0'..'9') PERSIAN_DIGITS[it - '0'] else it }
+        .joinToString("")
+
 private val PERSIAN_DIGITS = charArrayOf('۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹')

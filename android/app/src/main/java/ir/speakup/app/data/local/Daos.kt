@@ -77,6 +77,10 @@ interface ContentDao {
     @Query("SELECT COALESCE(SUM(estimatedMinutes), 0) FROM lessons WHERE levelCode = :level")
     suspend fun levelMinutes(level: String): Int
 
+    /** مجموع دقیقه همه سطوح — برای نشان دادن اندازه واقعی محتوا در پی‌وال */
+    @Query("SELECT COALESCE(SUM(estimatedMinutes), 0) FROM lessons")
+    suspend fun totalMinutes(): Int
+
     /**
      * فقط سطوحی که واقعاً درس دارند.
      *
@@ -125,6 +129,9 @@ interface DictionaryDao {
 
     @Query("SELECT lemma FROM word_forms WHERE form = :form LIMIT 1")
     suspend fun lemmaOf(form: String): String?
+
+    @Query("SELECT COUNT(*) FROM dictionary_entries")
+    suspend fun entryCount(): Int
 
     /**
      * ریشه‌یابی برای دیکشنری هوشمند (سند ۰۳ / F-06):
