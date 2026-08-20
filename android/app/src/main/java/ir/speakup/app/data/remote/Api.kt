@@ -244,6 +244,12 @@ data class LeagueResponse(
     val tierName: String = "",
     val cohort: Int = 1,
     val weekStart: String = "",
+    /** رده بعدی، یا null اگر در بالاترین رده باشد */
+    val nextTierName: String? = null,
+    /** پایان دوره به ثانیه — شمارش معکوس روی صفحه از همین می‌آید */
+    val endsAt: Long = 0,
+    val promoteCount: Int = 0,
+    val relegateCount: Int = 0,
     val rows: List<LeagueRow> = emptyList(),
 )
 

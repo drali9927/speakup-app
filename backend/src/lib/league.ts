@@ -18,6 +18,15 @@ export const COHORT_SIZE = 30
 /** امتیاز هر فعالیت تمام‌شده — برابر با XpRules.ACTIVITY سمت اپ */
 export const XP_PER_ACTIVITY = 10
 
+/**
+ * چند نفر از بالای گروه صعود می‌کنند و چند نفر از پایین سقوط.
+ *
+ * از سی نفر، پنج و پنج: به‌اندازه‌ای بزرگ که رسیدن بهش شدنی به نظر برسد،
+ * و به‌اندازه‌ای کوچک که رقابت معنا داشته باشد.
+ */
+export const PROMOTE_COUNT = 5
+export const RELEGATE_COUNT = 5
+
 /** رده‌ها — از پایین به بالا */
 export const TIERS = [
   'برنز', 'نقره', 'طلا', 'یاقوت', 'زمرد', 'کهربا', 'مروارید', 'الماس',
@@ -67,19 +76,50 @@ export function ensureMember(db: Db, userId: number, now = new Date()): number {
 
   const cohort = !last ? 1 : last.n >= COHORT_SIZE ? last.cohort + 1 : last.cohort
 
-  // رده کاربر از هفته پیش می‌آید؛ تازه‌واردها از برنز شروع می‌کنند.
+  // رده تازه از **نتیجه** هفته پیش درمی‌آید، نه از کپی کردن رده قبلی.
+  //
+  // تا امروز همین کپی می‌شد و هیچ‌کس هرگز از برنز بالاتر نمی‌رفت؛ هشت
+  // رده وجود داشت اما هیچ‌کدام قابل رسیدن نبود. لیگی که صعود ندارد،
+  // جدول است نه رقابت.
+  //
+  // محاسبه همین‌جا و تنبل انجام می‌شود و نه با کرون: رده هر کاربر دقیقاً
+  // وقتی لازم است که خودش وارد دوره تازه می‌شود.
   const prev = db
     .prepare(`
-      SELECT m.tier FROM league_members m
-      JOIN league_weeks w ON w.id = m.week_id
-      WHERE m.user_id = ? ORDER BY w.starts_on DESC LIMIT 1
+      SELECT m.tier, m.cohort, m.xp, m.week_id AS weekId
+        FROM league_members m
+        JOIN league_weeks w ON w.id = m.week_id
+       WHERE m.user_id = ? AND m.week_id <> ?
+       ORDER BY w.starts_on DESC LIMIT 1
     `)
-    .get(userId) as { tier: number } | undefined
+    .get(userId, weekId) as
+    | { tier: number; cohort: number; xp: number; weekId: number }
+    | undefined
+
+  let tier = prev?.tier ?? 0
+  if (prev) {
+    const rank = ((db
+      .prepare(`
+        SELECT COUNT(*) + 1 AS n FROM league_members
+         WHERE week_id = ? AND cohort = ?
+           AND (xp > ? OR (xp = ? AND user_id < ?))
+      `)
+      .get(prev.weekId, prev.cohort, prev.xp, prev.xp, userId) as { n: number }).n)
+
+    const size = ((db
+      .prepare(`SELECT COUNT(*) AS n FROM league_members WHERE week_id = ? AND cohort = ?`)
+      .get(prev.weekId, prev.cohort) as { n: number }).n)
+
+    // بدون امتیاز، صعود بی‌معناست: کسی که کل هفته کار نکرده نباید فقط
+    // به‌خاطر خالی بودن گروه بالا برود.
+    if (rank <= PROMOTE_COUNT && prev.xp > 0) tier = Math.min(tier + 1, TIERS.length - 1)
+    else if (rank > size - RELEGATE_COUNT) tier = Math.max(tier - 1, 0)
+  }
 
   db.prepare(`
     INSERT INTO league_members (week_id, user_id, cohort, tier, xp)
     VALUES (?, ?, ?, ?, 0)
-  `).run(weekId, userId, cohort, prev?.tier ?? 0)
+  `).run(weekId, userId, cohort, tier)
 
   return weekId
 }
@@ -106,8 +146,13 @@ export type LeagueRow = {
 export function standings(db: Db, userId: number, now = new Date()): {
   tier: number
   tierName: string
+  nextTierName: string | null
   cohort: number
   weekStart: string
+  /** پایان دوره به ثانیه — کاربر باید بداند چقدر وقت دارد */
+  endsAt: number
+  promoteCount: number
+  relegateCount: number
   rows: LeagueRow[]
 } {
   const weekId = ensureMember(db, userId, now)
@@ -123,11 +168,17 @@ export function standings(db: Db, userId: number, now = new Date()): {
     ORDER BY m.xp DESC, m.user_id ASC
   `).all(weekId, me.cohort) as Array<{ userId: number; xp: number; phone: string; isDemo: number }>
 
+  const starts = weekStart(now)
   return {
     tier: me.tier,
     tierName: TIERS[Math.min(me.tier, TIERS.length - 1)] ?? TIERS[0],
+    nextTierName: TIERS[me.tier + 1] ?? null,
     cohort: me.cohort,
-    weekStart: weekStart(now),
+    weekStart: starts,
+    // دوره از دوشنبه تا دوشنبه؛ پایانش هفت روز بعد از شروع
+    endsAt: Math.floor(Date.parse(`${starts}T00:00:00Z`) / 1000) + 7 * 86_400,
+    promoteCount: PROMOTE_COUNT,
+    relegateCount: RELEGATE_COUNT,
     rows: raw.map((r, i) => ({
       rank: i + 1,
       userId: r.userId,

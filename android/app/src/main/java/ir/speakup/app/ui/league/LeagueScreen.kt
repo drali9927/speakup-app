@@ -17,6 +17,10 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import ir.speakup.app.ui.theme.DuoRed
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.material3.Surface
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -63,10 +67,60 @@ fun LeagueScreen(vm: LeagueViewModel = hiltViewModel()) {
             Text(
                 if (s.rows.isEmpty()) "این هفته هنوز کسی امتیازی نگرفته"
                 else "گروه ${s.cohort.toPersianDigits()} · " +
-                    "${s.rows.size.toPersianDigits()} نفر این هفته",
+                    "${s.rows.size.toPersianDigits()} نفر · ${remaining(s.endsAt)}",
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
+
+            // فاصله تا رتبه بعد — همان چیزی که باعث می‌شود کاربر یک درس
+            // دیگر بزند. «رتبه هفتم» به‌تنهایی هیچ کاری با کسی نمی‌کند؛
+            // «۳۵ امتیاز تا رتبه ششم» کار می‌کند.
+            val me = s.rows.firstOrNull { it.isMe }
+            if (me != null) {
+                val ahead = s.rows.firstOrNull { it.rank == me.rank - 1 }
+                val gap = ahead?.let { it.xp - me.xp + 1 }
+                val promoting = me.rank <= s.promoteCount
+                val falling = s.relegateCount > 0 && me.rank > s.rows.size - s.relegateCount
+
+                // رنگ باید با حالِ کاربر بخواند. نسخه اول همه‌چیز را سبز
+                // می‌کرد و «در منطقه سقوط» با رنگ جشن نوشته می‌شد — یعنی
+                // دقیقاً وارونه‌ی چیزی که باید حس شود.
+                val accent = when {
+                    promoting -> DuoGreen
+                    falling -> DuoRed
+                    else -> MaterialTheme.colorScheme.primary
+                }
+
+                Spacer(Modifier.size(12.dp))
+                Surface(
+                    Modifier.fillMaxWidth(),
+                    shape = RoundedCornerShape(14.dp),
+                    color = accent.copy(alpha = 0.12f),
+                ) {
+                    Column(Modifier.padding(14.dp)) {
+                        Text(
+                            when {
+                                promoting && s.nextTierName != null ->
+                                    "در منطقه صعود به لیگ ${s.nextTierName}"
+                                promoting -> "در بالاترین رده، صدرنشین"
+                                falling -> "در منطقه سقوط"
+                                else -> "رتبه ${me.rank.toPersianDigits()} از ${s.rows.size.toPersianDigits()}"
+                            },
+                            style = MaterialTheme.typography.titleMedium,
+                            fontWeight = FontWeight.Bold,
+                            color = accent,
+                        )
+                        if (gap != null && gap > 0) {
+                            Spacer(Modifier.size(2.dp))
+                            Text(
+                                "${gap.toPersianDigits()} امتیاز تا رتبه ${(me.rank - 1).toPersianDigits()}",
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            )
+                        }
+                    }
+                }
+            }
         }
 
         when {
@@ -79,7 +133,20 @@ fun LeagueScreen(vm: LeagueViewModel = hiltViewModel()) {
                 textAlign = TextAlign.Center,
             )
             else -> LazyColumn(Modifier.fillMaxSize().padding(horizontal = 16.dp)) {
-                items(s.rows) { row -> LeagueRowView(row) }
+                // مرزِ منطقه‌ها به‌شکل خط، درست همان‌جا که رخ می‌دهد.
+                // بدون این، «پنج نفر اول صعود می‌کنند» یک جمله است؛ با
+                // این، کاربر می‌بیند دقیقاً چند ردیف با آن فاصله دارد.
+                itemsIndexed(s.rows) { i, row ->
+                    if (s.nextTierName != null && i == s.promoteCount && s.promoteCount > 0) {
+                        ZoneDivider("صعود به لیگ ${s.nextTierName}", DuoGreen)
+                    }
+                    if (s.relegateCount > 0 && i == s.rows.size - s.relegateCount &&
+                        i > s.promoteCount
+                    ) {
+                        ZoneDivider("منطقه سقوط", DuoRed)
+                    }
+                    LeagueRowView(row)
+                }
                 item { Spacer(Modifier.size(24.dp)) }
             }
         }
@@ -118,5 +185,48 @@ private fun LeagueRowView(row: LeagueRow) {
             style = MaterialTheme.typography.titleMedium.ltr(),
             color = if (row.isMe) DuoGreen else MaterialTheme.colorScheme.onSurfaceVariant,
         )
+    }
+}
+
+/**
+ * خط مرزِ منطقه صعود یا سقوط.
+ *
+ * نامش بالای خط می‌آید و نه پایینش: ردیف‌های **بالای** این خط آن اتفاق
+ * را دارند، و چشم فارسی‌زبان هم از بالا به پایین می‌خواند.
+ */
+@Composable
+private fun ZoneDivider(label: String, color: Color) {
+    androidx.compose.foundation.layout.Row(
+        Modifier.fillMaxWidth().padding(vertical = 8.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(10.dp),
+    ) {
+        Box(Modifier.weight(1f).size(2.dp).background(color.copy(alpha = 0.35f)))
+        Text(
+            label,
+            style = MaterialTheme.typography.bodyMedium,
+            fontWeight = FontWeight.Bold,
+            color = color,
+        )
+        Box(Modifier.weight(1f).size(2.dp).background(color.copy(alpha = 0.35f)))
+    }
+}
+
+/**
+ * زمان باقی‌مانده دوره، به زبان آدمیزاد.
+ *
+ * ساعت و دقیقهٔ دقیق لازم نیست و فقط شلوغ می‌کند؛ آنچه کاربر باید بفهمد
+ * این است که «هنوز وقت هست» یا «امروز آخرین فرصت است».
+ */
+private fun remaining(endsAt: Long): String {
+    if (endsAt <= 0) return ""
+    val left = endsAt - System.currentTimeMillis() / 1000
+    if (left <= 0) return "دوره تمام شد"
+    val days = left / 86_400
+    val hours = (left % 86_400) / 3_600
+    return when {
+        days > 0 -> "${days.toInt().toPersianDigits()} روز تا پایان"
+        hours > 0 -> "${hours.toInt().toPersianDigits()} ساعت تا پایان"
+        else -> "کمتر از یک ساعت تا پایان"
     }
 }

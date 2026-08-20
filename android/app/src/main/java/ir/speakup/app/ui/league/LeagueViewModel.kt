@@ -16,6 +16,12 @@ data class LeagueUiState(
     val tierName: String = "",
     val cohort: Int = 1,
     val rows: List<LeagueRow> = emptyList(),
+    /** رده بعدی، برای متنِ «برو به …» */
+    val nextTierName: String? = null,
+    /** پایان دوره به ثانیه — شمارش معکوس از این حساب می‌شود */
+    val endsAt: Long = 0,
+    val promoteCount: Int = 0,
+    val relegateCount: Int = 0,
     val error: String? = null,
 )
 
@@ -40,7 +46,16 @@ class LeagueViewModel @Inject constructor(private val api: Api) : ViewModel() {
                 .onSuccess { res ->
                     val b = res.body()
                     _state.value = if (res.isSuccessful && b != null) {
-                        LeagueUiState(false, b.tierName, b.cohort, b.rows)
+                        LeagueUiState(
+                            loading = false,
+                            tierName = b.tierName,
+                            cohort = b.cohort,
+                            rows = b.rows,
+                            nextTierName = b.nextTierName,
+                            endsAt = b.endsAt,
+                            promoteCount = b.promoteCount,
+                            relegateCount = b.relegateCount,
+                        )
                     } else {
                         _state.value.copy(loading = false, error = "جدول لیگ در دسترس نیست")
                     }
