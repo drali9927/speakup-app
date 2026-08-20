@@ -31,51 +31,51 @@
 بدهد، وگرنه همان‌جا رها می‌کند. سختی از درس ۴ شروع می‌شود.
 """
 
-# (شماره, عنوان انگلیسی, موضوع گرامر, موضوع محتوایی, رایگان؟)
+# (شماره, عنوان انگلیسی, موضوع گرامر, ماموریت درس, رایگان؟)
 SYLLABUS = [
     # --- بلوک ۱: پل از A1 (سبک، بازسازی آنچه بلد است)
-    (1,  "I usually get up at seven.", "مرور حال ساده و قیدهای تکرار", "روتین روزانه در سطح بالاتر", True),
-    (2,  "She's cooking right now.",   "مرور حال استمراری در برابر ساده", "خانه و کارهای همزمان", True),
-    (3,  "We went there last year.",   "مرور گذشته ساده و افعال بی‌قاعده بیشتر", "خاطرات", True),
+    (1, "I usually get up at seven.", "مرور حال ساده و قیدهای تکرار", "روتینت را طبیعی‌تر تعریف کن", True),
+    (2, "She's cooking right now.", "مرور حال استمراری در برابر ساده", "فرق کار همیشگی و همین حالا", True),
+    (3, "We went there last year.", "مرور گذشته ساده و افعال بی‌قاعده بیشتر", "خاطره‌ها را بهتر تعریف کن", True),
 
     # --- بلوک ۲: گذشته با جزئیات
-    (4,  "I was cooking when he called.", "گذشته استمراری", "قطع شدن یک کار", False),
-    (5,  "What happened next?",        "گذشته استمراری و ساده با هم", "تعریف کردن یک ماجرا", False),
+    (4, "I was cooking when he called.", "گذشته استمراری", "وقتی یک اتفاق وسط کار افتاد", False),
+    (5, "What happened next?", "گذشته استمراری و ساده با هم", "یک ماجرا را جذاب تعریف کن", False),
 
     # --- بلوک ۳: آینده
-    (6,  "I'll help you.",             "will برای تصمیم لحظه‌ای و پیش‌بینی", "قول دادن و پیشنهاد", False),
-    (7,  "We're meeting at six.",      "حال استمراری برای قرار آینده", "قرار گذاشتن", False),
-    (8,  "It might rain tomorrow.",    "may / might برای احتمال", "پیش‌بینی و تردید", False),
-    (9,  "If it rains, we'll stay.",   "شرطی نوع اول", "برنامه‌ریزی با شرط", False),
-    (10, "Making plans together.",     "مرور آینده", "برنامه‌های گروهی", False),
+    (6, "I'll help you.", "will برای تصمیم لحظه‌ای و پیش‌بینی", "قول بده و پیشنهاد بده", False),
+    (7, "We're meeting at six.", "حال استمراری برای قرار آینده", "برای یک قرار واقعی هماهنگ کن", False),
+    (8, "It might rain tomorrow.", "may / might برای احتمال", "احتمال بده و حدس بزن", False),
+    (9, "If it rains, we'll stay.", "شرطی نوع اول", "اگر شد… برنامه‌ات چیست؟", False),
+    (10, "Making plans together.", "مرور آینده", "با بقیه برنامه بچین", False),
 
     # --- بلوک ۴: مقایسه و توصیف دقیق‌تر
-    (11, "It's more expensive.",       "صفات تفضیلی بلند و بی‌قاعده", "خرید و مقایسه", False),
-    (12, "She drives carefully.",      "قیدهای حالت", "چگونه کاری انجام می‌شود", False),
-    (13, "It's not as big as that.",   "as … as و not as … as", "مقایسه برابر", False),
-    (14, "I've lived here for years.", "for و since", "مدت زمان", False),
-    (15, "Have you ever been there?",  "حال کامل با ever / never", "تجربه‌های زندگی", False),
+    (11, "It's more expensive.", "صفات تفضیلی بلند و بی‌قاعده", "قیمت و گزینه‌ها را مقایسه کن", False),
+    (12, "She drives carefully.", "قیدهای حالت", "بگو کاری چطور انجام می‌شود", False),
+    (13, "It's not as big as that.", "as … as و not as … as", "بگو چقدر شبیه یا متفاوت‌اند", False),
+    (14, "I've lived here for years.", "for و since", "بگو از کی و چه مدت", False),
+    (15, "Have you ever been there?", "حال کامل با ever / never", "از تجربه‌های زندگی بپرس", False),
 
     # --- بلوک ۵: حال کامل، سخت‌ترین بخش A2
-    (16, "I've already finished.",     "حال کامل با already / yet / just", "کارهای تمام‌شده", False),
-    (17, "I've been here since May.",  "حال کامل در برابر گذشته ساده", "تفاوت دو زمان", False),
-    (18, "It was made in Iran.",       "مجهول ساده", "توصیف اشیا و فرایندها", False),
-    (19, "The man who helped me.",     "ضمایر موصولی who / which / that", "توصیف افراد و چیزها", False),
-    (20, "Telling a longer story.",    "مرور زمان‌ها", "روایت بلندتر", False),
+    (16, "I've already finished.", "حال کامل با already / yet / just", "بگو چه کاری انجام شده", False),
+    (17, "I've been here since May.", "حال کامل در برابر گذشته ساده", "زمان درست را انتخاب کن", False),
+    (18, "It was made in Iran.", "مجهول ساده", "بگو چیزی کجا و چطور ساخته شده", False),
+    (19, "The man who helped me.", "ضمایر موصولی who / which / that", "آدم‌ها و چیزها را دقیق‌تر توصیف کن", False),
+    (20, "Telling a longer story.", "مرور زمان‌ها", "یک داستان کامل‌تر تعریف کن", False),
 
     # --- بلوک ۶: مدال‌ها و کارکردهای اجتماعی
-    (21, "You should see a doctor.",   "should / must / have to", "توصیه و الزام", False),
-    (22, "You mustn't park here.",     "منفی مدال‌ها و ممنوعیت", "قوانین و علائم", False),
-    (23, "Could you help me, please?", "درخواست مؤدبانه با could / would", "درخواست در موقعیت رسمی", False),
-    (24, "I'd like to book a room.",   "would like و درخواست خدمات", "هتل و رزرو", False),
-    (25, "At the doctor's.",           "مرور مدال‌ها", "موقعیت پزشکی", False),
+    (21, "You should see a doctor.", "should / must / have to", "توصیه کن و از الزام بگو", False),
+    (22, "You mustn't park here.", "منفی مدال‌ها و ممنوعیت", "قانون‌ها و تابلوها را بفهم", False),
+    (23, "Could you help me, please?", "درخواست مؤدبانه با could / would", "محترمانه درخواست کن", False),
+    (24, "I'd like to book a room.", "would like و درخواست خدمات", "هتل رزرو کن و درخواست بده", False),
+    (25, "At the doctor's.", "مرور مدال‌ها", "در موقعیت پزشکی حرف بزن", False),
 
     # --- بلوک ۷: ساختارهای فعل و جمله‌های طولانی‌تر
-    (26, "I enjoy reading books.",     "فعل + ing در برابر فعل + to", "علاقه و تصمیم", False),
-    (27, "He told me to wait.",        "نقل قول غیرمستقیم ساده", "بازگو کردن حرف دیگران", False),
-    (28, "Too expensive, not enough time.", "too و enough", "کمبود و زیادی", False),
-    (29, "Someone left this here.",    "ضمایر نامعین some / any / no + one/thing", "چیزهای نامشخص", False),
-    (30, "Ready for the next step.",   "مرور کلی A2", "جمع‌بندی سطح", False),
+    (26, "I enjoy reading books.", "فعل + ing در برابر فعل + to", "از علاقه و تصمیم حرف بزن", False),
+    (27, "He told me to wait.", "نقل قول غیرمستقیم ساده", "حرف دیگران را بازگو کن", False),
+    (28, "Too expensive, not enough time.", "too و enough", "بگو خیلی زیاد است یا کافی نیست", False),
+    (29, "Someone left this here.", "ضمایر نامعین some / any / no + one/thing", "درباره چیزهای نامشخص حرف بزن", False),
+    (30, "Ready for the next step.", "مرور کلی A2", "A2 تمام؛ آماده مرحله بعد", False),
 ]
 
 assert len(SYLLABUS) == 30, "سرفصل باید ۳۰ درس باشد"

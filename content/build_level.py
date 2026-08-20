@@ -41,18 +41,31 @@ def load(level):
     low = level.lower()
     syl = importlib.import_module(f"syllabus_{low}").SYLLABUS
     V, DLG, GR, EX, ST = {}, {}, {}, {}, {}
-    for block in ("01_10", "11_20", "21_30"):
-        for suffix in ("", "_b"):
-            name = f"data_{low}_{block}{suffix}"
-            try:
-                m = importlib.import_module(name)
-            except ImportError:
-                continue
-            V.update(getattr(m, "V", {}))
-            ST.update(getattr(m, "ST", {}))
-            DLG.update(getattr(m, "DLG", {}))
-            GR.update(getattr(m, "GR", {}))
-            EX.update(getattr(m, "EX", {}))
+
+    # ماژول‌های داده **پیدا** می‌شوند و نه از فهرست ثابت خوانده.
+    #
+    # پیش‌تر فهرست ثابتِ ("01_10", "11_20", "21_30") بود. فایل
+    # data_a2_04_10_b.py که بلوکش «04_10» است در آن فهرست نبود و
+    # **هیچ‌وقت خوانده نمی‌شد** — نتیجه‌اش این بود که درس‌های ۴ تا ۱۰
+    # سطح A2 بخش گرامرشان کاملاً خالی بود و هیچ خطایی هم نمی‌داد،
+    # چون نبودِ کلید در دیکشنری خطا نیست.
+    #
+    # با پیدا کردن از روی نام فایل، افزودن هر بلوک تازه خودکار کار
+    # می‌کند و این دسته اشکال دیگر ممکن نیست.
+    names = sorted(
+        f[:-3] for f in os.listdir(BASE)
+        if f.startswith(f"data_{low}_") and f.endswith(".py")
+    )
+    for name in names:
+        try:
+            m = importlib.import_module(name)
+        except ImportError:
+            continue
+        V.update(getattr(m, "V", {}))
+        ST.update(getattr(m, "ST", {}))
+        DLG.update(getattr(m, "DLG", {}))
+        GR.update(getattr(m, "GR", {}))
+        EX.update(getattr(m, "EX", {}))
     # داستانک‌ها در ماژول جدا: stories_<level>.py
     try:
         ST.update(importlib.import_module(f"stories_{low}").STORIES)
@@ -166,11 +179,29 @@ def main():
         for n in near:
             print("     " + n)
 
+    # --- محافظ: هیچ درسی نباید بخش خالی داشته باشد
+    #
+    # این محافظ نبود و نتیجه‌اش گران تمام شد: درس‌های ۴ تا ۱۰ سطح A2
+    # بخش گرامرشان **کاملاً خالی** بود، چون فایل داده‌شان با نامی بود که
+    # بارگذار نمی‌شناخت. هیچ خطایی نمی‌داد — نبودِ کلید در دیکشنری خطا
+    # نیست — و تنها راه دیدنش باز کردن همان درس روی گوشی بود.
+    lessons = [row[0] for row in SYLLABUS]
+    holes = []
+    for ln in lessons:
+        for label, table in (("واژگان", V), ("مکالمه", DLG), ("گرامر", GR), ("تمرین", EX)):
+            if not table.get(ln):
+                holes.append(f"درس {ln}: بخش «{label}» خالی است")
+    if holes:
+        raise SystemExit(
+            "درسِ ناقص (فایل داده‌اش خوانده نشده یا نوشته نشده):\n  "
+            + "\n  ".join(holes)
+        )
+
     wb = Workbook()
     wb.remove(wb.active)
 
     ws = sheet(wb, "نقشه دروس",
-               ["درس", "عنوان انگلیسی", "موضوع گرامر", "موضوع محتوایی", "تعداد واژه", "رایگان؟", "وضعیت"],
+               ["درس", "عنوان انگلیسی", "موضوع گرامر", "ماموریت درس", "تعداد واژه", "رایگان؟", "وضعیت"],
                [7, 30, 30, 28, 11, 9, 10])
     for n, title_en, grammar, theme, free in SYLLABUS:
         ws.append([n, title_en, grammar, theme, len(V.get(n, [])),

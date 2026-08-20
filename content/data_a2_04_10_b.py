@@ -112,9 +112,11 @@ GR = {
       "I'm going to study tonight. (قبلاً تصمیمش را گرفته بودم)\n"
       "منفی will: won't — I won't be late.",
       "I'll answer it. (تلفن زنگ می‌زند)\nI'm going to call her tonight. (برنامه داشتم)\nI won't forget.\nIt'll probably rain.",
-      "تلفن زنگ می‌زند. کدام درست است؟", "I'll answer it.",
-      "I'll answer it. | I'm going to answer it.",
-      "I'm going to answer it. ← این برای برنامه از پیش تعیین‌شده است، نه تصمیم همین لحظه.")],
+      # سناریوی پرسش با مثال‌های بالای همان کارت یکی نیست؛ پیش‌تر هم
+      # جمله و هم موقعیت فارسی‌اش عیناً در مثال‌ها بود و پاسخ لو می‌رفت.
+      "کسی در می‌زند. کدام درست است؟", "I'll open the door.",
+      "I'll open the door. | I'm going to open the door.",
+      "I'm going to open the door. ← این برای برنامه از پیش تعیین‌شده است، نه تصمیم همین لحظه.")],
 
  7: [("حال استمراری برای قرار آینده",
       "وقتی قرار **قطعی** است و زمان و مکانش معلوم، حال استمراری به‌کار\n"
