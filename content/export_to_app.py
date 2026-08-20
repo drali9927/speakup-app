@@ -95,6 +95,9 @@ def main():
                          "sortOrder": order, "estimatedMinutes": minutes})
         return sid
 
+    # desc در اپ نمایش داده نمی‌شود — activities.descriptionFa هیچ‌جا
+    # خوانده نمی‌شود. متنی که کاربر می‌بیند hintFa روی خودِ آیتم‌هاست.
+    # پیش از صرف وقت روی نگارش این جمله‌ها، این را در نظر بگیر.
     def act(section_id, order, title, desc, atype):
         aid = f"{section_id}-A{order}"
         activities.append({"id": aid, "sectionId": section_id, "title": title,
