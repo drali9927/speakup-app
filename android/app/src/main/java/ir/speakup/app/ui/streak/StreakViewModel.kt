@@ -16,6 +16,8 @@ data class StreakUiState(
     val longestLength: Int = 0,
     val freezeCount: Int = 0,
     val week: List<StreakRepository.DayCell> = emptyList(),
+    /** ترمیم رایگان الان در دسترس است یا هنوز در فاصله انتظار */
+    val repairAvailable: Boolean = false,
 )
 
 @HiltViewModel
@@ -37,6 +39,7 @@ class StreakViewModel @Inject constructor(
                 longestLength = s.longestLength,
                 freezeCount = s.freezeCount,
                 week = repo.currentWeek(),
+                repairAvailable = repo.repairAvailable(),
             )
         }
     }

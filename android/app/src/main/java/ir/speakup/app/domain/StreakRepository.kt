@@ -71,47 +71,51 @@ class StreakRepository @Inject constructor(
         if (s.lastActiveDate == today) return CheckInResult.AlreadyToday(s.currentLength)
 
         val gap = s.lastActiveDate?.let { daysBetween(it, today) }
-        val missed = when {
-            gap == null -> 0          // نخستین روز
-            gap <= 0 -> 0             // ساعت دستگاه عقب رفته — نادیده
-            else -> gap - 1           // روزهای بین آخرین فعالیت و امروز
-        }
-
-        // فریزها روزهای ازدست‌رفته را می‌پوشانند تا سقف موجودی
-        val covered = minOf(missed, s.freezeCount)
-        val broken = missed > covered
-
-        val newLength = when {
-            s.lastActiveDate == null -> 1
-            broken -> 1
-            else -> s.currentLength + 1
-        }
+        val o = StreakRules.decide(
+            gapDays = gap,
+            currentLength = s.currentLength,
+            freezes = s.freezeCount,
+            sinceLastRepair = s.lastRepairDate?.let { daysBetween(it, today) },
+        )
+        val missed = if (gap == null) 0 else (gap - 1).coerceAtLeast(0)
 
         // روزهای پوشش‌داده‌شده به‌عنوان فریزشده ثبت می‌شوند
-        for (i in 1..covered) {
+        for (i in 1..o.freezesUsed) {
             streakDao.upsertDay(StreakDayEntity(shiftDays(today, -i), StreakDayStatus.FROZEN.name))
         }
-        if (broken) {
-            for (i in (covered + 1)..missed) {
+        // روزی که ترمیم پوشاندش نشان خودش را می‌گیرد و نه نشان فریز: کاربر
+        // باید در تقویم ببیند این روز از دست رفته بود و برگردانده شد.
+        // یکسان نشان دادنشان، ارزش ترمیم را پنهان می‌کند.
+        val rest = (o.freezesUsed + 1)..missed
+        if (o.repaired) {
+            for (i in rest) {
+                streakDao.upsertDay(StreakDayEntity(shiftDays(today, -i), StreakDayStatus.REPAIRED.name))
+            }
+        } else if (o.broken) {
+            for (i in rest) {
                 streakDao.upsertDay(StreakDayEntity(shiftDays(today, -i), StreakDayStatus.MISSED.name))
             }
         }
         streakDao.upsertDay(StreakDayEntity(today, StreakDayStatus.ACTIVE.name))
 
-        val updated = s.copy(
-            currentLength = newLength,
-            longestLength = maxOf(s.longestLength, newLength),
-            lastActiveDate = today,
-            freezeCount = s.freezeCount - covered,
-            freezesUsedTotal = s.freezesUsedTotal + covered,
-            updatedAt = time.nowMillis(),
+        streakDao.upsert(
+            s.copy(
+                currentLength = o.newLength,
+                longestLength = maxOf(s.longestLength, o.newLength),
+                lastActiveDate = today,
+                freezeCount = o.freezesLeft,
+                freezesUsedTotal = s.freezesUsedTotal + o.freezesUsed,
+                lastRepairDate = if (o.repaired) today else s.lastRepairDate,
+                repairsUsedTotal = s.repairsUsedTotal + if (o.repaired) 1 else 0,
+                updatedAt = time.nowMillis(),
+            )
         )
-        streakDao.upsert(updated)
 
         return when {
-            broken -> CheckInResult.Broken(newLength)
-            covered > 0 -> CheckInResult.Frozen(newLength, covered)
-            else -> CheckInResult.Extended(newLength)
+            o.broken -> CheckInResult.Broken(o.newLength)
+            o.repaired -> CheckInResult.Repaired(o.newLength, o.repairedDays, o.earnedFreeze)
+            o.freezesUsed > 0 -> CheckInResult.Frozen(o.newLength, o.freezesUsed, o.earnedFreeze)
+            else -> CheckInResult.Extended(o.newLength, o.earnedFreeze)
         }
     }
 
@@ -124,6 +128,13 @@ class StreakRepository @Inject constructor(
         if (s.freezeCount >= StreakRules.MAX_FREEZES) return false
         streakDao.upsert(s.copy(freezeCount = s.freezeCount + 1, updatedAt = time.nowMillis()))
         return true
+    }
+
+    /** آیا ترمیم رایگان الان در دسترس است */
+    suspend fun repairAvailable(): Boolean {
+        val s = state()
+        val last = s.lastRepairDate ?: return true
+        return daysBetween(last, time.today()) >= StreakRules.REPAIR_COOLDOWN_DAYS
     }
 
     // ---------- کمکی ----------
@@ -148,8 +159,27 @@ class StreakRepository @Inject constructor(
 
     sealed interface CheckInResult {
         val length: Int
-        data class Extended(override val length: Int) : CheckInResult
-        data class Frozen(override val length: Int, val freezesUsed: Int) : CheckInResult
+        /** فریز تازه‌ای که همین حالا جایزه گرفته شد */
+        val earnedFreeze: Boolean get() = false
+
+        data class Extended(
+            override val length: Int,
+            override val earnedFreeze: Boolean = false,
+        ) : CheckInResult
+
+        data class Frozen(
+            override val length: Int,
+            val freezesUsed: Int,
+            override val earnedFreeze: Boolean = false,
+        ) : CheckInResult
+
+        /** زنجیره داشت می‌شکست و ترمیم شد */
+        data class Repaired(
+            override val length: Int,
+            val daysRepaired: Int,
+            override val earnedFreeze: Boolean = false,
+        ) : CheckInResult
+
         data class Broken(override val length: Int) : CheckInResult
         data class AlreadyToday(override val length: Int) : CheckInResult
     }

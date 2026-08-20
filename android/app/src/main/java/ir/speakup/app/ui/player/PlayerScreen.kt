@@ -242,6 +242,7 @@ fun PlayerScreen(
             scored = if (s.nextInSection == null) tallyTotal > 0 else s.type.isScored,
             earnedXp = s.earnedXp,
             goalReached = s.goalReached,
+            streakNote = s.streakNote,
             step = s.stepInSection,
             steps = s.stepsInSection,
             nextInSection = s.nextInSection,
@@ -963,6 +964,7 @@ private fun FinishedView(
     scored: Boolean,
     earnedXp: Int,
     goalReached: Boolean,
+    streakNote: String?,
     step: Int,
     steps: Int,
     nextInSection: String?,
@@ -1050,6 +1052,17 @@ private fun FinishedView(
                     color = ir.speakup.app.ui.theme.DuoGoldDark,
                 )
             }
+        }
+        // خبر زنجیره — فریز تازه یا ترمیم. سپری که دیده نشود، انگار نیست.
+        streakNote?.let {
+            Spacer(Modifier.size(12.dp))
+            Text(
+                it,
+                style = MaterialTheme.typography.bodyLarge,
+                fontWeight = FontWeight.SemiBold,
+                color = ir.speakup.app.ui.theme.DuoGoldDark,
+                textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+            )
         }
         if (goalReached) {
             Spacer(Modifier.size(12.dp))

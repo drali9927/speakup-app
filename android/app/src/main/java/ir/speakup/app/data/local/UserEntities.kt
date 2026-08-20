@@ -56,13 +56,16 @@ data class StreakEntity(
     val lastActiveDate: String? = null, // yyyy-MM-dd به وقت سرور
     val freezeCount: Int = 0,           // سقف ۳
     val freezesUsedTotal: Int = 0,
+    /** آخرین باری که زنجیره ترمیم شد — برای فاصله بین دو ترمیم رایگان */
+    val lastRepairDate: String? = null,
+    val repairsUsedTotal: Int = 0,
     val updatedAt: Long = 0,
 )
 
 @Entity(tableName = "streak_days")
 data class StreakDayEntity(
     @PrimaryKey val date: String,       // yyyy-MM-dd
-    val status: String,                 // ACTIVE | FROZEN | MISSED
+    val status: String,                 // ACTIVE | FROZEN | MISSED | REPAIRED
 )
 
 /**

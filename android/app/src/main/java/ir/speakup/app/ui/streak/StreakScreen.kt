@@ -17,6 +17,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -45,6 +46,7 @@ private val Flame = Color(0xFFE58A00)
 /** کرمی گرم سرصفحه — همان نقشی که در الگوی مرجع دارد: جدا کردن ناحیه جشن */
 private val StreakCream = Color(0xFFFFF4D6)
 private val FreezeBlue = Color(0xFF42A5F5)
+private val RepairGreen = Color(0xFF43A047)
 
 /**
  * صفحه زنجیره — بازنویسی‌شده روی الگوی دولینگو.
@@ -161,16 +163,53 @@ fun StreakScreen(vm: StreakViewModel = hiltViewModel()) {
                             )
                         }
                         Spacer(Modifier.size(8.dp))
+                        // متن باید **قاعده واقعی** را بگوید و نه یک وعده مبهم.
+                        //
+                        // نسخه قبل می‌گفت «با تمام کردن درس، فریز جمع
+                        // می‌شود» در حالی که هیچ‌جای اپ فریز اضافه
+                        // نمی‌کرد. کاربر درس تمام می‌کرد، برمی‌گشت، و
+                        // باز صفر می‌دید.
                         Text(
                             if (s.freezeCount > 0)
-                                "اگر یک روز جا بماند، فریز خودش خرج می‌شود و زنجیره‌ات نمی‌شکند."
-                            else "با تمام کردن درس، فریز جمع می‌شود — تا " +
+                                "اگر روزی جا بماند، فریز خودش خرج می‌شود و زنجیره‌ات نمی‌شکند."
+                            else "هر ${StreakRules.FREEZE_EVERY_DAYS.toPersianDigits()} روز پیاپی، " +
+                                "یک فریز جایزه می‌گیری — تا " +
                                 "${StreakRules.MAX_FREEZES.toPersianDigits()} تا.",
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
                         Spacer(Modifier.size(12.dp))
                         FreezeSlots(s.freezeCount)
+
+                        // سپر دوم. جدا از فریز نوشته شده چون کارکردش فرق
+                        // دارد: فریز پیشگیرانه است و فقط به کسی می‌رسد که
+                        // قبلاً مرتب بوده؛ ترمیم درمانی است و دقیقاً به کار
+                        // کسی می‌آید که هنوز فریزی جمع نکرده.
+                        Spacer(Modifier.size(14.dp))
+                        HorizontalDivider(color = MaterialTheme.colorScheme.surfaceVariant)
+                        Spacer(Modifier.size(14.dp))
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(10.dp),
+                        ) {
+                            Text("↺", fontSize = 26.sp, color = RepairGreen)
+                            Column {
+                                Text(
+                                    if (s.repairAvailable) "یک ترمیم رایگان داری"
+                                    else "ترمیم فعلاً در دسترس نیست",
+                                    style = MaterialTheme.typography.titleSmall,
+                                )
+                                Text(
+                                    if (s.repairAvailable)
+                                        "اگر فریزت تمام شود و زنجیره بخواهد بشکند، " +
+                                            "خودش یک بار برت می‌گرداند."
+                                    else "هر ${StreakRules.REPAIR_COOLDOWN_DAYS.toPersianDigits()} " +
+                                        "روز یک بار تازه می‌شود.",
+                                    style = MaterialTheme.typography.bodySmall,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                )
+                            }
+                        }
                     }
                 }
             }
@@ -241,6 +280,9 @@ private fun DayDot(d: StreakRepository.DayCell) {
     val (bg, content) = when (d.status) {
         StreakDayStatus.ACTIVE -> Flame to "✓"
         StreakDayStatus.FROZEN -> FreezeBlue to "❄"
+        // روزِ ترمیم‌شده نشان خودش را دارد و نه نشان فریز: کاربر باید در
+        // تقویم ببیند این روز از دست رفته بود و برگردانده شد.
+        StreakDayStatus.REPAIRED -> RepairGreen to "↺"
         StreakDayStatus.MISSED -> MaterialTheme.colorScheme.surfaceVariant to ""
         null -> MaterialTheme.colorScheme.surfaceVariant to ""
     }

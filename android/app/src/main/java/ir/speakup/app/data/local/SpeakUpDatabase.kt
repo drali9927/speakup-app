@@ -24,7 +24,8 @@ import androidx.room.RoomDatabase
     ],
     // ۲: ستون‌های بررسی درک به activity_items اضافه شد
     // ۴: ستون voice — جنسیت گوینده مکالمه
-    version = 4,
+    // ۵: ستون‌های ترمیم زنجیره
+    version = 5,
     exportSchema = true,
 )
 abstract class SpeakUpDatabase : RoomDatabase() {

@@ -12,6 +12,8 @@ import ir.speakup.app.domain.AnswerChecker
 import ir.speakup.app.domain.LearningRepository
 import ir.speakup.app.domain.SpeechMatcher
 import ir.speakup.app.domain.SpeechService
+import ir.speakup.app.domain.StreakRepository
+import ir.speakup.app.domain.toPersianDigits
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -80,6 +82,14 @@ data class PlayerUiState(
     /** وقتی پاسخ نادرست بود و واژه خودکار وارد لایتنر شد */
     val addedToLeitner: Boolean = false,
     val finished: Boolean = false,
+    /**
+     * خبر زنجیره در صفحه پایان — فریز تازه یا ترمیم.
+     *
+     * پیش‌تر نتیجه `checkIn` دور ریخته می‌شد. یعنی حتی وقتی ترمیم جلوی
+     * شکستن زنجیره را می‌گرفت، کاربر هیچ‌وقت نمی‌فهمید؛ سپری که دیده
+     * نشود، انگار نیست.
+     */
+    val streakNote: String? = null,
     /** نمای واژگان باز است */
     val showWordList: Boolean = false,
     /** واژه‌هایی که همین حالا در جعبه لایتنر هستند — برای وضعیت دکمه افزودن */
@@ -492,6 +502,7 @@ class PlayerViewModel @Inject constructor(
                 finished = true,
                 earnedXp = done.xp?.amount ?: 0,
                 goalReached = done.xp?.goalJustReached == true,
+                streakNote = streakNote(done.streak),
             )
             ir.speakup.app.data.remote.SyncWorker.syncNow(appContext)
         }
@@ -561,6 +572,7 @@ class PlayerViewModel @Inject constructor(
             _state.value = _state.value.copy(
                 earnedXp = done.xp?.amount ?: 0,
                 goalReached = done.xp?.goalJustReached == true,
+                streakNote = streakNote(done.streak),
             )
             if (done.xp?.goalJustReached == true) sound.celebrate()
             ir.speakup.app.data.remote.SyncWorker.syncNow(appContext)
@@ -620,6 +632,7 @@ class PlayerViewModel @Inject constructor(
             _state.value = _state.value.copy(
                 earnedXp = awards.sumOf { it.xp?.amount ?: 0 },
                 goalReached = awards.any { it.xp?.goalJustReached == true },
+                streakNote = awards.firstNotNullOfOrNull { streakNote(it.streak) },
             )
             if (awards.any { it.xp?.goalJustReached == true }) sound.celebrate()
             ir.speakup.app.data.remote.SyncWorker.syncNow(appContext)
@@ -848,6 +861,7 @@ class PlayerViewModel @Inject constructor(
                 _state.value = _state.value.copy(
                     earnedXp = awards.sumOf { it.xp?.amount ?: 0 },
                     goalReached = awards.any { it.xp?.goalJustReached == true },
+                    streakNote = awards.firstNotNullOfOrNull { streakNote(it.streak) },
                 )
                 if (awards.any { it.xp?.goalJustReached == true }) sound.celebrate()
                 ir.speakup.app.data.remote.SyncWorker.syncNow(appContext)
@@ -883,6 +897,22 @@ class PlayerViewModel @Inject constructor(
         speech.stop()
         super.onCleared()
     }
+}
+
+/**
+ * خبر زنجیره برای صفحه پایان، یا null اگر خبری نیست.
+ *
+ * فقط لحظه‌های استثنایی خبر می‌شوند. «زنجیره‌ات ۶ روزه شد» هر روز
+ * تکرار می‌شود و خیلی زود دیگر خوانده نمی‌شود؛ آن‌وقت روزی که واقعاً
+ * اتفاقی افتاده هم بی‌صدا رد می‌شود.
+ */
+private fun streakNote(r: StreakRepository.CheckInResult): String? = when {
+    r is StreakRepository.CheckInResult.Repaired ->
+        "زنجیره‌ات داشت می‌شکست و برگرداندیمش — همان ${r.length.toPersianDigits()} روز سر جایش است."
+    r is StreakRepository.CheckInResult.Frozen ->
+        "${r.freezesUsed.toPersianDigits()} فریز خرج شد و زنجیره‌ات نشکست."
+    r.earnedFreeze -> "یک فریز تازه گرفتی ❄"
+    else -> null
 }
 
 /**
