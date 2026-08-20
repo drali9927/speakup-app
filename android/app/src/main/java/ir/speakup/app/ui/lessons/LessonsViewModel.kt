@@ -1,6 +1,7 @@
 package ir.speakup.app.ui.lessons
 
 import androidx.lifecycle.ViewModel
+import ir.speakup.app.domain.toPersianDigits
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import ir.speakup.app.data.content.ContentImporter
@@ -20,6 +21,14 @@ data class LessonsUiState(
     val levelTitle: String = "سطح مقدماتی ۱",
     /** سطوحی که محتوا دارند — برای انتخابگر سطح */
     val availableLevels: List<ir.speakup.app.data.local.LevelEntity> = emptyList(),
+    /**
+     * اندازه هر سطح: «۳۰ درس · ۷ ساعت».
+     *
+     * پیش از انتخاب سطح باید معلوم باشد چقدر محتوا دارد. کاربری که
+     * انتظار دارد یک سطح او را «به B2 برساند» و بعد می‌بیند هفت ساعت
+     * است، بهتر است همان اول بداند تا بعد از خرید.
+     */
+    val levelSizes: Map<String, String> = emptyMap(),
     val lessons: List<LessonEntity> = emptyList(),
     /** تصویر بنر سطح — از محتوای درس اول، نه از assets */
     val bannerImage: String? = null,
@@ -153,6 +162,15 @@ class LessonsViewModel @Inject constructor(
                     levelTitle = levels.firstOrNull { it.code == level.value }?.titleFa
                         ?: _state.value.levelTitle,
                     availableLevels = levels,
+                    levelSizes = levels.associate { lv ->
+                        val n = contentDao.lessonCount(lv.code)
+                        val h = contentDao.levelMinutes(lv.code) / 60
+                        lv.code to when {
+                            n == 0 -> "به‌زودی"
+                            h > 0 -> "${n.toPersianDigits()} درس · حدود ${h.toPersianDigits()} ساعت"
+                            else -> "${n.toPersianDigits()} درس"
+                        }
+                    },
                 )
             }
         }

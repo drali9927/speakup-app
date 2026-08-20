@@ -73,6 +73,10 @@ interface ContentDao {
     @Query("SELECT COUNT(*) FROM lessons WHERE levelCode = :level")
     suspend fun lessonCount(level: String): Int
 
+    /** مجموع دقیقه‌های یک سطح — برای شفاف کردن اندازه سطح پیش از انتخابش */
+    @Query("SELECT COALESCE(SUM(estimatedMinutes), 0) FROM lessons WHERE levelCode = :level")
+    suspend fun levelMinutes(level: String): Int
+
     /**
      * فقط سطوحی که واقعاً درس دارند.
      *

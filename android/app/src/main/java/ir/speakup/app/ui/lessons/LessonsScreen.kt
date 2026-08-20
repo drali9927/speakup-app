@@ -77,6 +77,13 @@ fun LessonsScreen(
                                     style = MaterialTheme.typography.bodyMedium.ltr(),
                                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                                 )
+                                state.levelSizes[lvl.code]?.let {
+                                    Text(
+                                        it,
+                                        style = MaterialTheme.typography.bodyMedium,
+                                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                    )
+                                }
                             }
                         }
                     }
