@@ -212,6 +212,14 @@ fun LessonRow(
                     maxLines = 1,
                     overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis,
                 )
+                // اینجا «ماموریت درس» می‌آید و نه موضوع گرامر.
+                //
+                // کاربر در این فهرست دارد تصمیم می‌گیرد سراغ کدام درس
+                // برود؛ «از کارهای روزمره‌ات بگو» به آن تصمیم جواب
+                // می‌دهد، «حال ساده: I/you/we/they» نه. موضوع گرامر
+                // داخل خود درس، بالای فهرست بخش‌ها نشان داده می‌شود —
+                // جایی که کاربر وارد شده و می‌خواهد بداند چه می‌آموزد.
+                //
                 // موضوع و زمان دو Text جدا هستند و نه یک رشته.
                 //
                 // در یک رشته، الگوریتم دوسویه جداکننده «·» را کنارِ عدد
@@ -221,7 +229,7 @@ fun LessonRow(
                     horizontalArrangement = Arrangement.spacedBy(6.dp),
                 ) {
                     Text(
-                        lesson.grammarTopicFa,
+                        lesson.themeFa,
                         style = MaterialTheme.typography.bodyMedium,
                         color = scheme.onSurfaceVariant,
                         maxLines = 1,

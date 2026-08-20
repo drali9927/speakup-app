@@ -41,6 +41,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.Surface
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
@@ -112,6 +113,34 @@ fun LessonScreen(
                     Modifier.fillMaxSize().padding(16.dp),
                     verticalArrangement = Arrangement.spacedBy(12.dp),
                 ) {
+                    // موضوع گرامر درس، بالای فهرست بخش‌ها.
+                    //
+                    // در فهرست دروس جایش را به «ماموریت درس» داد، چون
+                    // آن‌جا کاربر دارد انتخاب می‌کند و نتیجه برایش مهم
+                    // است. این‌جا وارد شده و سؤالش عوض شده: «قرار است چه
+                    // ساختاری یاد بگیرم؟» — و همین‌جا باید جوابش باشد.
+                    if (lesson != null && lesson.grammarTopicFa.isNotBlank()) {
+                        item {
+                            Surface(
+                                Modifier.fillMaxWidth(),
+                                shape = RoundedCornerShape(12.dp),
+                                color = MaterialTheme.colorScheme.surfaceVariant,
+                            ) {
+                                Column(Modifier.padding(horizontal = 14.dp, vertical = 10.dp)) {
+                                    Text(
+                                        "در این درس یاد می‌گیری",
+                                        style = MaterialTheme.typography.labelMedium,
+                                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                    )
+                                    Text(
+                                        lesson.grammarTopicFa,
+                                        style = MaterialTheme.typography.bodyLarge,
+                                        fontWeight = FontWeight.SemiBold,
+                                    )
+                                }
+                            }
+                        }
+                    }
                     items(state.sections, key = { it.id }) { card ->
                         SectionCardView(card, state.artFiles) { act -> onOpenActivity(act) }
                     }

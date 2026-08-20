@@ -26,12 +26,18 @@ def paths(level):
     )
 
 LEVELS = [
-    {"code": "starter", "titleFa": "سطح استارتر",   "titleEn": "Starter",      "sortOrder": 0},
-    {"code": "A1",      "titleFa": "سطح مقدماتی ۱", "titleEn": "Elementary 1", "sortOrder": 1},
-    {"code": "A2",      "titleFa": "سطح مقدماتی ۲", "titleEn": "Elementary 2", "sortOrder": 2},
-    {"code": "B1",      "titleFa": "سطح متوسط ۱",   "titleEn": "Intermediate 1","sortOrder": 3},
-    {"code": "B2",      "titleFa": "سطح متوسط ۲",   "titleEn": "Intermediate 2","sortOrder": 4},
-    {"code": "C1",      "titleFa": "سطح پیشرفته",   "titleEn": "Advanced",     "sortOrder": 5},
+    # نام فارسی، نتیجه‌ای است که کاربر می‌گیرد و نه برچسب آموزشی. «سطح
+    # استارتر» و «سطح مقدماتی ۲» به کسی نمی‌گویند آن‌جا چه خبر است.
+    #
+    # اما کد CEFR در نام انگلیسی ماند و حذف نشد: نام‌های تازه ترتیب را
+    # نمی‌رسانند — از «روان حرف بزن» و «طبیعی و دقیق» معلوم نیست کدام
+    # جلوتر است — و کاربر در انتخابگر سطح دقیقاً همین را می‌خواهد بداند.
+    {"code": "starter", "titleFa": "شروع از صفر",      "titleEn": "Starter",           "sortOrder": 0},
+    {"code": "A1",      "titleFa": "اولین جمله‌های تو", "titleEn": "A1 · Elementary 1",  "sortOrder": 1},
+    {"code": "A2",      "titleFa": "مکالمه‌های واقعی",  "titleEn": "A2 · Elementary 2",  "sortOrder": 2},
+    {"code": "B1",      "titleFa": "روان حرف بزن",     "titleEn": "B1 · Intermediate 1","sortOrder": 3},
+    {"code": "B2",      "titleFa": "طبیعی و دقیق",     "titleEn": "B2 · Intermediate 2","sortOrder": 4},
+    {"code": "C1",      "titleFa": "تسلط حرفه‌ای",      "titleEn": "C1 · Advanced",      "sortOrder": 5},
 ]
 
 # رنگ شش‌ضلعی شماره درس — ریتم بصری لیست (سند ۰۲ بخش ۲.۳)
@@ -148,7 +154,7 @@ def main():
             "id": lesson_id, "levelCode": LEVEL, "number": n,
             "titleEn": lr["عنوان انگلیسی"],
             "grammarTopicFa": lr["موضوع گرامر"],
-            "themeFa": lr["موضوع محتوایی"],
+            "themeFa": lr["ماموریت درس"],
             "isFree": lr["رایگان؟"] == "بله",
             "estimatedMinutes": 26,
             "colorHex": PALETTE[(n - 1) % len(PALETTE)],
