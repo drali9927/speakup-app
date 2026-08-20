@@ -26,6 +26,8 @@ export type Config = {
   imagesDir: string
   /** لاگ یک‌خطی هر درخواست؛ با REQUEST_LOG=0 خاموش می‌شود */
   requestLog: boolean
+  /** توکن پنل ادمین؛ خالی یعنی پنل اصلاً بالا نمی‌آید */
+  adminToken: string
   sms: SmsConfig
   /** سقف پیامک روزانه برای هر شماره — سد هزینه و سوءاستفاده */
   smsDailyLimitPerPhone: number
@@ -73,6 +75,7 @@ export function loadConfig(env = process.env): Config {
   }
 
   return {
+    adminToken: env.ADMIN_TOKEN ?? '',
     port: Number(env.PORT ?? 8080),
     dbPath: env.DB_PATH ?? 'speakup.db',
     jwtSecret: secret || 'dev-only-insecure-secret-do-not-use-in-production',

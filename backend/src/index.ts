@@ -24,9 +24,20 @@ import {
   trustingVerifier,
 } from './lib/purchase.js'
 import { ContentStore } from './lib/content.js'
+import {
+  overview as adminOverview,
+  users as adminUsers,
+  grantSubscription,
+  revokeSubscriptions,
+} from './lib/admin.js'
 import { checkIn, getStreak } from './lib/streak.js'
 import { productiveAccuracy, pull, push } from './lib/sync.js'
 import { todayInAppTz } from './lib/time.js'
+import { dirname, join } from 'node:path'
+import { fileURLToPath } from 'node:url'
+
+/** صفحه پنل ادمین — کنار سورس می‌ماند و در build کپی می‌شود */
+const adminPagePath = join(dirname(fileURLToPath(import.meta.url)), 'admin.html')
 
 export function createApp(db: Db, config = loadConfig()) {
   const app = express()
@@ -398,6 +409,64 @@ export function createApp(db: Db, config = loadConfig()) {
       streak: getStreak(db, req.userId!),
     })
   })
+
+  // ---------------------------------------------------------- پنل ادمین
+  //
+  // اگر ADMIN_TOKEN تنظیم نشده باشد، هیچ‌کدام از این مسیرها ثبت نمی‌شوند.
+  // پیش‌فرضِ «خاموش» عمدی است: پنلی که ناخواسته با توکن خالی بالا بیاید،
+  // یعنی آمار کاربران و ثبت اشتراک برای همه باز است.
+  if (config.adminToken) {
+    const adminOnly = (req: Request, res: Response, next: NextFunction) => {
+      const header = req.header('authorization') ?? ''
+      const bearer = header.startsWith('Bearer ') ? header.slice(7) : ''
+      const token = bearer || String(req.query.token ?? '')
+      // مقایسه با طول ثابت لازم نیست چون توکن تصادفی و بلند است، اما
+      // مقایسه ساده هم نباید زودتر از موعد true بدهد
+      if (token !== config.adminToken) {
+        res.status(401).json({ error: 'unauthorized' })
+        return
+      }
+      next()
+    }
+
+    app.get('/admin/api/overview', adminOnly, (_req, res) => {
+      res.json(adminOverview(db))
+    })
+
+    app.get('/admin/api/users', adminOnly, (req, res) => {
+      const q = String(req.query.q ?? '').replace(/[^0-9]/g, '').slice(0, 15)
+      const page = Math.max(0, Number(req.query.page ?? 0) || 0)
+      const size = 25
+      res.json({ ...adminUsers(db, q, size, page * size), page, size })
+    })
+
+    app.post('/admin/api/subscription', adminOnly, (req, res) => {
+      const data = body(
+        z.object({
+          phone: z.string().min(10).max(15),
+          plan: z.string().max(32).default(''),
+          days: z.number().int().min(1).max(3650).nullable().default(null),
+          note: z.string().max(200).default(''),
+        }),
+        req, res,
+      )
+      if (!data) return
+      const phone = data.phone.replace(/[^0-9]/g, '')
+      res.json(grantSubscription(db, phone, data.plan, data.days, data.note))
+    })
+
+    app.post('/admin/api/subscription/revoke', adminOnly, (req, res) => {
+      const data = body(z.object({ phone: z.string().min(10).max(15) }), req, res)
+      if (!data) return
+      res.json(revokeSubscriptions(db, data.phone.replace(/[^0-9]/g, '')))
+    })
+
+    // خودِ صفحه — بدون توکن باز می‌شود و توکن را از کاربر می‌گیرد،
+    // وگرنه باید توکن در نوار آدرس بیاید و در تاریخچه مرورگر بماند.
+    app.get('/admin', (_req, res) => {
+      res.sendFile(adminPagePath)
+    })
+  }
 
   // ---------------------------------------------------------- خطاها
 
