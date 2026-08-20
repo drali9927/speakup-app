@@ -482,6 +482,36 @@ def main():
     print(f"  فعالیت‌ها   : {len(activities)}")
     print(f"  آیتم‌ها     : {len(items)}")
     print(f"  دیکشنری    : {len(dictionary)}")
+
+    # کفِ تبلیغ‌شده در صفحه ورود: «بیش از ۲۰۰۰ واژه».
+    #
+    # صفحه ورود پیش از وارد شدن محتوا به دیتابیس نشان داده می‌شود، پس
+    # نمی‌تواند عدد را زنده بخواند و ناچار یک عدد ثابت دارد. پیش‌تر
+    # «۲۴۰۰ واژه» نوشته بود در حالی که واقعیت ۲٬۰۸۸ بود — عددی که کسی
+    # به‌روزش نکرده بود. این محافظ نمی‌گذارد آن ادعا دوباره دروغ شود.
+    #
+    # سنجش روی **مجموع همه سطوح** است و نه همین سطح، چون ادعای صفحه
+    # ورود درباره کل محتواست. سطوحی که هنوز ساخته نشده‌اند نادیده
+    # می‌مانند تا ساختِ تک‌سطحی بی‌خود نشکند.
+    ADVERTISED_FLOOR = 2000
+    all_words = set()
+    for other in ("a1", "a2", "b1", "b2"):
+        path = os.path.join(os.path.dirname(OUT), f"content_{other}.json")
+        if not os.path.exists(path):
+            continue
+        with open(path, encoding="utf-8") as fh:
+            all_words.update(
+                (e.get("word") or "").lower() for e in json.load(fh).get("dictionary", [])
+            )
+    all_words.discard("")
+    if len(all_words) >= 4 * 500 and len(all_words) < ADVERTISED_FLOOR:
+        raise SystemExit(
+            f"❌ مجموع واژه‌ها ({len(all_words)}) از کفِ تبلیغ‌شده در صفحه ورود "
+            f"({ADVERTISED_FLOOR}) کمتر است. یا محتوا اضافه کن یا آن متن را عوض کن."
+        )
+    if all_words:
+        print(f"  مجموع واژه همه سطوح: {len(all_words)}")
+
     print(f"  حجم        : {os.path.getsize(OUT)/1024:.0f} کیلوبایت")
     print()
     ratio = prod_drill / len(drill) if drill else 0

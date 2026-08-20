@@ -132,12 +132,22 @@ class AppPreferences @Inject constructor(
         }
     }
 
-    /** نسخه بسته محتوای یک سطح — کلید پویا چون سطوح اضافه می‌شوند */
+    /**
+     * نسخه بسته محتوای یک سطح — کلید پویا چون سطوح اضافه می‌شوند.
+     *
+     * کلید پیش‌تر با `${'$'}{'$'}` نوشته شده بود، یعنی رشته‌ای که «$» را
+     * **عیناً** چاپ می‌کند و نه مقدار متغیر را. نتیجه این بود که هر
+     * چهار سطح روی یک کلیدِ واحد به نام `content_v_${'$'}{level.lowercase()}`
+     * می‌نوشتند: به‌روزرسانی A1 نسخه را برای B2 هم «تازه» علامت می‌زد و
+     * محتوای تازه آن سطح هرگز دانلود نمی‌شد.
+     */
+    private fun versionKey(level: String) = stringPreferencesKey("content_v_" + level.lowercase())
+
     fun contentVersion(level: String): Flow<String?> =
-        context.dataStore.data.map { it[stringPreferencesKey("content_v_${'$'}{level.lowercase()}")] }
+        context.dataStore.data.map { it[versionKey(level)] }
 
     suspend fun setContentVersion(level: String, version: String) {
-        context.dataStore.edit { it[stringPreferencesKey("content_v_${'$'}{level.lowercase()}")] = version }
+        context.dataStore.edit { it[versionKey(level)] = version }
     }
 
     suspend fun setCurrentLevel(code: String) {

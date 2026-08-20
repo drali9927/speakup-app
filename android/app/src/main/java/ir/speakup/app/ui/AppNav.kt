@@ -43,6 +43,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.hilt.navigation.compose.hiltViewModel
+import kotlinx.coroutines.flow.combine
 import androidx.lifecycle.compose.LifecycleResumeEffect
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -116,29 +117,48 @@ fun AppNav(nav: NavHostController = rememberNavController()) {
     val prefs = remember { AppPreferences(ctx.applicationContext) }
     val scope = rememberCoroutineScope()
 
-    // مقصد اولیه از وضعیت ذخیره‌شده: معرفی → ورود → اپ
-    val onboarded by prefs.onboarded.collectAsStateWithLifecycle(initialValue = null)
     // وضعیت اشتراک از سرور می‌آید (`/v1/me`) و با زمان سرور سنجیده می‌شود.
     // پیش‌تر یک بولین محلی بود که خود اپ روشنش می‌کرد — یعنی دستکاری فایل
     // تنظیمات برای گرفتن اشتراک رایگان کافی بود.
     val session: SessionViewModel = hiltViewModel()
     val isSubscribed by session.isSubscribed.collectAsStateWithLifecycle()
-    val token by prefs.token.collectAsStateWithLifecycle(initialValue = null)
-    val placed by prefs.placed.collectAsStateWithLifecycle(initialValue = null)
-    var start by remember { mutableStateOf<String?>(null) }
-    LaunchedEffect(onboarded, token, placed) {
-        if (start == null && onboarded != null && placed != null) {
-            start = when {
-                onboarded == false -> Routes.ONBOARDING
-                token == null -> Routes.AUTH
+
+    /**
+     * مقصد اولیه: معرفی → ورود → تعیین سطح → اپ.
+     *
+     * هر سه مقدار در **یک** جریان ترکیب می‌شوند و نه سه جریان جدا.
+     *
+     * چرا مهم است: `combine` تا وقتی هر سه دست‌کم یک بار مقدار نداده
+     * باشند چیزی منتشر نمی‌کند. با سه `collectAsState` جدا، هرکدام در
+     * زمان خودش می‌رسید و مقصد ممکن بود با توکنی که **هنوز خوانده
+     * نشده** تصمیم گرفته شود — یعنی کاربرِ واردشده به صفحه ورود
+     * می‌رفت. چون مقصد فقط یک بار تعیین می‌شود، دیگر هم اصلاح نمی‌شد.
+     *
+     * روی دستگاه دیده شد: توکن سالم در حافظه بود و اپ باز هم صفحه ورود
+     * را نشان می‌داد. با قطع بودن سرور بیشتر هم اتفاق می‌افتاد، چون
+     * ترتیب رسیدن جریان‌ها عوض می‌شد.
+     */
+    val startState by remember(prefs) {
+        combine(prefs.onboarded, prefs.token, prefs.placed) { onboarded, token, placed ->
+            when {
+                !onboarded -> Routes.ONBOARDING
+                token.isNullOrBlank() -> Routes.AUTH
                 // تعیین سطح بعد از ورود می‌آید و نه پیش از آن: نتیجه‌اش
                 // باید به حساب کاربر بچسبد، و کاربری که هنوز وارد نشده
                 // ممکن است اصلاً ادامه ندهد.
-                placed == false -> Routes.PLACEMENT
+                !placed -> Routes.PLACEMENT
                 else -> Routes.LESSONS
             }
         }
+    }.collectAsStateWithLifecycle(initialValue = null)
+
+    // مقصد پس از نخستین تعیین، ثابت می‌ماند؛ وگرنه با ورود کاربر یا
+    // پایان تعیین سطح، کل NavHost از نو ساخته می‌شود.
+    var start by remember { mutableStateOf<String?>(null) }
+    LaunchedEffect(startState) {
+        if (start == null && startState != null) start = startState
     }
+    val placed by prefs.placed.collectAsStateWithLifecycle(initialValue = null)
     if (start == null) return
 
     val entry by nav.currentBackStackEntryAsState()
