@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  زمینه وقتی امروز تمرین شده.
+
+  چرا زمینه هم عوض می‌شود و نه فقط شعله: ابزارک از فاصله یک متری دیده
+  می‌شود و در آن فاصله، تفاوت رنگِ یک تصویر ۶۶dp به چشم نمی‌آید ولی
+  تفاوت رنگِ کل کارت می‌آید. حالِ امروز باید بدون تمرکز کردن خوانده شود.
+-->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <gradient android:startColor="#FFD79A" android:endColor="#FFF3DC" android:angle="270" />
+    <corners android:radius="28dp" />
+    <!-- خط دور نازک: کارت روشن روی تصویرزمینه روشن، بدون آن لبه ندارد -->
+    <stroke android:width="1dp" android:color="#F3C07A" />
+</shape>

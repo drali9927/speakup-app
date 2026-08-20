@@ -96,30 +96,71 @@ class StreakWidget : AppWidgetProvider() {
             val goal = d.prefs().dailyGoalXp.first()
             val due = d.leitnerDao().observeDueCount(time.nowMillis()).first()
             val activeToday = streak?.lastActiveDate == today
+            val days = streak?.currentLength ?: 0
+            val pct = if (goal <= 0) 100 else (todayXp * 100 / goal).coerceIn(0, 100)
+            val msg = message(activeToday, todayXp, goal, due)
 
-            return RemoteViews(app.packageName, R.layout.widget_streak).apply {
-                // عدد تنها، بدون واحد: «روز پشت‌سرهم» زیرش نوشته شده و
-                // تکرارش در خودِ عدد، قهرمانیِ عدد را می‌گیرد.
-                setTextViewText(R.id.widget_streak, (streak?.currentLength ?: 0).toPersianDigits())
+            val compact = layout(app, R.layout.widget_streak, days, activeToday, msg, pct, wide = false)
 
-                // حالِ کار را خودِ تصویر می‌گوید: شعلهٔ رنگی یا خاکستری.
-                // همین «نگاهِ بی‌واسطه» است که ابزارک را از یک میان‌بُر
-                // ساده جدا می‌کند.
-                setImageViewResource(
-                    R.id.widget_flame,
-                    if (activeToday) R.drawable.img_flame_on else R.drawable.img_flame_off,
+            // چیدمان بر اساس اندازه، فقط روی اندروید ۱۲ به بالا.
+            // پایین‌تر از آن، همان نسخه فشرده برای همه اندازه‌ها می‌رود؛
+            // فشرده در قاب پهن بدنما نیست، ولی پهن در قاب ۲×۲ بریده می‌شود.
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
+                val wide = layout(app, R.layout.widget_streak_wide, days, activeToday, msg, pct, wide = true)
+                return RemoteViews(
+                    mapOf(
+                        android.util.SizeF(110f, 110f) to compact,
+                        android.util.SizeF(250f, 110f) to wide,
+                    ),
                 )
-                setTextViewText(R.id.widget_message, message(activeToday, todayXp, goal, due))
-
-                val pct = if (goal <= 0) 100 else (todayXp * 100 / goal).coerceIn(0, 100)
-                setProgressBar(R.id.widget_bar, 100, pct, false)
-                setTextViewText(
-                    R.id.widget_goal,
-                    "${todayXp.toPersianDigits()} از ${goal.toPersianDigits()} امتیاز امروز",
-                )
-
-                setOnClickPendingIntent(R.id.widget_root, openApp(app))
             }
+            return compact
+        }
+
+        private fun layout(
+            app: Context,
+            layoutId: Int,
+            days: Int,
+            activeToday: Boolean,
+            msg: String,
+            pct: Int,
+            wide: Boolean,
+        ): RemoteViews = RemoteViews(app.packageName, layoutId).apply {
+            // زنجیره صفر: عدد را نشان نده.
+            //
+            // «۰» در فارسی یک نقطه است. در ۴۶sp هم روی صفحه خانه یک لکه
+            // ریز دیده می‌شد و کل ابزارک خالی به نظر می‌رسید. کاربری که
+            // زنجیره ندارد، عدد صفر به کارش نمی‌آید — دعوت به شروع می‌آید.
+            if (days > 0) {
+                setTextViewText(R.id.widget_streak, days.toPersianDigits())
+                setTextViewText(R.id.widget_label, "روز پشت‌سرهم")
+                setViewVisibility(R.id.widget_streak, android.view.View.VISIBLE)
+            } else {
+                setViewVisibility(R.id.widget_streak, android.view.View.GONE)
+                setTextViewText(R.id.widget_label, if (wide) "زنجیره‌ات را شروع کن" else "شروع کن")
+            }
+
+            // حالِ امروز، هم از شعله و هم از رنگ خودِ کارت.
+            //
+            // فقط شعله کافی نبود: ابزارک از فاصله یک متری دیده می‌شود و در
+            // آن فاصله رنگِ یک تصویر ۶۲dp به چشم نمی‌آید، رنگِ کل کارت
+            // می‌آید.
+            setImageViewResource(
+                R.id.widget_flame,
+                if (activeToday) R.drawable.img_flame_on else R.drawable.img_flame_off,
+            )
+            setInt(
+                R.id.widget_root,
+                "setBackgroundResource",
+                if (activeToday) R.drawable.widget_bg_lit else R.drawable.widget_bg,
+            )
+
+            if (wide) {
+                setTextViewText(R.id.widget_message, msg)
+                setProgressBar(R.id.widget_bar, 100, pct, false)
+            }
+
+            setOnClickPendingIntent(R.id.widget_root, openApp(app))
         }
 
         private fun message(activeToday: Boolean, xp: Int, goal: Int, due: Int): String = when {

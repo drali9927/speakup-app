@@ -1,8 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  اندازه پیش‌فرض ۲×۲ شد و نه ۳×۲.
+
+  ابزارک قبلی سه ستون عرض می‌گرفت و کاربر گفت «بزرگ است». حق داشت: پهنای
+  سه‌ستونی برای دو عدد و یک تصویر، فضای صفحه خانه را بی‌دلیل می‌خورد.
+  ۲×۲ همان اندازه‌ای است که ابزارک زنجیره دولینگو دارد.
+
+  resizeMode باز ماند تا هر کس خواست پهنش کند و نسخه پهن را بگیرد.
+-->
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
-    android:minWidth="180dp"
+    android:minWidth="110dp"
     android:minHeight="110dp"
-    android:targetCellWidth="3"
+    android:targetCellWidth="2"
     android:targetCellHeight="2"
     android:initialLayout="@layout/widget_streak"
     android:previewLayout="@layout/widget_streak"

@@ -1,20 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ابزارک صفحه خانه — بازطراحی.
+  ابزارک فشرده — ۲×۲.
 
-  نسخه اول کارت سفیدی بود با سه خط متن خاکستریِ هم‌وزن و یک اموجی ریز؛
-  شبیه رسید، نه ابزارک. سه چیز عوض شد:
+  نسخه قبل ۳×۲ بود با پنج عنصر: شعله، عدد، پیام، نوار پیشرفت، و زیرنویس
+  امتیاز. روی صفحه خانه، نتیجه یک مستطیل بزرگِ کم‌رنگ بود که هیچ‌کدام از
+  آن پنج چیز در آن دیده نمی‌شد.
 
-  ۱. **تصویر شعله قهرمان شد** — ۶۰dp، تصویرسازی واقعی به‌جای اموجی. حالِ
-     کار را همین تصویر می‌گوید: شعله رنگی یعنی امروز تمرین کرده‌ای،
-     خاکستری یعنی نه. از فاصله چند متری هم خوانده می‌شود.
-  ۲. **عدد زنجیره بزرگ شد** (۴۰sp) و کنار تصویر نشست. پیش‌تر ۲۴sp بود و
-     زیر دست بقیه متن‌ها گم می‌شد.
-  ۳. **سلسله‌مراتب متن**: یک پیامِ پررنگ و یک زیرنویسِ کم‌رنگ، به‌جای سه
-     خط هم‌وزن. وقتی همه‌چیز ۱۲spِ خاکستری باشد، هیچ‌چیز مهم نیست.
+  حالا دو عنصر: **شعله و عدد**. همان چیزی که ابزارک دولینگو دارد. نوار
+  پیشرفت و پیام به نسخه پهن منتقل شدند؛ کسی که ابزارک ۲×۲ می‌گذارد،
+  جا برای گزارش نگذاشته است.
 
-  زمینه کرمِ ملایم است و نه سفید محض: تصویر رنگی زمینه روشن می‌خواهد، اما
-  سفیدِ خالی کارت را بی‌روح می‌کرد.
+  چرا عدد کنار شعله و نه زیرش: در چیدمان عمودی، هر دو کوچک می‌مانند تا
+  در ارتفاع جا شوند. کنار هم، هر دو می‌توانند بزرگ باشند.
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/widget_root"
@@ -23,7 +20,7 @@
     android:orientation="vertical"
     android:layoutDirection="rtl"
     android:gravity="center"
-    android:padding="14dp"
+    android:padding="8dp"
     android:background="@drawable/widget_bg">
 
     <LinearLayout
@@ -34,66 +31,39 @@
 
         <ImageView
             android:id="@+id/widget_flame"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
             android:contentDescription="@string/widget_description"
             android:src="@drawable/img_flame_off" />
 
-        <LinearLayout
+        <!--
+          عدد زنجیره.
+
+          وقتی زنجیره صفر است این پنهان می‌شود و جایش «شروع کن» می‌آید:
+          رقم صفر در فارسی «۰» است، یعنی یک نقطه — حتی در ۴۶sp هم روی
+          صفحه خانه یک لکه ریز دیده می‌شد و ابزارک را خالی نشان می‌داد.
+        -->
+        <TextView
+            android:id="@+id/widget_streak"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/widget_streak"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="40sp"
-                android:textStyle="bold"
-                android:maxLines="1"
-                android:includeFontPadding="false"
-                android:text="۰"
-                android:textColor="#E8730C" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="12sp"
-                android:maxLines="1"
-                android:text="روز پشت‌سرهم"
-                android:textColor="#9A8F7E" />
-        </LinearLayout>
+            android:layout_marginStart="6dp"
+            android:textSize="54sp"
+            android:fontFamily="@font/vazirmatn_extrabold"
+            android:maxLines="1"
+            android:includeFontPadding="false"
+            android:text="۵"
+            android:textColor="#E8730C" />
     </LinearLayout>
 
     <TextView
-        android:id="@+id/widget_message"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:textSize="13sp"
-        android:textStyle="bold"
-        android:gravity="center"
-        android:maxLines="2"
-        android:text="برای شروع بزن"
-        android:textColor="#4A4238" />
-
-    <ProgressBar
-        android:id="@+id/widget_bar"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="match_parent"
-        android:layout_height="10dp"
-        android:layout_marginTop="10dp"
-        android:max="100"
-        android:progressDrawable="@drawable/widget_progress" />
-
-    <TextView
-        android:id="@+id/widget_goal"
+        android:id="@+id/widget_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
-        android:textSize="11sp"
+        android:layout_marginTop="2dp"
+        android:textSize="12sp"
+        android:fontFamily="@font/vazirmatn_semibold"
         android:maxLines="1"
-        android:text="SpeakUp"
-        android:textColor="#9A8F7E" />
+        android:text="روز پشت‌سرهم"
+        android:textColor="#8A7A63" />
 </LinearLayout>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ابزارک پهن — از ۴×۲ به بالا.
+
+  فقط وقتی نشان داده می‌شود که کاربر خودش ابزارک را پهن کرده باشد. آن‌وقت
+  جا هست و نوار هدف روزانه و پیام وضعیت هم می‌آیند — همان‌هایی که در
+  نسخه فشرده حذف شدند چون در ۲×۲ فقط شلوغی بودند.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/widget_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:layoutDirection="rtl"
+    android:gravity="center_vertical"
+    android:padding="14dp"
+    android:background="@drawable/widget_bg">
+
+    <ImageView
+        android:id="@+id/widget_flame"
+        android:layout_width="66dp"
+        android:layout_height="66dp"
+        android:contentDescription="@string/widget_description"
+        android:src="@drawable/img_flame_off" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_marginStart="12dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="bottom">
+
+            <TextView
+                android:id="@+id/widget_streak"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="40sp"
+                android:fontFamily="@font/vazirmatn_extrabold"
+                android:maxLines="1"
+                android:includeFontPadding="false"
+                android:text="۵"
+                android:textColor="#E8730C" />
+
+            <TextView
+                android:id="@+id/widget_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginBottom="4dp"
+                android:textSize="13sp"
+                android:fontFamily="@font/vazirmatn_semibold"
+                android:maxLines="1"
+                android:text="روز پشت‌سرهم"
+                android:textColor="#8A7A63" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/widget_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:textSize="13sp"
+            android:fontFamily="@font/vazirmatn_semibold"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:text="امروز هنوز تمرین نکرده‌ای"
+            android:textColor="#4A4238" />
+
+        <ProgressBar
+            android:id="@+id/widget_bar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="9dp"
+            android:layout_marginTop="8dp"
+            android:max="100"
+            android:progressDrawable="@drawable/widget_progress" />
+    </LinearLayout>
+</LinearLayout>
