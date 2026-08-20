@@ -89,10 +89,10 @@ fun LeagueScreen(vm: LeagueViewModel = hiltViewModel()) {
                 ) {
                     val dim = MaterialTheme.colorScheme.onSurfaceVariant
                     val body = MaterialTheme.typography.bodyMedium
-                    Text("گروه ${s.cohort.toPersianDigits()}", style = body, color = dim)
-                    Text("،", style = body, color = dim)
-                    Text("${s.rows.size.toPersianDigits()} نفر", style = body, color = dim)
-                    Text("،", style = body, color = dim)
+                    // ویرگول به واژه پیش از خود می‌چسبد؛ Text جدا، فاصله
+                    // Row را پیش از ویرگول هم می‌انداخت: «گروه ۳ ، ۲۰ نفر».
+                    Text("گروه ${s.cohort.toPersianDigits()}،", style = body, color = dim)
+                    Text("${s.rows.size.toPersianDigits()} نفر،", style = body, color = dim)
                     Text(remaining(s.endsAt), style = body, color = dim, maxLines = 1)
                 }
             }
@@ -105,7 +105,12 @@ fun LeagueScreen(vm: LeagueViewModel = hiltViewModel()) {
                 val ahead = s.rows.firstOrNull { it.rank == me.rank - 1 }
                 val gap = ahead?.let { it.xp - me.xp + 1 }
                 val promoting = me.rank <= s.promoteCount
-                val falling = s.relegateCount > 0 && me.rank > s.rows.size - s.relegateCount
+                // کسی که این هفته هنوز یک درس هم نزده، ته جدول است چون شروع
+                // نکرده، نه چون عقب افتاده. اولین چیزی که کاربر تازه در لیگ
+                // می‌دید «در منطقه سقوط» با رنگ قرمز بود — تنبیه پیش از بازی.
+                val notStarted = me.xp == 0
+                val falling = !notStarted &&
+                    s.relegateCount > 0 && me.rank > s.rows.size - s.relegateCount
 
                 // رنگ باید با حالِ کاربر بخواند. نسخه اول همه‌چیز را سبز
                 // می‌کرد و «در منطقه سقوط» با رنگ جشن نوشته می‌شد — یعنی
@@ -129,13 +134,21 @@ fun LeagueScreen(vm: LeagueViewModel = hiltViewModel()) {
                                     "در منطقه صعود به لیگ ${s.nextTierName}"
                                 promoting -> "در بالاترین رده، صدرنشین"
                                 falling -> "در منطقه سقوط"
+                                notStarted -> "این هفته تازه شروع شده"
                                 else -> "رتبه ${me.rank.toPersianDigits()} از ${s.rows.size.toPersianDigits()}"
                             },
                             style = MaterialTheme.typography.titleMedium,
                             fontWeight = FontWeight.Bold,
                             color = accent,
                         )
-                        if (gap != null && gap > 0) {
+                        if (notStarted) {
+                            Spacer(Modifier.size(2.dp))
+                            Text(
+                                "با اولین درس وارد جدول می‌شوی.",
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            )
+                        } else if (gap != null && gap > 0) {
                             Spacer(Modifier.size(2.dp))
                             Text(
                                 "${gap.toPersianDigits()} امتیاز تا رتبه ${(me.rank - 1).toPersianDigits()}",

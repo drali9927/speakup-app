@@ -229,19 +229,16 @@ fun LessonRow(
                     horizontalArrangement = Arrangement.spacedBy(6.dp),
                 ) {
                     Text(
-                        lesson.themeFa,
+                        // «،» و نه «·» — صفر فارسی خودش یک نقطه است و نقطه
+                        // کنار عدد، جزئی از همان عدد دیده می‌شود. ویرگول
+                        // چسبیده به موضوع است و نه Text جدا، وگرنه فاصله
+                        // Row پیش از آن هم می‌افتد: «حرف بزن ، ۱۵ دقیقه».
+                        "${lesson.themeFa}،",
                         style = MaterialTheme.typography.bodyMedium,
                         color = scheme.onSurfaceVariant,
                         maxLines = 1,
                         overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis,
                         modifier = Modifier.weight(1f, fill = false),
-                    )
-                    Text(
-                        // «،» و نه «·» — صفر فارسی خودش یک نقطه است و
-                        // نقطه کنار عدد، جزئی از همان عدد دیده می‌شود.
-                        "،",
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = scheme.onSurfaceVariant,
                     )
                     Text(
                         "${lesson.estimatedMinutes.toPersianDigits()} دقیقه",
