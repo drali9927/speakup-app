@@ -43,6 +43,11 @@ import ir.speakup.app.ui.common.SpeechUnavailableDialog
 import ir.speakup.app.ui.theme.ltr
 import ir.speakup.app.ui.common.DuoButton
 import ir.speakup.app.ui.common.DuoButtonStyle
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.border
+import androidx.compose.material3.Surface
+import androidx.compose.material3.OutlinedTextField
+import ir.speakup.app.domain.ReviewMode
 
 private val Green = Color(0xFF2E7D32)
 private val Red = Color(0xFFC62828)
@@ -152,47 +157,127 @@ private fun ReviewSession(
     onUnavailable: () -> Unit,
 ) {
     val rc = s.current ?: return
+    val scheme = MaterialTheme.colorScheme
+
     Column(
         Modifier.fillMaxSize().statusBarsPadding().navigationBarsPadding().padding(20.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         LinearProgressIndicator(progress = { s.progress }, modifier = Modifier.fillMaxWidth())
 
+        Spacer(Modifier.size(20.dp))
+        Text(
+            when (rc.mode) {
+                ReviewMode.MEANING -> "معنی این واژه کدام است؟"
+                ReviewMode.WORD -> "کدام واژه این معنی را می‌دهد؟"
+                ReviewMode.TYPING -> "بشنو و بنویس"
+            },
+            style = MaterialTheme.typography.bodyLarge,
+            color = scheme.onSurfaceVariant,
+        )
+
         Spacer(Modifier.weight(1f))
 
-        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-            SpeakButton(
+        // صورت پرسش
+        when (rc.mode) {
+            ReviewMode.MEANING -> Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(12.dp),
+            ) {
+                SpeakButton(
+                    text = rc.card.word, id = rc.card.id,
+                    status = speechStatus, speakingId = speakingId,
+                    onSpeak = onSpeak, onUnavailable = onUnavailable,
+                )
+                Text(
+                    rc.card.word,
+                    style = MaterialTheme.typography.displaySmall.ltr(),
+                    fontWeight = FontWeight.Bold,
+                )
+            }
+
+            ReviewMode.WORD -> Text(
+                rc.entry?.translationFa.orEmpty(),
+                style = MaterialTheme.typography.headlineMedium,
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Center,
+            )
+
+            // در حالت تایپ، واژه نوشته نمی‌شود — فقط شنیده می‌شود.
+            // نوشتنش کل پرسش را بی‌معنا می‌کرد.
+            ReviewMode.TYPING -> SpeakButton(
                 text = rc.card.word, id = rc.card.id,
                 status = speechStatus, speakingId = speakingId,
                 onSpeak = onSpeak, onUnavailable = onUnavailable,
             )
-            Text(
-                rc.card.word,
-                style = MaterialTheme.typography.displaySmall.ltr(),
-                fontWeight = FontWeight.Bold,
-            )
-        }
-        rc.entry?.ipaUk?.let {
-            Text(it, style = MaterialTheme.typography.bodyLarge.ltr(),
-                color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
 
+        Spacer(Modifier.size(28.dp))
+
+        if (rc.mode == ReviewMode.TYPING) {
+            OutlinedTextField(
+                value = s.typed,
+                onValueChange = vm::type,
+                enabled = !s.revealed,
+                singleLine = true,
+                textStyle = MaterialTheme.typography.titleLarge.ltr(),
+                modifier = Modifier.fillMaxWidth(),
+            )
+        } else {
+            rc.options.forEach { opt ->
+                val correct = opt == rc.answer
+                val bg = when {
+                    !s.revealed -> scheme.surface
+                    correct -> Green.copy(alpha = 0.15f)
+                    opt == s.picked -> Red.copy(alpha = 0.12f)
+                    else -> scheme.surface
+                }
+                val border = when {
+                    !s.revealed -> scheme.outlineVariant
+                    correct -> Green
+                    opt == s.picked -> Red
+                    else -> scheme.outlineVariant
+                }
+                Surface(
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 5.dp)
+                        .border(2.dp, border, RoundedCornerShape(14.dp))
+                        .clickable(enabled = !s.revealed) { vm.pick(opt) },
+                    shape = RoundedCornerShape(14.dp),
+                    color = bg,
+                ) {
+                    Text(
+                        opt,
+                        style = if (rc.mode == ReviewMode.WORD)
+                            MaterialTheme.typography.titleMedium.ltr()
+                        else MaterialTheme.typography.titleMedium,
+                        modifier = Modifier.padding(16.dp).fillMaxWidth(),
+                        textAlign = TextAlign.Center,
+                    )
+                }
+            }
+        }
+
+        // پس از پاسخ: واژه، معنی و مثال با هم — همان چیزی که کاربر
+        // برای درست کردن حافظه‌اش لازم دارد.
         if (s.revealed) {
-            Spacer(Modifier.size(20.dp))
+            Spacer(Modifier.size(18.dp))
             Text(
-                rc.entry?.translationFa.orEmpty(),
-                style = MaterialTheme.typography.titleLarge,
+                if (vm.isCorrect()) "درست بود" else "پاسخ درست: ${rc.answer}",
+                style = MaterialTheme.typography.titleMedium,
+                color = if (vm.isCorrect()) Green else Red,
                 textAlign = TextAlign.Center,
             )
             rc.entry?.exampleEn?.let {
-                Spacer(Modifier.size(12.dp))
+                Spacer(Modifier.size(8.dp))
                 Text(it, style = MaterialTheme.typography.bodyLarge.ltr(), textAlign = TextAlign.Center)
             }
             rc.entry?.exampleFa?.let {
                 Text(
                     it,
                     style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    color = scheme.onSurfaceVariant,
                     textAlign = TextAlign.Center,
                 )
             }
@@ -200,29 +285,23 @@ private fun ReviewSession(
 
         Spacer(Modifier.weight(1f))
 
-        if (!s.revealed) {
-            DuoButton(
-                text = "نمایش معنی",
-                onClick = vm::reveal,
+        when {
+            // تایپ: تا وقتی چیزی ننوشته، دکمه خاموش
+            !s.revealed && rc.mode == ReviewMode.TYPING -> DuoButton(
+                text = "بررسی",
+                onClick = vm::submitTyped,
+                enabled = s.typed.isNotBlank(),
                 height = 56.dp,
                 modifier = Modifier.fillMaxWidth(),
             )
-        } else {
-            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                DuoButton(
-                    text = "بلد نبودم",
-                    onClick = { vm.answer(false) },
-                    style = DuoButtonStyle.Danger,
-                    height = 56.dp,
-                    modifier = Modifier.weight(1f),
-                )
-                DuoButton(
-                    text = "بلد بودم",
-                    onClick = { vm.answer(true) },
-                    height = 56.dp,
-                    modifier = Modifier.weight(1f),
-                )
-            }
+            // چندگزینه‌ای: با زدن گزینه خودش جلو می‌رود، دکمه‌ای لازم نیست
+            !s.revealed -> Spacer(Modifier.size(56.dp))
+            else -> DuoButton(
+                text = "ادامه",
+                onClick = { vm.answer(vm.isCorrect()) },
+                height = 56.dp,
+                modifier = Modifier.fillMaxWidth(),
+            )
         }
     }
 }

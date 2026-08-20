@@ -9,6 +9,8 @@ import ir.speakup.app.data.local.LeitnerCardEntity
 import ir.speakup.app.data.local.LeitnerDao
 import ir.speakup.app.data.model.LeitnerSchedule
 import ir.speakup.app.domain.LearningRepository
+import ir.speakup.app.domain.ReviewMode
+import ir.speakup.app.domain.ReviewOptions
 import ir.speakup.app.domain.TimeSource
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -19,7 +21,17 @@ import javax.inject.Inject
 data class ReviewCard(
     val card: LeitnerCardEntity,
     val entry: DictionaryEntryEntity?,
-)
+    val mode: ReviewMode = ReviewMode.MEANING,
+    /** گزینه‌ها در حالت چندگزینه‌ای؛ در حالت تایپ خالی است */
+    val options: List<String> = emptyList(),
+) {
+    /** پاسخ درست، بسته به شکل پرسش */
+    val answer: String
+        get() = when (mode) {
+            ReviewMode.MEANING -> entry?.translationFa.orEmpty()
+            ReviewMode.WORD, ReviewMode.TYPING -> card.word
+        }
+}
 
 data class LeitnerUiState(
     val loading: Boolean = true,
@@ -30,6 +42,10 @@ data class LeitnerUiState(
     val session: List<ReviewCard> = emptyList(),
     val index: Int = 0,
     val revealed: Boolean = false,
+    /** گزینه‌ای که کاربر زد، یا null اگر هنوز نزده */
+    val picked: String? = null,
+    /** آنچه در حالت تایپ نوشته شده */
+    val typed: String = "",
     val correctCount: Int = 0,
     val finished: Boolean = false,
 ) {
@@ -70,14 +86,73 @@ class LeitnerViewModel @Inject constructor(
     fun startSession() {
         viewModelScope.launch {
             val cards = leitnerDao.due(time.nowMillis(), limit = SESSION_SIZE)
-            val withEntries = cards.map { ReviewCard(it, dictionaryDao.byId(it.entryId)) }
+            val entries = cards.map { dictionaryDao.byId(it.entryId) }
+
+            // حواس‌پرت‌کن‌ها از خودِ همین جلسه می‌آیند، نه از کل دیکشنری:
+            // معنی‌های بی‌ربط پرسش را بی‌اهمیت می‌کنند.
+            val meanings = entries.mapNotNull { it?.translationFa?.takeIf(String::isNotBlank) }
+            val words = cards.map { it.word }
+
+            val session = cards.mapIndexed { i, card ->
+                val entry = entries[i]
+                val mode = ReviewMode.forBox(card.box, ReviewMode.typable(card.word))
+                val options = when (mode) {
+                    ReviewMode.MEANING ->
+                        ReviewOptions.build(entry?.translationFa.orEmpty(), meanings, i)
+                    ReviewMode.WORD -> ReviewOptions.build(card.word, words, i)
+                    ReviewMode.TYPING -> emptyList()
+                }
+                // اگر گزینه ساخته نشد (جلسه تک‌کارتی)، به شکل ساده برگرد
+                ReviewCard(
+                    card = card,
+                    entry = entry,
+                    mode = if (mode != ReviewMode.TYPING && options.isEmpty()) ReviewMode.MEANING else mode,
+                    options = options,
+                )
+            }
+
             _state.value = _state.value.copy(
-                session = withEntries,
+                session = session,
                 index = 0,
                 revealed = false,
+                picked = null,
+                typed = "",
                 correctCount = 0,
                 finished = false,
             )
+        }
+    }
+
+    fun pick(option: String) {
+        val s = _state.value
+        if (s.picked != null || s.revealed) return
+        _state.value = s.copy(picked = option, revealed = true)
+    }
+
+    fun type(text: String) {
+        if (_state.value.revealed) return
+        _state.value = _state.value.copy(typed = text)
+    }
+
+    /** تأیید پاسخ تایپ‌شده */
+    fun submitTyped() {
+        val s = _state.value
+        if (s.revealed || s.typed.isBlank()) return
+        _state.value = s.copy(revealed = true)
+    }
+
+    /**
+     * آیا پاسخ داده‌شده درست بود.
+     *
+     * در حالت تایپ، فاصله و بزرگی حروف نادیده گرفته می‌شود: هدف
+     * سنجش واژه است نه دقت تایپ.
+     */
+    fun isCorrect(): Boolean {
+        val s = _state.value
+        val c = s.current ?: return false
+        return when (c.mode) {
+            ReviewMode.TYPING -> s.typed.trim().equals(c.answer.trim(), ignoreCase = true)
+            else -> s.picked == c.answer
         }
     }
 
@@ -96,6 +171,8 @@ class LeitnerViewModel @Inject constructor(
             s.copy(
                 index = next,
                 revealed = false,
+                picked = null,
+                typed = "",
                 correctCount = s.correctCount + if (knew) 1 else 0,
             )
         }
