@@ -81,10 +81,14 @@ fun LessonScreen(
         topBar = {
             TopAppBar(
                 title = {
+                    // «درس ۳» و نه «Lesson 3»: این یک برچسب است و نه
+                    // محتوای درس. جمله انگلیسی زیرش می‌ماند، چون آن
+                    // خودش همان چیزی است که قرار است یاد گرفته شود.
                     Column {
                         Text(
-                            "Lesson ${lesson?.number ?: ""} | ${lesson?.levelCode ?: ""}",
-                            style = MaterialTheme.typography.titleMedium.ltr(),
+                            "درس ${(lesson?.number ?: 0).toPersianDigits()}",
+                            style = MaterialTheme.typography.titleMedium,
+                            fontWeight = FontWeight.Bold,
                         )
                         if (lesson != null) {
                             Text(lesson.titleEn, style = MaterialTheme.typography.bodyMedium.ltr())
@@ -206,15 +210,25 @@ private fun SectionCardView(
 
             Column(Modifier.fillMaxSize().padding(14.dp)) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
+                    // فارسی بالا، انگلیسی زیرش.
+                    //
+                    // پیش‌تر برعکس بود: «Vocabulary» درشت و بولد، و
+                    // «واژگان» ریز و کم‌رنگ زیرش. در محصولی که تمام
+                    // مخاطبش فارسی‌زبان است، این وارونه است — نام بخش
+                    // یک برچسب ناوبری است و باید به زبان کاربر خوانده
+                    // شود، نه به زبانی که هنوز یاد نگرفته.
+                    //
+                    // انگلیسی حذف نشد چون خودش ارزش دارد: کاربر همان
+                    // واژه‌ها را در اپ‌های دیگر و در آزمون‌ها می‌بیند.
                     Column(Modifier.weight(1f)) {
                         Text(
-                            card.type.titleEn,
-                            style = MaterialTheme.typography.titleLarge.ltr(),
+                            card.type.titleFa,
+                            style = MaterialTheme.typography.titleLarge,
                             fontWeight = FontWeight.Bold,
                         )
                         Text(
-                            card.type.titleFa,
-                            style = MaterialTheme.typography.bodyMedium,
+                            card.type.titleEn,
+                            style = MaterialTheme.typography.bodyMedium.ltr(),
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
                     }
