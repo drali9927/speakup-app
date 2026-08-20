@@ -36,6 +36,7 @@ class AppPreferences @Inject constructor(
         val LAST_REMINDER_DAY = stringPreferencesKey("last_reminder_day")
         val AVATAR = intPreferencesKey("avatar_id")
         val INSTALL_ID = stringPreferencesKey("install_id")
+        val PLACED = booleanPreferencesKey("placement_done")
     }
 
     val onboarded: Flow<Boolean> = context.dataStore.data.map { it[Keys.ONBOARDED] ?: false }
@@ -89,6 +90,13 @@ class AppPreferences @Inject constructor(
      * واقعاً تمام شده و نباید در آمار بازگشت شمرده شود.
      */
     suspend fun installId(): String? = context.dataStore.data.map { it[Keys.INSTALL_ID] }.first()
+
+    /** آزمون تعیین سطح انجام یا رد شده — تا دوباره جلوی کاربر سبز نشود */
+    val placed: Flow<Boolean> = context.dataStore.data.map { it[Keys.PLACED] ?: false }
+
+    suspend fun setPlaced() {
+        context.dataStore.edit { it[Keys.PLACED] = true }
+    }
 
     suspend fun setInstallId(id: String) {
         context.dataStore.edit { it[Keys.INSTALL_ID] = id }

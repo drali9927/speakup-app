@@ -1,0 +1,164 @@
+{
+ "version": 1,
+ "perLevel": 3,
+ "stopAfterWrong": 2,
+ "passThreshold": 2,
+ "questions": [
+  {
+   "id": "p01",
+   "level": "A1",
+   "text": "She ___ a doctor.",
+   "options": [
+    "am",
+    "is",
+    "are",
+    "be"
+   ],
+   "answer": 1,
+   "explanationFa": "با he / she / it همیشه is می‌آید."
+  },
+  {
+   "id": "p02",
+   "level": "A1",
+   "text": "I ___ to school every day.",
+   "options": [
+    "go",
+    "goes",
+    "going",
+    "gone"
+   ],
+   "answer": 0,
+   "explanationFa": "حال ساده با I به شکل ساده فعل می‌آید."
+  },
+  {
+   "id": "p03",
+   "level": "A1",
+   "text": "There ___ two books on the table.",
+   "options": [
+    "is",
+    "are",
+    "was",
+    "be"
+   ],
+   "answer": 1,
+   "explanationFa": "برای جمع، are می‌آید."
+  },
+  {
+   "id": "p04",
+   "level": "A2",
+   "text": "We ___ to Shiraz last summer.",
+   "options": [
+    "go",
+    "went",
+    "gone",
+    "going"
+   ],
+   "answer": 1,
+   "explanationFa": "گذشته ساده go می‌شود went."
+  },
+  {
+   "id": "p05",
+   "level": "A2",
+   "text": "This book is ___ than that one.",
+   "options": [
+    "cheap",
+    "cheaper",
+    "cheapest",
+    "more cheap"
+   ],
+   "answer": 1,
+   "explanationFa": "صفت کوتاه با er تفضیلی می‌شود."
+  },
+  {
+   "id": "p06",
+   "level": "A2",
+   "text": "I have ___ finished my homework.",
+   "options": [
+    "yet",
+    "already",
+    "since",
+    "ago"
+   ],
+   "answer": 1,
+   "explanationFa": "already در جمله مثبت حال کامل می‌آید."
+  },
+  {
+   "id": "p07",
+   "level": "B1",
+   "text": "She ___ here since 2019.",
+   "options": [
+    "works",
+    "worked",
+    "has been working",
+    "is working"
+   ],
+   "answer": 2,
+   "explanationFa": "کاری که از گذشته تا حالا ادامه دارد، حال کامل استمراری می‌گیرد."
+  },
+  {
+   "id": "p08",
+   "level": "B1",
+   "text": "If I ___ more time, I would travel more.",
+   "options": [
+    "have",
+    "had",
+    "will have",
+    "am having"
+   ],
+   "answer": 1,
+   "explanationFa": "شرطی نوع دوم: if + گذشته ساده، و would در جمله دوم."
+  },
+  {
+   "id": "p09",
+   "level": "B1",
+   "text": "He said he ___ the film before.",
+   "options": [
+    "sees",
+    "saw",
+    "had seen",
+    "has seen"
+   ],
+   "answer": 2,
+   "explanationFa": "در نقل قول، حال کامل به گذشته کامل تبدیل می‌شود."
+  },
+  {
+   "id": "p10",
+   "level": "B2",
+   "text": "You ___ told me earlier; I could have helped.",
+   "options": [
+    "should",
+    "should have",
+    "must",
+    "would"
+   ],
+   "answer": 1,
+   "explanationFa": "should have + قسمت سوم، برای کاری که در گذشته انجام نشد."
+  },
+  {
+   "id": "p11",
+   "level": "B2",
+   "text": "The report ___ by the time we arrived.",
+   "options": [
+    "was finished",
+    "had been finished",
+    "has finished",
+    "finished"
+   ],
+   "answer": 1,
+   "explanationFa": "مجهول در گذشته کامل: had been + قسمت سوم."
+  },
+  {
+   "id": "p12",
+   "level": "B2",
+   "text": "Not only ___ late, but he also forgot the documents.",
+   "options": [
+    "he was",
+    "was he",
+    "he is",
+    "is he"
+   ],
+   "answer": 1,
+   "explanationFa": "بعد از Not only جای فعل و فاعل عوض می‌شود."
+  }
+ ]
+}

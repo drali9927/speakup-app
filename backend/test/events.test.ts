@@ -66,6 +66,7 @@ describe('قیف', () => {
     for (const i of [1, 2]) record(d, `i${i}`, null, [ev('onboarding_done')])
     for (const i of [1]) record(d, `i${i}`, null, [ev('auth_done')])
     const f = funnel(d, 30)
+    assert.equal(f[1]!.name, 'onboarding_done')
     assert.equal(f[1]!.installs, 2)
     assert.equal(f[1]!.pctOfPrev, 50, 'از ۴ نفر، ۲ نفر رد شدند')
     assert.equal(f[2]!.pctOfFirst, 25, 'نسبت به گام اول')

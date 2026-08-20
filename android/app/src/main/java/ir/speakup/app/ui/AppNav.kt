@@ -36,6 +36,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import ir.speakup.app.data.prefs.AppPreferences
 import ir.speakup.app.ui.auth.AuthScreen
 import ir.speakup.app.ui.onboarding.OnboardingScreen
+import ir.speakup.app.ui.placement.PlacementScreen
 import ir.speakup.app.ui.paywall.PaywallScreen
 import kotlinx.coroutines.launch
 import androidx.compose.ui.Modifier
@@ -66,6 +67,7 @@ import androidx.compose.material.icons.filled.EmojiEvents
 object Routes {
     const val ONBOARDING = "onboarding"
     const val AUTH = "auth"
+    const val PLACEMENT = "placement"
     const val PAYWALL = "paywall"
     const val LESSONS = "lessons"
     const val LEITNER = "leitner"
@@ -122,12 +124,17 @@ fun AppNav(nav: NavHostController = rememberNavController()) {
     val session: SessionViewModel = hiltViewModel()
     val isSubscribed by session.isSubscribed.collectAsStateWithLifecycle()
     val token by prefs.token.collectAsStateWithLifecycle(initialValue = null)
+    val placed by prefs.placed.collectAsStateWithLifecycle(initialValue = null)
     var start by remember { mutableStateOf<String?>(null) }
-    LaunchedEffect(onboarded, token) {
-        if (start == null && onboarded != null) {
+    LaunchedEffect(onboarded, token, placed) {
+        if (start == null && onboarded != null && placed != null) {
             start = when {
                 onboarded == false -> Routes.ONBOARDING
                 token == null -> Routes.AUTH
+                // تعیین سطح بعد از ورود می‌آید و نه پیش از آن: نتیجه‌اش
+                // باید به حساب کاربر بچسبد، و کاربری که هنوز وارد نشده
+                // ممکن است اصلاً ادامه ندهد.
+                placed == false -> Routes.PLACEMENT
                 else -> Routes.LESSONS
             }
         }
@@ -213,9 +220,19 @@ fun AppNav(nav: NavHostController = rememberNavController()) {
                     })
                 }
 
+                composable(Routes.PLACEMENT) {
+                    PlacementScreen(onDone = {
+                        nav.navigate(Routes.LESSONS) {
+                            popUpTo(Routes.PLACEMENT) { inclusive = true }
+                        }
+                    })
+                }
+
                 composable(Routes.AUTH) {
                     AuthScreen(onDone = {
-                        nav.navigate(Routes.LESSONS) { popUpTo(Routes.AUTH) { inclusive = true } }
+                        // پس از ورود، اگر هنوز تعیین سطح نشده، همان‌جا برود
+                        val next = if (placed == false) Routes.PLACEMENT else Routes.LESSONS
+                        nav.navigate(next) { popUpTo(Routes.AUTH) { inclusive = true } }
                     })
                 }
 

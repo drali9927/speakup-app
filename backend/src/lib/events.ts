@@ -23,6 +23,7 @@ export const FUNNEL = [
   'app_open',
   'onboarding_done',
   'auth_done',
+  'placement_done',
   'activity_start',
   'activity_done',
   'lesson_done',
