@@ -296,7 +296,7 @@ EX = {
      (P,"متن آزاد","فشرده کنید: She read it twice and then she rewrote it.","Having read it twice, she rewrote it.","","","revision","با Having شروع کن."),
      (P,"مرتب‌سازی","down / half / by / cut / it","Cut it down by half.","","","cut down","جمله امری با فعل شروع می‌شود."),
      (P,"ترجمه به انگلیسی","دو بخش را ادغام کردیم.","We merged the two sections.","","","merge","با فاعل شروع کن."),
-     (P,"گفتار","The draft is too wordy.","The draft is too wordy.","","","wordy","جمله را واضح تلفظ کنید.")],
+     (P,"گفتار","The draft is too wordy.","The draft is too wordy.","","","wordy","جمله را واضح تلفظ کن.")],
 
  12:[(R,"چندگزینه‌ای","Never ___ such a thing.","have I seen","","have I seen | I have seen | I saw","never have I","با قید منفی آغازین، وارونگی لازم است."),
      (R,"تطبیق","unprecedented","بی‌سابقه","","unprecedented | remarkable | striking","unprecedented","واژه را به معنی درست وصل کن."),
@@ -305,7 +305,7 @@ EX = {
      (P,"متن آزاد","با Rarely بنویسید: he complains","Rarely does he complain.","","","rarely","با قید منفی آغازین، does می‌آید."),
      (P,"مرتب‌سازی","stress / to / point / I / this / want","I want to stress this point.","","","stress","با فاعل شروع کن."),
      (P,"ترجمه به انگلیسی","به‌هیچ‌وجه قطعی نیست.","It's by no means certain.","","","by no means","با فاعل It شروع کن."),
-     (P,"گفتار","Not only did he help, he stayed late.","Not only did he help, he stayed late.","","","not only","جمله را واضح تلفظ کنید.")],
+     (P,"گفتار","Not only did he help, he stayed late.","Not only did he help, he stayed late.","","","not only","جمله را واضح تلفظ کن.")],
 
  13:[(R,"چندگزینه‌ای","It was you ___ said it.","who","","who | which | what","it was you who","برای افراد who می‌آید."),
      (R,"تطبیق","credit","اعتبار، سهم","","credit | insistence | blame someone for","credit","واژه را به معنی درست وصل کن."),
@@ -314,7 +314,7 @@ EX = {
      (P,"متن آزاد","تأکید کنید بر «here»: The problem starts here.","It is here that the problem starts.","","","it is here that","با It is شروع کن."),
      (P,"مرتب‌سازی","straight / the / record / set / let's","Let's set the record straight.","","","set the record straight","با Let's شروع کن."),
      (P,"ترجمه به انگلیسی","عمدی نبود.","It wasn't deliberate.","","","deliberate","با فاعل It شروع کن."),
-     (P,"گفتار","She drew attention to the cost.","She drew attention to the cost.","","","draw attention to","جمله را واضح تلفظ کنید.")],
+     (P,"گفتار","She drew attention to the cost.","She drew attention to the cost.","","","draw attention to","جمله را واضح تلفظ کن.")],
 
  14:[(R,"چندگزینه‌ای","What ___ is trust.","matters","","matters | matter | mattering","what matters is","فعل بعد از what مفرد است."),
      (R,"تطبیق","integrity","درستکاری","","integrity | loyalty | fairness","integrity","واژه را به معنی درست وصل کن."),
@@ -323,7 +323,7 @@ EX = {
      (P,"متن آزاد","تأکید کنید: Details matter.","What matters is the details.","What matters are details.","","matter","با What شروع کن."),
      (P,"مرتب‌سازی","first / safety / comes","Safety comes first.","","","come first","با فاعل شروع کن."),
      (P,"ترجمه به انگلیسی","بیش از همه صادق باش.","Above all, be honest.","","","above all","با عبارت ثابت شروع کن."),
-     (P,"گفتار","Trust is at the heart of it.","Trust is at the heart of it.","","","at the heart of","جمله را واضح تلفظ کنید.")],
+     (P,"گفتار","Trust is at the heart of it.","Trust is at the heart of it.","","","at the heart of","جمله را واضح تلفظ کن.")],
 
  15:[(R,"چندگزینه‌ای","Be ___ , not aggressive.","assertive","","assertive | blunt | aggressive","assertive","قاطع بودن با assertive بیان می‌شود."),
      (R,"تطبیق","tactful","با ملاحظه","","tactful | diplomatic | blunt","tactful","واژه را به معنی درست وصل کن."),
@@ -332,7 +332,7 @@ EX = {
      (P,"متن آزاد","با politely but firmly بنویسید: I / refuse","I refused politely but firmly.","","","politely but firmly","قید بعد از فعل می‌آید."),
      (P,"مرتب‌سازی","bush / the / around / beat / don't","Don't beat around the bush.","","","beat around the bush","جمله امری منفی با Don't شروع می‌شود."),
      (P,"ترجمه به انگلیسی","بیا مستقیم سر اصل مطلب برویم.","Let's get straight to the point.","","","get straight to the point","با Let's شروع کن."),
-     (P,"گفتار","He came across as confident.","He came across as confident.","","","come across as","جمله را واضح تلفظ کنید.")],
+     (P,"گفتار","He came across as confident.","He came across as confident.","","","come across as","جمله را واضح تلفظ کن.")],
 
  16:[(R,"چندگزینه‌ای","Prices tend ___ in winter.","to rise","","to rise | rising | rise","tend to","بعد از tend فعل با to می‌آید."),
      (R,"تطبیق","arguably","می‌توان گفت","","arguably | seemingly | relatively","arguably","واژه را به معنی درست وصل کن."),
@@ -341,7 +341,7 @@ EX = {
      (P,"متن آزاد","محتاطانه بنویسید: costs rose (بر اساس داده)","The data suggests that costs rose.","","","suggest that","با The data شروع کن."),
      (P,"مرتب‌سازی","whole / works / on / it / the","On the whole, it works.","","","on the whole","با On the whole شروع کن."),
      (P,"ترجمه به انگلیسی","به‌جز جمعه آزادیم.","With the exception of Friday, we're free.","","","with the exception of","با عبارت ثابت شروع کن."),
-     (P,"گفتار","More often than not, it works.","More often than not, it works.","","","more often than not","جمله را واضح تلفظ کنید.")],
+     (P,"گفتار","More often than not, it works.","More often than not, it works.","","","more often than not","جمله را واضح تلفظ کن.")],
 
  17:[(R,"چندگزینه‌ای","___ two hundred came.","Approximately","","Approximately | Approximate | Approximately of","approximately","این قید پیش از عدد می‌آید."),
      (R,"تطبیق","negligible","ناچیز","","negligible | precise figure | margin","negligible","واژه را به معنی درست وصل کن."),
@@ -350,7 +350,7 @@ EX = {
      (P,"متن آزاد","تقریبی بنویسید: ten days","Ten days, give or take.","","","give or take","عبارت ثابت بعد از عدد می‌آید."),
      (P,"مرتب‌سازی","target / short / it / of / the / fell","It fell short of the target.","","","fall short of","با فاعل شروع کن."),
      (P,"ترجمه به انگلیسی","خیلی بیشتر از صد نفر درخواست دادند.","Well over a hundred applied.","","","well over","با عبارت ثابت شروع کن."),
-     (P,"گفتار","Give me a ballpark number.","Give me a ballpark number.","","","ballpark","جمله را واضح تلفظ کنید.")],
+     (P,"گفتار","Give me a ballpark number.","Give me a ballpark number.","","","ballpark","جمله را واضح تلفظ کن.")],
 
  18:[(R,"چندگزینه‌ای","___ the results, we changed the plan.","In light of","","In light of | In light | In light that","in light of","بعد از این عبارت اسم می‌آید."),
      (R,"تطبیق","premise","مقدمه، پیش‌فرض","","premise | logic | hypothesis","premise","واژه را به معنی درست وصل کن."),
@@ -359,7 +359,7 @@ EX = {
      (P,"متن آزاد","استنتاج کنید: we / must wait","It follows that we must wait.","","","it follows that","با It follows that شروع کن."),
      (P,"مرتب‌سازی","conclusions / to / jump / don't","Don't jump to conclusions.","","","jump to conclusions","جمله امری منفی با Don't شروع می‌شود."),
      (P,"ترجمه به انگلیسی","دو گزارش متناقض‌اند.","The two reports are contradictory.","","","contradictory","با فاعل شروع کن."),
-     (P,"گفتار","The logic is sound.","The logic is sound.","","","sound reasoning","جمله را واضح تلفظ کنید.")],
+     (P,"گفتار","The logic is sound.","The logic is sound.","","","sound reasoning","جمله را واضح تلفظ کن.")],
 
  19:[(R,"چندگزینه‌ای","___ some extent, yes.","To","","To | In | At","to some extent","حرف اضافه درست to است."),
      (R,"تطبیق","reservation","تحفظ، تردید","","reservation | common ground | middle ground","reservation","واژه را به معنی درست وصل کن."),
@@ -368,7 +368,7 @@ EX = {
      (P,"متن آزاد","مشروط کنید: I agree (اصل بله، عمل سخت)","In principle I agree, but in practice it's harder.","","","in principle","دو نیمه با but وصل می‌شوند."),
      (P,"مرتب‌سازی","point / concede / that / I","I concede that point.","","","concede","با فاعل شروع کن."),
      (P,"ترجمه به انگلیسی","سیاه و سفید نیست.","It isn't black and white.","","","black and white","با فاعل It شروع کن."),
-     (P,"گفتار","I can see both sides.","I can see both sides.","","","see both sides","جمله را واضح تلفظ کنید.")],
+     (P,"گفتار","I can see both sides.","I can see both sides.","","","see both sides","جمله را واضح تلفظ کن.")],
 
  20:[(R,"چندگزینه‌ای","I'd like to begin by ___ the plan.","outlining","","outlining | outline | to outline","I'd like to begin by","بعد از by فعل ing می‌آید."),
      (R,"تطبیق","audience","حضار","","audience | handout | slide","audience","واژه را به معنی درست وصل کن."),
@@ -377,5 +377,5 @@ EX = {
      (P,"متن آزاد","گذار بنویسید: the figures","Let's move on to the figures.","","","move on to","با Let's شروع کن."),
      (P,"مرتب‌سازی","here / up / wrap / let's","Let's wrap up here.","","","wrap up","با Let's شروع کن."),
      (P,"ترجمه به انگلیسی","برای جمع‌بندی، در مسیریم.","To sum up, we're on track.","","","to sum up","با عبارت ثابت شروع کن."),
-     (P,"گفتار","As you can see, sales rose.","As you can see, sales rose.","","","as you can see","جمله را واضح تلفظ کنید.")],
+     (P,"گفتار","As you can see, sales rose.","As you can see, sales rose.","","","as you can see","جمله را واضح تلفظ کن.")],
 }

@@ -245,7 +245,7 @@ EX = {
       (P,"متن آزاد","مؤدبانه کنید: Cross the road.","Cross the road, please.","","","cross","با please مؤدبانه می‌شود."),
       (P,"مرتب‌سازی","the / cross / bridge","Cross the bridge.","","","bridge","جمله امری با فعل شروع می‌شود."),
       (P,"ترجمه به انگلیسی","ببخشید، ایستگاه کجاست؟","Excuse me, where is the station?","Excuse me, where's the station?","","station","با Excuse me شروع کن."),
-      (P,"گفتار","Go straight on and turn left.","Go straight on and turn left.","","","left","جمله را واضح تلفظ کنید.")],
+      (P,"گفتار","Go straight on and turn left.","Go straight on and turn left.","","","left","جمله را واضح تلفظ کن.")],
 
  22: [(R,"چندگزینه‌ای","She ___ reading now.","is","","is | are | am","read","با she فعل is می‌آید."),
       (R,"تطبیق","busy","مشغول","","busy | quiet | ready","busy","واژه را به معنی درست وصل کن."),
@@ -254,7 +254,7 @@ EX = {
       (P,"متن آزاد","سوالی کنید: You are working.","Are you working?","","","work","فعل to be به ابتدای جمله می‌رود."),
       (P,"مرتب‌سازی","film / watching / we / a / are","We are watching a film.","We're watching a film.","","watch","با فاعل شروع کن."),
       (P,"ترجمه به انگلیسی","دارد با تلفن حرف می‌زند.","He is talking on the phone.","She is talking on the phone.","","talk","حال استمراری: to be + ing"),
-      (P,"گفتار","What are you doing now?","What are you doing now?","","","now","جمله را واضح تلفظ کنید.")],
+      (P,"گفتار","What are you doing now?","What are you doing now?","","","now","جمله را واضح تلفظ کن.")],
 
  23: [(R,"چندگزینه‌ای","I ___ walk to work, but today I'm taking the bus.","usually","","usually | now | tomorrow","usually","برای کار همیشگی قید تکرار می‌آید."),
       (R,"تطبیق","never","هرگز","","never | always | often","never","واژه را به معنی درست وصل کن."),
@@ -263,7 +263,7 @@ EX = {
       (P,"متن آزاد","قید را در جای درست بگذارید: She is busy. (always)","She is always busy.","","","busy","قید بعد از فعل to be می‌آید."),
       (P,"مرتب‌سازی","late / sometimes / works / he","He sometimes works late.","","","late","قید پیش از فعل اصلی می‌آید."),
       (P,"ترجمه به انگلیسی","اغلب با هم غذا می‌خوریم.","We often eat together.","","","often","قید پیش از فعل اصلی می‌آید."),
-      (P,"گفتار","I usually walk to work.","I usually walk to work.","","","usually","جمله را واضح تلفظ کنید.")],
+      (P,"گفتار","I usually walk to work.","I usually walk to work.","","","usually","جمله را واضح تلفظ کن.")],
 
  24: [(R,"چندگزینه‌ای","They ___ very happy.","were","","was | were | are","were","با they فعل were می‌آید."),
       (R,"تطبیق","angry","عصبانی","","angry | happy | sad","angry","واژه را به معنی درست وصل کن."),
@@ -272,7 +272,7 @@ EX = {
       (P,"متن آزاد","سوالی کنید: You were free.","Were you free?","","","free","were به ابتدای جمله می‌رود."),
       (P,"مرتب‌سازی","park / we / at / were / the","We were at the park.","","","park","با فاعل شروع کن."),
       (P,"ترجمه به انگلیسی","دیروز کجا بودی؟","Where were you yesterday?","","","yesterday","برای پرسیدن جا where می‌آید."),
-      (P,"گفتار","I was very tired last night.","I was very tired last night.","","","tired","جمله را واضح تلفظ کنید.")],
+      (P,"گفتار","I was very tired last night.","I was very tired last night.","","","tired","جمله را واضح تلفظ کن.")],
 
  25: [(R,"چندگزینه‌ای","We ___ football last week.","played","","play | played | playing","played","برای گذشته ed اضافه می‌شود."),
       (R,"تطبیق","visited","دیدن رفت","","visited | called | helped","visited","واژه را به معنی درست وصل کن."),
@@ -281,7 +281,7 @@ EX = {
       (P,"متن آزاد","گذشته بنویسید: stop","stopped","","","stopped","حرف آخر دو بار می‌آید."),
       (P,"مرتب‌سازی","film / watched / a / I / yesterday","I watched a film yesterday.","","","watched","با فاعل شروع کن."),
       (P,"ترجمه به انگلیسی","دیروز تمام روز کار کرد.","She worked all day yesterday.","He worked all day yesterday.","","worked","به فعل ed اضافه کن."),
-      (P,"گفتار","We played football last week.","We played football last week.","","","football","جمله را واضح تلفظ کنید.")],
+      (P,"گفتار","We played football last week.","We played football last week.","","","football","جمله را واضح تلفظ کن.")],
 
  26: [(R,"چندگزینه‌ای","I ___ to Tehran last summer.","went","","goed | went | going","went","گذشته go همان went است."),
       (R,"تطبیق","bought","خرید","","bought | took | made","bought","واژه را به معنی درست وصل کن."),
@@ -290,7 +290,7 @@ EX = {
       (P,"متن آزاد","منفی کنید: I went to Tehran.","I didn't go to Tehran.","I did not go to Tehran.","","went","بعد از didn't فعل ساده می‌آید."),
       (P,"مرتب‌سازی","bus / took / the / she","She took the bus.","","","took","با فاعل شروع کن."),
       (P,"ترجمه به انگلیسی","عکس‌های زیادی گرفتم.","I took many photos.","","","took","گذشته take همان took است."),
-      (P,"گفتار","We went to the mountain last week.","We went to the mountain last week.","","","mountain","جمله را واضح تلفظ کنید.")],
+      (P,"گفتار","We went to the mountain last week.","We went to the mountain last week.","","","mountain","جمله را واضح تلفظ کن.")],
 
  27: [(R,"چندگزینه‌ای","___ you like the holiday?","Did","","Do | Did | Was","holiday","برای سوال گذشته did می‌آید."),
       (R,"تطبیق","crowded","شلوغ","","crowded | quiet | beautiful","crowded","واژه را به معنی درست وصل کن."),
@@ -299,7 +299,7 @@ EX = {
       (P,"متن آزاد","جواب کوتاه مثبت بدهید: Did she travel?","Yes, she did.","","","travel","جواب کوتاه با did ساخته می‌شود."),
       (P,"مرتب‌سازی","did / do / what / you","What did you do?","","","did","کلمه پرسشی اول می‌آید."),
       (P,"ترجمه به انگلیسی","کجا ماندی؟","Where did you stay?","","","stay","با Where did شروع کن."),
-      (P,"گفتار","Did you enjoy the trip?","Did you enjoy the trip?","","","enjoy","جمله را واضح تلفظ کنید.")],
+      (P,"گفتار","Did you enjoy the trip?","Did you enjoy the trip?","","","enjoy","جمله را واضح تلفظ کن.")],
 
  28: [(R,"چندگزینه‌ای","I'm going ___ study tomorrow.","to","","to | for | at","study","ساختار going to است."),
       (R,"تطبیق","future","آینده","","future | plan | course","future","واژه را به معنی درست وصل کن."),
@@ -308,7 +308,7 @@ EX = {
       (P,"متن آزاد","سوالی کنید: You are going to travel.","Are you going to travel?","","","travel","فعل to be به ابتدای جمله می‌رود."),
       (P,"مرتب‌سازی","move / we / going / are / to","We are going to move.","We're going to move.","","move","با فاعل شروع کن."),
       (P,"ترجمه به انگلیسی","قرار است پول پس‌انداز کنم.","I am going to save money.","I'm going to save money.","","save","از be going to استفاده کن."),
-      (P,"گفتار","I'm going to start a course.","I'm going to start a course.","","","course","جمله را واضح تلفظ کنید.")],
+      (P,"گفتار","I'm going to start a course.","I'm going to start a course.","","","course","جمله را واضح تلفظ کن.")],
 
  29: [(R,"چندگزینه‌ای","Tehran is ___ than Yazd.","bigger","","big | bigger | biggest","bigger","برای مقایسه دو چیز er می‌آید."),
       (R,"تطبیق","different","متفاوت","","different | same | better","different","واژه را به معنی درست وصل کن."),
@@ -317,7 +317,7 @@ EX = {
       (P,"متن آزاد","تفضیلی بنویسید: expensive","more expensive","","","expensive","صفت بلند است، پس more می‌گیرد."),
       (P,"مرتب‌سازی","better / this / than / is / tea / that / one","This tea is better than that one.","","","better","با فاعل شروع کن."),
       (P,"ترجمه به انگلیسی","برادرم از من مسن‌تر است.","My brother is older than me.","My brother is older than I am.","","older","با than مقایسه کن."),
-      (P,"گفتار","Tehran is bigger than Yazd.","Tehran is bigger than Yazd.","","","bigger","جمله را واضح تلفظ کنید.")],
+      (P,"گفتار","Tehran is bigger than Yazd.","Tehran is bigger than Yazd.","","","bigger","جمله را واضح تلفظ کن.")],
 
  30: [(R,"چندگزینه‌ای","It was ___ day of the year.","the best","","best | the best | the better","best","صفت عالی با the می‌آید."),
       (R,"تطبیق","progress","پیشرفت","","progress | practice | level","progress","واژه را به معنی درست وصل کن."),
@@ -326,5 +326,5 @@ EX = {
       (P,"متن آزاد","عالی بنویسید: expensive","the most expensive","most expensive","","expensive","صفت بلند با the most می‌آید."),
       (P,"مرتب‌سازی","level / next / continue / the / to","Continue to the next level.","","","continue","جمله امری با فعل شروع می‌شود."),
       (P,"ترجمه به انگلیسی","برای A2 آماده‌ای.","You are ready for A2.","You're ready for A2.","","ready","با فعل to be شروع کن."),
-      (P,"گفتار","I am proud of my progress.","I am proud of my progress.","","","proud","جمله را واضح تلفظ کنید.")],
+      (P,"گفتار","I am proud of my progress.","I am proud of my progress.","","","proud","جمله را واضح تلفظ کن.")],
 }

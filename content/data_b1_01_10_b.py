@@ -331,7 +331,7 @@ EX = {
      (P,"متن آزاد","سوال بسازید: I've been working here for three years.","How long have you been working here?","","","deadline","با How long شروع کن."),
      (P,"مرتب‌سازی","overtime / been / doing / I've","I've been doing overtime.","","","overtime","با فاعل شروع کن."),
      (P,"ترجمه به انگلیسی","تمام هفته به این رسیدگی کرده‌ام.","I've been dealing with this all week.","","","deal with","حال کامل استمراری بساز."),
-     (P,"گفتار","It's demanding, but rewarding.","It's demanding, but rewarding.","","","rewarding","جمله را واضح تلفظ کنید.")],
+     (P,"گفتار","It's demanding, but rewarding.","It's demanding, but rewarding.","","","rewarding","جمله را واضح تلفظ کن.")],
 
  2: [(R,"چندگزینه‌ای","The report ___ checked.","has been","","has been | has | has been being","procedure","مجهول کامل با has been + قسمت سوم ساخته می‌شود."),
      (R,"تطبیق","supplier","تأمین‌کننده","","supplier | delivery | approval","supplier","واژه را به معنی درست وصل کن."),
@@ -340,7 +340,7 @@ EX = {
      (P,"متن آزاد","مجهول کنید: They carried out the test yesterday.","The test was carried out yesterday.","","","carry out","مفعول به ابتدای جمله می‌رود."),
      (P,"مرتب‌سازی","approved / plan / was / the","The plan was approved.","","","approve","با فاعل شروع کن."),
      (P,"ترجمه به انگلیسی","تحویل به تأخیر افتاده است.","The delivery has been delayed.","","","delivery","مجهول کامل بساز."),
-     (P,"گفتار","The work is still in progress.","The work is still in progress.","","","in progress","جمله را واضح تلفظ کنید.")],
+     (P,"گفتار","The work is still in progress.","The work is still in progress.","","","in progress","جمله را واضح تلفظ کن.")],
 
  3: [(R,"چندگزینه‌ای","I'm used to ___ late.","working","","working | work | to work","be used to","بعد از used to فعل ing می‌گیرد."),
      (R,"تطبیق","attitude","نگرش","","attitude | patience | confidence","attitude","واژه را به معنی درست وصل کن."),
@@ -349,7 +349,7 @@ EX = {
      (P,"متن آزاد","با used to بنویسید (عادت گذشته): I / walk / to school","I used to walk to school.","","","routine","used to + فعل ساده برای عادت گذشته."),
      (P,"مرتب‌سازی","difficult / longer / it's / no","It's no longer difficult.","","","no longer","با فاعل شروع کن."),
      (P,"ترجمه به انگلیسی","به‌تدریج اوضاع بهتر شد.","Things gradually improved.","","","gradually","قید پیش از فعل می‌آید."),
-     (P,"گفتار","At first it felt strange.","At first it felt strange.","","","at first","جمله را واضح تلفظ کنید.")],
+     (P,"گفتار","At first it felt strange.","At first it felt strange.","","","at first","جمله را واضح تلفظ کن.")],
 
  4: [(R,"چندگزینه‌ای","When I arrived, she ___ already gone.","had","","had | has | was","by then","گذشته کامل با had ساخته می‌شود."),
      (R,"تطبیق","relief","آسودگی","","relief | apology | delay","relief","واژه را به معنی درست وصل کن."),
@@ -358,7 +358,7 @@ EX = {
      (P,"متن آزاد","دو جمله را یکی کنید: I arrived. She had left.","When I arrived, she had left.","","","previously","با When شروع کن."),
      (P,"مرتب‌سازی","late / by / was / then / too / it","By then it was too late.","","","by then","با By then شروع کن."),
      (P,"ترجمه به انگلیسی","خوشبختانه چیزی از دست نرفت.","Fortunately, nothing was lost.","","","fortunately","با قید شروع کن."),
-     (P,"گفتار","It was just a misunderstanding.","It was just a misunderstanding.","","","misunderstanding","جمله را واضح تلفظ کنید.")],
+     (P,"گفتار","It was just a misunderstanding.","It was just a misunderstanding.","","","misunderstanding","جمله را واضح تلفظ کن.")],
 
  5: [(R,"چندگزینه‌ای","We ___ home when the lights went out.","were walking","","were walking | walked | had walked","meanwhile","پس‌زمینه با گذشته استمراری می‌آید."),
      (R,"تطبیق","witness","شاهد","","witness | incident | detail","witness","واژه را به معنی درست وصل کن."),
@@ -367,7 +367,7 @@ EX = {
      (P,"متن آزاد","با Looking back بنویسید: it / be / funny","Looking back, it was funny.","","","looking back","بعد از عبارت ابتدایی ویرگول می‌آید."),
      (P,"مرتب‌سازی","different / a / told / version / he","He told a different version.","","","version","با فاعل شروع کن."),
      (P,"ترجمه به انگلیسی","تا جایی که می‌دانم، مشکلی نیست.","As far as I know, it's fine.","","","as far as I know","با عبارت ثابت شروع کن."),
-     (P,"گفتار","Apparently nobody knew.","Apparently nobody knew.","","","apparently","جمله را واضح تلفظ کنید.")],
+     (P,"گفتار","Apparently nobody knew.","Apparently nobody knew.","","","apparently","جمله را واضح تلفظ کن.")],
 
  6: [(R,"چندگزینه‌ای","By the time we ___ , it had closed.","arrived","","arrived | will arrive | had arrived","by the time","بعد از by the time گذشته ساده می‌آید."),
      (R,"تطبیق","schedule","برنامه زمانی","","schedule | appointment | delay","schedule","واژه را به معنی درست وصل کن."),
@@ -376,7 +376,7 @@ EX = {
      (P,"متن آزاد","با By the time بنویسید: we / arrive — the meeting / end","By the time we arrived, the meeting had ended.","","","by the time","نیمه دوم گذشته کامل می‌گیرد."),
      (P,"مرتب‌سازی","schedule / behind / we're","We're behind schedule.","","","behind schedule","با فاعل شروع کن."),
      (P,"ترجمه به انگلیسی","از پیش رزروش کن.","Book it in advance.","","","in advance","جمله امری با فعل شروع می‌شود."),
-     (P,"گفتار","The meeting was postponed.","The meeting was postponed.","","","postpone","جمله را واضح تلفظ کنید.")],
+     (P,"گفتار","The meeting was postponed.","The meeting was postponed.","","","postpone","جمله را واضح تلفظ کن.")],
 
  7: [(R,"چندگزینه‌ای","He said he ___ finished it.","had","","had | has | have","claim","در نقل قولِ گذشته، گذشته کامل می‌آید."),
      (R,"تطبیق","evidence","شواهد","","evidence | rumour | fact","evidence","واژه را به معنی درست وصل کن."),
@@ -385,7 +385,7 @@ EX = {
      (P,"متن آزاد","بازگو کنید: \"I have seen it.\" (she)","She said she had seen it.","","","mention","حال کامل به گذشته کامل می‌رود."),
      (P,"مرتب‌سازی","everything / denied / he","He denied everything.","","","deny","با فاعل شروع کن."),
      (P,"ترجمه به انگلیسی","به گفته گزارش، درست نبود.","According to the report, it wasn't true.","","","according to","با عبارت ثابت شروع کن."),
-     (P,"گفتار","She admitted she had forgotten.","She admitted she had forgotten.","","","admit","جمله را واضح تلفظ کنید.")],
+     (P,"گفتار","She admitted she had forgotten.","She admitted she had forgotten.","","","admit","جمله را واضح تلفظ کن.")],
 
  8: [(R,"چندگزینه‌ای","If I ___ more time, I'd travel.","had","","had | have | would have","imagine","در شرطی دوم بعد از if گذشته ساده می‌آید."),
      (R,"تطبیق","opportunity","فرصت","","opportunity | risk | benefit","opportunity","واژه را به معنی درست وصل کن."),
@@ -394,7 +394,7 @@ EX = {
      (P,"متن آزاد","شرطی دوم بسازید: I / be wealthy — I / help others","If I were wealthy, I'd help others.","","","wealthy","نیمه دوم با would می‌آید."),
      (P,"مرتب‌سازی","do / would / what / you","What would you do?","","","decision","با کلمه پرسشی شروع کن."),
      (P,"ترجمه به انگلیسی","جای تو بودم ریسک می‌کردم.","If I were in your place, I'd take the risk.","","","risk","با If I were شروع کن."),
-     (P,"گفتار","Let's be realistic.","Let's be realistic.","","","realistic","جمله را واضح تلفظ کنید.")],
+     (P,"گفتار","Let's be realistic.","Let's be realistic.","","","realistic","جمله را واضح تلفظ کن.")],
 
  9: [(R,"چندگزینه‌ای","I wish I ___ the answer.","knew","","knew | know | would know","wish","بعد از wish فعل به گذشته می‌رود."),
      (R,"تطبیق","grateful","سپاسگزار","","grateful | relieved | guilty","grateful","واژه را به معنی درست وصل کن."),
@@ -403,7 +403,7 @@ EX = {
      (P,"متن آزاد","افسوس گذشته بنویسید: I / take / his advice","I wish I had taken his advice.","","","advice","برای گذشته، wish + had + قسمت سوم."),
      (P,"مرتب‌سازی","on / time / it's / move / to","It's time to move on.","","","move on","با فاعل It's شروع کن."),
      (P,"ترجمه به انگلیسی","کاش وقت بیشتری داشتم.","I wish I had more time.","If only I had more time.","","if only","با I wish شروع کن."),
-     (P,"گفتار","I'm grateful for the help.","I'm grateful for the help.","","","grateful","جمله را واضح تلفظ کنید.")],
+     (P,"گفتار","I'm grateful for the help.","I'm grateful for the help.","","","grateful","جمله را واضح تلفظ کن.")],
 
  10:[(R,"چندگزینه‌ای","It ___ on the budget.","depends","","depends | depend | depends to","depend on","حرف اضافه ثابت depend on است."),
      (R,"تطبیق","compromise","سازش","","compromise | alternative | consequence","compromise","واژه را به معنی درست وصل کن."),
@@ -412,5 +412,5 @@ EX = {
      (P,"متن آزاد","با Either way بنویسید: we / manage","Either way, we'll manage.","","","either way","بعد از عبارت ابتدایی ویرگول می‌آید."),
      (P,"مرتب‌سازی","options / up / the / weigh / let's","Let's weigh up the options.","","","weigh up","با Let's شروع کن."),
      (P,"ترجمه به انگلیسی","مزیت اصلی سرعت است.","The main advantage is speed.","","","advantage","با فاعل شروع کن."),
-     (P,"گفتار","It's a risky plan.","It's a risky plan.","","","risky","جمله را واضح تلفظ کنید.")],
+     (P,"گفتار","It's a risky plan.","It's a risky plan.","","","risky","جمله را واضح تلفظ کن.")],
 }

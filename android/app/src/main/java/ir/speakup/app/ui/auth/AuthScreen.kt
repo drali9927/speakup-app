@@ -133,7 +133,7 @@ fun AuthScreen(onDone: () -> Unit, vm: AuthViewModel = hiltViewModel()) {
 
         Spacer(Modifier.size(16.dp))
         Text(
-            "ورود شما به معنی پذیرش قوانین است.",
+            "با ورود، قوانین را می‌پذیری.",
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             textAlign = TextAlign.Center,

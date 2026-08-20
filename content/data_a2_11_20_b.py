@@ -305,7 +305,7 @@ EX = {
      (P,"متن آزاد","مقایسه کنید: this bag / cheap / that bag","This bag is cheaper than that bag.","","","cheap","بعد از صفت تفضیلی than می‌آید."),
      (P,"مرتب‌سازی","better / the / is / quality","The quality is better.","","","quality","با فاعل شروع کن."),
      (P,"ترجمه به انگلیسی","این مدل محبوب‌تر است.","This model is more popular.","","","popular","صفت بلند با more می‌آید."),
-     (P,"گفتار","The quality is better, but it's more expensive.","The quality is better, but it's more expensive.","","","price","جمله را واضح تلفظ کنید.")],
+     (P,"گفتار","The quality is better, but it's more expensive.","The quality is better, but it's more expensive.","","","price","جمله را واضح تلفظ کن.")],
 
  12:[(R,"چندگزینه‌ای","He drives very ___ .","carefully","","carefully | careful | carefuly","carefully","قید با ly ساخته می‌شود."),
      (R,"تطبیق","carefully","با دقت","","carefully | quickly | slowly","carefully","واژه را به معنی درست وصل کن."),
@@ -314,7 +314,7 @@ EX = {
      (P,"متن آزاد","قید بسازید: easy →","easily","","","easily","y به ily تبدیل می‌شود."),
      (P,"مرتب‌سازی","suddenly / the / stopped / car","The car stopped suddenly.","","","suddenly","با فاعل شروع کن."),
      (P,"ترجمه به انگلیسی","لطفاً آهسته صحبت کن.","Please speak slowly.","","","slowly","جمله امری با فعل شروع می‌شود."),
-     (P,"گفتار","He never pays attention.","He never pays attention.","","","attention","جمله را واضح تلفظ کنید.")],
+     (P,"گفتار","He never pays attention.","He never pays attention.","","","attention","جمله را واضح تلفظ کن.")],
 
  13:[(R,"چندگزینه‌ای","It's as ___ as mine.","big","","big | bigger | biggest","same","بین دو as صفت ساده می‌آید."),
      (R,"تطبیق","similar","شبیه","","similar | different | equal","similar","واژه را به معنی درست وصل کن."),
@@ -323,7 +323,7 @@ EX = {
      (P,"متن آزاد","با as … as بنویسید: big / my flat / your flat","My flat is as big as your flat.","","","wide","صفت ساده بین دو as می‌نشیند."),
      (P,"مرتب‌سازی","good / options / are / both","Both options are good.","","","both","با فاعل شروع کن."),
      (P,"ترجمه به انگلیسی","هیچ‌کدام ارزان نیست.","Neither one is cheap.","","","neither","بعد از neither فعل مفرد می‌آید."),
-     (P,"گفتار","This isn't as heavy as that one.","This isn't as heavy as that one.","","","heavy","جمله را واضح تلفظ کنید.")],
+     (P,"گفتار","This isn't as heavy as that one.","This isn't as heavy as that one.","","","heavy","جمله را واضح تلفظ کن.")],
 
  14:[(R,"چندگزینه‌ای","I ___ here for six years.","have lived","","have lived | live | am living","live","برای مدتی که تا حالا ادامه دارد حال کامل می‌آید."),
      (R,"تطبیق","improve","بهتر شدن","","improve | keep | grow","improve","واژه را به معنی درست وصل کن."),
@@ -332,7 +332,7 @@ EX = {
      (P,"متن آزاد","سوال بسازید: I've lived here for six years.","How long have you lived here?","","","period","با How long شروع کن."),
      (P,"مرتب‌سازی","changed / have / things","Things have changed.","","","change","با فاعل شروع کن."),
      (P,"ترجمه به انگلیسی","انگلیسی‌ام بهتر شده.","My English has improved.","","","improve","حال کامل با has + قسمت سوم ساخته می‌شود."),
-     (P,"گفتار","I've known her since 2015.","I've known her since 2015.","","","since","جمله را واضح تلفظ کنید.")],
+     (P,"گفتار","I've known her since 2015.","I've known her since 2015.","","","since","جمله را واضح تلفظ کن.")],
 
  15:[(R,"چندگزینه‌ای","Have you ___ been abroad?","ever","","ever | never | already","ever","برای پرسش از تجربه ever می‌آید."),
      (R,"تطبیق","abroad","خارج از کشور","","abroad | adventure | culture","abroad","واژه را به معنی درست وصل کن."),
@@ -341,7 +341,7 @@ EX = {
      (P,"متن آزاد","سوال بسازید با ever: you / climb / a mountain","Have you ever climbed a mountain?","","","climb","با Have you ever شروع کن."),
      (P,"مرتب‌سازی","cities / visited / many / I've","I've visited many cities.","","","visit","با فاعل شروع کن."),
      (P,"ترجمه به انگلیسی","تا حالا به ایران رفته‌ای؟","Have you ever been to Iran?","","","been","برای تجربه been می‌آید نه gone."),
-     (P,"گفتار","I've never done that before.","I've never done that before.","","","experience","جمله را واضح تلفظ کنید.")],
+     (P,"گفتار","I've never done that before.","I've never done that before.","","","experience","جمله را واضح تلفظ کن.")],
 
  16:[(R,"چندگزینه‌ای","I haven't finished ___ .","yet","","yet | already | just","yet","yet در منفی و آخر جمله می‌آید."),
      (R,"تطبیق","yet","هنوز","","yet | just | deadline","yet","واژه را به معنی درست وصل کن."),
@@ -350,7 +350,7 @@ EX = {
      (P,"متن آزاد","منفی کنید با yet: I've booked the tickets.","I haven't booked the tickets yet.","","","book","yet به انتهای جمله منفی می‌رود."),
      (P,"مرتب‌سازی","already / it / sent / I've","I've already sent it.","","","send","با فاعل شروع کن."),
      (P,"ترجمه به انگلیسی","قبلاً تمامش کرده‌ام.","I've already finished.","I have already finished.","","finish","already بین have و فعل می‌آید."),
-     (P,"گفتار","Everything is ready.","Everything is ready.","","","ready","جمله را واضح تلفظ کنید.")],
+     (P,"گفتار","Everything is ready.","Everything is ready.","","","ready","جمله را واضح تلفظ کن.")],
 
  17:[(R,"چندگزینه‌ای","I ___ him yesterday.","saw","","saw | have seen | had seen","before","با زمان تمام‌شده گذشته ساده می‌آید."),
      (R,"تطبیق","career","حرفه، شغل","","career | company | project","career","واژه را به معنی درست وصل کن."),
@@ -359,7 +359,7 @@ EX = {
      (P,"متن آزاد","با this week بنویسید: I / not / see / him","I haven't seen him this week.","","","lately","بازه‌ای که تمام نشده حال کامل می‌گیرد."),
      (P,"مرتب‌سازی","recently / we've / moved","We've recently moved.","","","move","با فاعل شروع کن."),
      (P,"ترجمه به انگلیسی","دو سال پیش نقل مکان کردم.","I moved two years ago.","","","ago","ago با گذشته ساده می‌آید."),
-     (P,"گفتار","A new cafe has recently opened.","A new cafe has recently opened.","","","recently","جمله را واضح تلفظ کنید.")],
+     (P,"گفتار","A new cafe has recently opened.","A new cafe has recently opened.","","","recently","جمله را واضح تلفظ کن.")],
 
  18:[(R,"چندگزینه‌ای","It ___ in Iran.","was made","","was made | was make | made","made","بعد از was قسمت سوم فعل می‌آید."),
      (R,"تطبیق","factory","کارخانه","","factory | material | machine","factory","واژه را به معنی درست وصل کن."),
@@ -368,7 +368,7 @@ EX = {
      (P,"متن آزاد","مجهول کنید: They sold the tickets quickly.","The tickets were sold quickly.","","","sold","مفعول به ابتدای جمله می‌رود."),
      (P,"مرتب‌سازی","here / is / rice / grown","Rice is grown here.","","","grown","با فاعل شروع کن."),
      (P,"ترجمه به انگلیسی","این محلی تولید می‌شود.","This is produced locally.","","","produced","مجهول حال با is + قسمت سوم ساخته می‌شود."),
-     (P,"گفتار","It's completely hand-made.","It's completely hand-made.","","","hand-made","جمله را واضح تلفظ کنید.")],
+     (P,"گفتار","It's completely hand-made.","It's completely hand-made.","","","hand-made","جمله را واضح تلفظ کن.")],
 
  19:[(R,"چندگزینه‌ای","The man ___ helped me was kind.","who","","who | which | where","who","برای افراد who می‌آید."),
      (R,"تطبیق","colleague","همکار","","colleague | owner | customer","colleague","واژه را به معنی درست وصل کن."),
@@ -377,7 +377,7 @@ EX = {
      (P,"متن آزاد","با where بنویسید: the cafe / we met","The cafe where we met.","","","where","برای مکان where می‌آید."),
      (P,"مرتب‌سازی","kind / who / very / a / is / person","A person who is very kind.","","","kind","با اسم شروع کن."),
      (P,"ترجمه به انگلیسی","همسایه‌ای که طبقه بالا زندگی می‌کند.","The neighbour who lives upstairs.","","","neighbour","برای افراد who می‌آید."),
-     (P,"گفتار","A tool which is really useful.","A tool which is really useful.","","","tool","جمله را واضح تلفظ کنید.")],
+     (P,"گفتار","A tool which is really useful.","A tool which is really useful.","","","tool","جمله را واضح تلفظ کن.")],
 
  20:[(R,"چندگزینه‌ای","We stayed ___ the rain.","because of","","because of | because | although","because of","پیش از اسم because of می‌آید."),
      (R,"تطبیق","scene","صحنه","","scene | character | silence","scene","واژه را به معنی درست وصل کن."),
@@ -386,5 +386,5 @@ EX = {
      (P,"متن آزاد","پایان ماجرا را بنویسید با At last: we / find / the road","At last, we found the road.","","","at last","بعد از At last ویرگول می‌آید."),
      (P,"مرتب‌سازی","dark / it / meanwhile / got","Meanwhile, it got dark.","","","meanwhile","قید ترتیب اول جمله می‌آید."),
      (P,"ترجمه به انگلیسی","سفر فراموش‌نشدنی‌ای بود.","It was an unforgettable trip.","","","unforgettable","با فاعل It شروع کن."),
-     (P,"گفتار","Sorry to interrupt, but I have a question.","Sorry to interrupt, but I have a question.","","","interrupt","جمله را واضح تلفظ کنید.")],
+     (P,"گفتار","Sorry to interrupt, but I have a question.","Sorry to interrupt, but I have a question.","","","interrupt","جمله را واضح تلفظ کن.")],
 }

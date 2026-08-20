@@ -288,7 +288,7 @@ EX = {
      (P,"متن آزاد","فشرده کنید: It is believed that it is old.","It is believed to be old.","","","it is believed","ساختار be + said/believed + to است."),
      (P,"مرتب‌سازی","fast / spread / news / the","The news spread fast.","","","spread","با فاعل شروع کن."),
      (P,"ترجمه به انگلیسی","اول باید راستی‌آزمایی کنیم.","We should verify it first.","","","verify","با فاعل We شروع کن."),
-     (P,"گفتار","Take it with a pinch of salt.","Take it with a pinch of salt.","","","take with a pinch of salt","جمله را واضح تلفظ کنید.")],
+     (P,"گفتار","Take it with a pinch of salt.","Take it with a pinch of salt.","","","take with a pinch of salt","جمله را واضح تلفظ کن.")],
 
  22:[(R,"چندگزینه‌ای","I ___ the car repaired.","had","","had | had been | have repaired","have something done","ساختار have + مفعول + قسمت سوم است."),
      (R,"تطبیق","plumber","لوله‌کش","","plumber | electrician | technician","plumber","واژه را به معنی درست وصل کن."),
@@ -297,7 +297,7 @@ EX = {
      (P,"متن آزاد","با get بنویسید: let's / it / fix","Let's get it fixed.","","","get something done","بعد از مفعول قسمت سوم می‌آید."),
      (P,"مرتب‌سازی","order / of / lift / out / the / is","The lift is out of order.","","","out of order","با فاعل شروع کن."),
      (P,"ترجمه به انگلیسی","هنوز تحت گارانتی است.","It's still under warranty.","","","under warranty","با فاعل It شروع کن."),
-     (P,"گفتار","I'll sort it out today.","I'll sort it out today.","","","sort out","جمله را واضح تلفظ کنید.")],
+     (P,"گفتار","I'll sort it out today.","I'll sort it out today.","","","sort out","جمله را واضح تلفظ کن.")],
 
  23:[(R,"چندگزینه‌ای","Fill ___ , please.","it in","","it in | in it | in","fill in","با ضمیر، مفعول وسط می‌آید."),
      (R,"تطبیق","paperwork","کاغذبازی","","paperwork | permit | proof","paperwork","واژه را به معنی درست وصل کن."),
@@ -306,7 +306,7 @@ EX = {
      (P,"متن آزاد","بنویسید: hand / it / by Friday","Hand it in by Friday.","","","hand in","جمله امری با فعل شروع می‌شود."),
      (P,"مرتب‌سازی","up / had / queue / we / to","We had to queue up.","","","queue up","با فاعل شروع کن."),
      (P,"ترجمه به انگلیسی","باید کارتم را تمدید کنم.","I need to renew my card.","","","renew","با فاعل I شروع کن."),
-     (P,"گفتار","Let's get it over with.","Let's get it over with.","","","get it over with","جمله را واضح تلفظ کنید.")],
+     (P,"گفتار","Let's get it over with.","Let's get it over with.","","","get it over with","جمله را واضح تلفظ کن.")],
 
  24:[(R,"چندگزینه‌ای","The man ___ car broke down.","whose","","whose | who | which","whose","برای مالکیت whose می‌آید."),
      (R,"تطبیق","tenant","مستأجر","","tenant | landlord | resident","tenant","واژه را به معنی درست وصل کن."),
@@ -315,7 +315,7 @@ EX = {
      (P,"متن آزاد","با which is why بنویسید: it rained / we stayed","It rained, which is why we stayed.","","","which is why","نیمه دوم با ویرگول می‌آید."),
      (P,"مرتب‌سازی","noise / put / can't / the / with / I / up","I can't put up with the noise.","","","put up with","با فاعل شروع کن."),
      (P,"ترجمه به انگلیسی","با همسایه‌هایمان کنار می‌آییم.","We get on with our neighbours.","","","get on with","با فاعل We شروع کن."),
-     (P,"گفتار","The rooms are spacious.","The rooms are spacious.","","","spacious","جمله را واضح تلفظ کنید.")],
+     (P,"گفتار","The rooms are spacious.","The rooms are spacious.","","","spacious","جمله را واضح تلفظ کن.")],
 
  25:[(R,"چندگزینه‌ای","There ___ be a shop here.","used to","","used to | would | was used to","used to be","برای حالت گذشته used to می‌آید."),
      (R,"تطبیق","nostalgia","حس نوستالژی","","nostalgia | memory | tradition","nostalgia","واژه را به معنی درست وصل کن."),
@@ -324,7 +324,7 @@ EX = {
      (P,"متن آزاد","با would بنویسید: every summer / we / visit","Every summer we would visit.","","","would","would برای کار تکراری گذشته می‌آید."),
      (P,"مرتب‌سازی","town / up / a / I / small / grew / in","I grew up in a small town.","","","grow up","با فاعل شروع کن."),
      (P,"ترجمه به انگلیسی","خیابان تا حد ناشناختنی عوض شده.","The street has changed beyond recognition.","","","change beyond recognition","حال کامل بساز."),
-     (P,"گفتار","I used to walk to school.","I used to walk to school.","","","used to","جمله را واضح تلفظ کنید.")],
+     (P,"گفتار","I used to walk to school.","I used to walk to school.","","","used to","جمله را واضح تلفظ کن.")],
 
  26:[(R,"چندگزینه‌ای","___ the rain, we went.","Despite","","Despite | Despite of | Although","despite","بعد از despite اسم می‌آید."),
      (R,"تطبیق","contrast","تضاد","","contrast | similarity | comparison","contrast","واژه را به معنی درست وصل کن."),
@@ -333,7 +333,7 @@ EX = {
      (P,"متن آزاد","با whereas بنویسید: he likes cities / I prefer villages","He likes cities, whereas I prefer villages.","","","whereas","پیش از whereas ویرگول می‌آید."),
      (P,"مرتب‌سازی","so / again / it / even / I'd / do","Even so, I'd do it again.","","","even so","با Even so شروع کن."),
      (P,"ترجمه به انگلیسی","برخلاف من، او لذت می‌برد.","Unlike me, she enjoys it.","","","unlike","با Unlike شروع کن."),
-     (P,"گفتار","However, the cost was high.","However, the cost was high.","","","however","جمله را واضح تلفظ کنید.")],
+     (P,"گفتار","However, the cost was high.","However, the cost was high.","","","however","جمله را واضح تلفظ کن.")],
 
  27:[(R,"چندگزینه‌ای","It's ___ more expensive.","far","","far | very | so","far more","با صفت تفضیلی far می‌آید نه very."),
      (R,"تطبیق","trade-off","بده‌بستان","","trade-off | preference | criteria","trade-off","واژه را به معنی درست وصل کن."),
@@ -342,7 +342,7 @@ EX = {
      (P,"متن آزاد","با the … the … بنویسید: we practise more / we get better","The more we practise, the better we get.","","","the more the better","هر دو نیمه the می‌خواهند."),
      (P,"مرتب‌سازی","costs / outweigh / benefits / the / the","The benefits outweigh the costs.","","","outweigh","با فاعل شروع کن."),
      (P,"ترجمه به انگلیسی","این به‌مراتب بهترین است.","This is by far the best.","","","by far","با فاعل This شروع کن."),
-     (P,"گفتار","It's good value for money.","It's good value for money.","","","value for money","جمله را واضح تلفظ کنید.")],
+     (P,"گفتار","It's good value for money.","It's good value for money.","","","value for money","جمله را واضح تلفظ کن.")],
 
  28:[(R,"چندگزینه‌ای","___ , it's fair.","In my opinion","","In my opinion | In my idea | To my opinion","in my opinion","عبارت ثابت in my opinion است."),
      (R,"تطبیق","viewpoint","دیدگاه","","viewpoint | argument | common ground","viewpoint","واژه را به معنی درست وصل کن."),
@@ -351,7 +351,7 @@ EX = {
      (P,"متن آزاد","مخالفت نرم بنویسید: that / work","I'm not sure about that.","","","I'm not sure about","با I'm not sure شروع کن."),
      (P,"مرتب‌سازی","ground / found / common / we","We found common ground.","","","common ground","با فاعل شروع کن."),
      (P,"ترجمه به انگلیسی","منظورت را می‌فهمم، اما…","I see your point, but…","","","I see your point","با عبارت ثابت شروع کن."),
-     (P,"گفتار","That's a convincing argument.","That's a convincing argument.","","","convincing","جمله را واضح تلفظ کنید.")],
+     (P,"گفتار","That's a convincing argument.","That's a convincing argument.","","","convincing","جمله را واضح تلفظ کن.")],
 
  29:[(R,"چندگزینه‌ای","___ , it's slow.","On the other hand","","On the other hand | In the other hand | At the other hand","on the one hand","حرف اضافه درست on است."),
      (R,"تطبیق","counter-argument","استدلال متقابل","","counter-argument | evidence for | conclude","counter-argument","واژه را به معنی درست وصل کن."),
@@ -360,7 +360,7 @@ EX = {
      (P,"متن آزاد","نتیجه بگیرید: we / choose the second","Therefore, we chose the second.","","","therefore","با قید نتیجه شروع کن."),
      (P,"مرتب‌سازی","all / went / in / all / well / it","All in all, it went well.","","","all in all","با All in all شروع کن."),
      (P,"ترجمه به انگلیسی","روی هم رفته ارزشش را دارد.","Overall, it's worth it.","","","overall","با قید شروع کن."),
-     (P,"گفتار","In conclusion, we should wait.","In conclusion, we should wait.","","","in conclusion","جمله را واضح تلفظ کنید.")],
+     (P,"گفتار","In conclusion, we should wait.","In conclusion, we should wait.","","","in conclusion","جمله را واضح تلفظ کن.")],
 
  30:[(R,"چندگزینه‌ای","I ___ working here for three years.","have been","","have been | had been | am","intermediate","حال کامل استمراری با have been ساخته می‌شود."),
      (R,"تطبیق","fluency","روانی","","fluency | accuracy | range","fluency","واژه را به معنی درست وصل کن."),
@@ -369,5 +369,5 @@ EX = {
      (P,"متن آزاد","با wish بنویسید: I / know / the answer","I wish I knew the answer.","","","capable","بعد از wish فعل به گذشته می‌رود."),
      (P,"مرتب‌سازی","practising / keep / day / every","Keep practising every day.","","","keep practising","جمله امری با فعل شروع می‌شود."),
      (P,"ترجمه به انگلیسی","حالا می‌توانم گفت‌وگو را ادامه دهم.","I can hold a conversation now.","","","hold a conversation","با فاعل I شروع کن."),
-     (P,"گفتار","Well done — level complete.","Well done — level complete.","","","well done","جمله را واضح تلفظ کنید.")],
+     (P,"گفتار","Well done — level complete.","Well done — level complete.","","","well done","جمله را واضح تلفظ کن.")],
 }

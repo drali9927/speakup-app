@@ -282,7 +282,7 @@ EX = {
      (P,"متن آزاد","با as long as بنویسید: it's fine / you / be careful","It's fine as long as you're careful.","","","as long as","نیمه دوم حال ساده می‌گیرد."),
      (P,"مرتب‌سازی","time / just / we / in / arrived","We arrived just in time.","","","just in time","با فاعل شروع کن."),
      (P,"ترجمه به انگلیسی","برای تأخیر آماده باش.","Be prepared for delays.","","","be prepared","جمله امری با فعل شروع می‌شود."),
-     (P,"گفتار","In the worst case, we'll walk.","In the worst case, we'll walk.","","","worst case","جمله را واضح تلفظ کنید.")],
+     (P,"گفتار","In the worst case, we'll walk.","In the worst case, we'll walk.","","","worst case","جمله را واضح تلفظ کن.")],
 
  12:[(R,"چندگزینه‌ای","He ___ forgotten.","must have","","must have | must had | must have forgot","must have","ساختار مدال + have + قسمت سوم است."),
      (R,"تطبیق","clue","سرنخ","","clue | doubt | theory","clue","واژه را به معنی درست وصل کن."),
@@ -291,7 +291,7 @@ EX = {
      (P,"متن آزاد","حدس بزنید: they / leave early (شاید)","They might have left early.","They may have left early.","","might have","برای احتمال might have می‌آید."),
      (P,"مرتب‌سازی","sense / that / makes","That makes sense.","","","make sense","با فاعل شروع کن."),
      (P,"ترجمه به انگلیسی","سر در نمی‌آورم.","I can't figure it out.","","","figure out","با فاعل I شروع کن."),
-     (P,"گفتار","No wonder he was tired.","No wonder he was tired.","","","no wonder","جمله را واضح تلفظ کنید.")],
+     (P,"گفتار","No wonder he was tired.","No wonder he was tired.","","","no wonder","جمله را واضح تلفظ کن.")],
 
  13:[(R,"چندگزینه‌ای","You ___ told me.","should have","","should have | should | should have tell","should have","ساختار should + have + قسمت سوم است."),
      (R,"تطبیق","fault","تقصیر","","fault | excuse | complaint","fault","واژه را به معنی درست وصل کن."),
@@ -300,7 +300,7 @@ EX = {
      (P,"متن آزاد","پشیمانی بنویسید: I / wait / so long","I shouldn't have waited so long.","","","shouldn't have","برای کار انجام‌شده و نادرست shouldn't have می‌آید."),
      (P,"مرتب‌سازی","for / it / up / make / I'll","I'll make up for it.","","","make up for","با فاعل شروع کن."),
      (P,"ترجمه به انگلیسی","خودت را سرزنش نکن.","Don't blame yourself.","","","blame","جمله امری منفی با Don't شروع می‌شود."),
-     (P,"گفتار","With hindsight, I was wrong.","With hindsight, I was wrong.","","","with hindsight","جمله را واضح تلفظ کنید.")],
+     (P,"گفتار","With hindsight, I was wrong.","With hindsight, I was wrong.","","","with hindsight","جمله را واضح تلفظ کن.")],
 
  14:[(R,"چندگزینه‌ای","It ___ been worse.","could have","","could have | should have | must have","could have","برای امکانِ نرفته could have می‌آید."),
      (R,"تطبیق","assumption","فرض","","assumption | expectation | outcome","assumption","واژه را به معنی درست وصل کن."),
@@ -309,7 +309,7 @@ EX = {
      (P,"متن آزاد","با In retrospect بنویسید: it / be / fine","In retrospect, it was fine.","","","in retrospect","بعد از عبارت ابتدایی ویرگول می‌آید."),
      (P,"مرتب‌سازی","work / underestimated / the / we","We underestimated the work.","","","underestimate","با فاعل شروع کن."),
      (P,"ترجمه به انگلیسی","زمان‌بندی می‌توانست بهتر باشد.","The timing could have been better.","","","timing","با فاعل شروع کن."),
-     (P,"گفتار","All things considered, it went well.","All things considered, it went well.","","","all things considered","جمله را واضح تلفظ کنید.")],
+     (P,"گفتار","All things considered, it went well.","All things considered, it went well.","","","all things considered","جمله را واضح تلفظ کن.")],
 
  15:[(R,"چندگزینه‌ای","I kept ___ anyway.","going","","going | to go | go","keep going","بعد از keep فعل ing می‌آید."),
      (R,"تطبیق","determination","عزم","","determination | motivation | setback","determination","واژه را به معنی درست وصل کن."),
@@ -318,7 +318,7 @@ EX = {
      (P,"متن آزاد","بنویسید: it / be / a turning point","It was a turning point.","","","turning point","با فاعل It شروع کن."),
      (P,"مرتب‌سازی","up / gave / almost / I","I almost gave up.","","","give up","با فاعل شروع کن."),
      (P,"ترجمه به انگلیسی","پشیمان نیستم.","I have no regrets.","","","no regrets","با فاعل I شروع کن."),
-     (P,"گفتار","In hindsight, it helped.","In hindsight, it helped.","","","in hindsight","جمله را واضح تلفظ کنید.")],
+     (P,"گفتار","In hindsight, it helped.","In hindsight, it helped.","","","in hindsight","جمله را واضح تلفظ کن.")],
 
  16:[(R,"چندگزینه‌ای","She asked me where ___ .","I lived","","I lived | did I live | do I live","interview","در نقل قول ترتیب خبری می‌شود."),
      (R,"تطبیق","candidate","داوطلب","","candidate | qualification | strength","candidate","واژه را به معنی درست وصل کن."),
@@ -327,7 +327,7 @@ EX = {
      (P,"متن آزاد","بازگو کنید: \"Did you finish?\" (she)","She asked if I had finished.","She asked whether I had finished.","","clarify","با if یا whether شروع کن."),
      (P,"مرتب‌سازی","up / follow / I'll / week / next","I'll follow up next week.","","","follow up","با فاعل شروع کن."),
      (P,"ترجمه به انگلیسی","به شما جواب می‌دهیم.","We'll get back to you.","","","get back to","با فاعل We شروع کن."),
-     (P,"گفتار","I felt well prepared.","I felt well prepared.","","","prepared","جمله را واضح تلفظ کنید.")],
+     (P,"گفتار","I felt well prepared.","I felt well prepared.","","","prepared","جمله را واضح تلفظ کن.")],
 
  17:[(R,"چندگزینه‌ای","He suggested ___ .","waiting","","waiting | to wait | me to wait","suggest","بعد از suggest فعل ing می‌آید."),
      (R,"تطبیق","agenda","دستور جلسه","","agenda | proposal | summary","agenda","واژه را به معنی درست وصل کن."),
@@ -336,7 +336,7 @@ EX = {
      (P,"متن آزاد","با offer بنویسید: he / help","He offered to help.","","","offer to","بعد از offer فعل با to می‌آید."),
      (P,"مرتب‌سازی","risk / out / she / the / pointed","She pointed out the risk.","","","point out","با فاعل شروع کن."),
      (P,"ترجمه به انگلیسی","بررسی‌اش می‌کنیم.","We'll look into it.","","","look into","با فاعل We شروع کن."),
-     (P,"گفتار","It was a productive meeting.","It was a productive meeting.","","","productive","جمله را واضح تلفظ کنید.")],
+     (P,"گفتار","It was a productive meeting.","It was a productive meeting.","","","productive","جمله را واضح تلفظ کن.")],
 
  18:[(R,"چندگزینه‌ای","They refused ___ .","to sign","","to sign | signing | sign","refuse","بعد از refuse فعل با to می‌آید."),
      (R,"تطبیق","contract","قرارداد","","contract | dispute | condition","contract","واژه را به معنی درست وصل کن."),
@@ -345,7 +345,7 @@ EX = {
      (P,"متن آزاد","بنویسید: let's / meet halfway","Let's meet halfway.","","","meet halfway","با Let's شروع کن."),
      (P,"مرتب‌سازی","down / talks / broke / the","The talks broke down.","","","break down","با فاعل شروع کن."),
      (P,"ترجمه به انگلیسی","می‌توانیم انعطاف‌پذیر باشیم.","We can be flexible.","","","flexible","با فاعل We شروع کن."),
-     (P,"گفتار","It was a reasonable offer.","It was a reasonable offer.","","","reasonable offer","جمله را واضح تلفظ کنید.")],
+     (P,"گفتار","It was a reasonable offer.","It was a reasonable offer.","","","reasonable offer","جمله را واضح تلفظ کن.")],
 
  19:[(R,"چندگزینه‌ای","___ , the plan has changed.","In other words","","In other words | With other words | On other words","in other words","عبارت ثابت in other words است."),
      (R,"تطبیق","clarification","شفاف‌سازی","","clarification | summary | main point","clarification","واژه را به معنی درست وصل کن."),
@@ -354,7 +354,7 @@ EX = {
      (P,"متن آزاد","ساده بگویید: we / start later","To put it simply, we start later.","","","to put it simply","با عبارت ثابت شروع کن."),
      (P,"مرتب‌سازی","point / the / I / get","I get the point.","","","get the point","با فاعل شروع کن."),
      (P,"ترجمه به انگلیسی","خلاصه اینکه توافق کردیم.","In short, we agreed.","","","in short","با عبارت ثابت شروع کن."),
-     (P,"گفتار","Let me make it clear.","Let me make it clear.","","","make it clear","جمله را واضح تلفظ کنید.")],
+     (P,"گفتار","Let me make it clear.","Let me make it clear.","","","make it clear","جمله را واضح تلفظ کن.")],
 
  20:[(R,"چندگزینه‌ای","The plan ___ reviewed at the moment.","is being","","is being | is | has being","review","مجهول استمراری با is being ساخته می‌شود."),
      (R,"تطبیق","committee","کمیته","","committee | authority | regulation","committee","واژه را به معنی درست وصل کن."),
@@ -363,5 +363,5 @@ EX = {
      (P,"متن آزاد","مجهول کنید: They appointed a new manager.","A new manager was appointed.","","","appoint","مفعول به ابتدای جمله می‌رود."),
      (P,"مرتب‌سازی","released / figures / were / the","The figures were released.","","","release","با فاعل شروع کن."),
      (P,"ترجمه به انگلیسی","به ما دو هفته داده شد.","We were given two weeks.","","","be given","با فاعل We شروع کن."),
-     (P,"گفتار","A survey was carried out.","A survey was carried out.","","","survey","جمله را واضح تلفظ کنید.")],
+     (P,"گفتار","A survey was carried out.","A survey was carried out.","","","survey","جمله را واضح تلفظ کن.")],
 }

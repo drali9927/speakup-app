@@ -217,7 +217,7 @@ EX = {
      (P,"متن آزاد","با while بنویسید: I was cooking. She called.","While I was cooking, she called.","","","while","while پیش از کار کشدار می‌آید."),
      (P,"مرتب‌سازی","raining / it / hard / was","It was raining hard.","","","rain","با فاعل شروع کن."),
      (P,"ترجمه به انگلیسی","وقتی زنگ زد داشتم آشپزی می‌کردم.","I was cooking when she called.","I was cooking when he called.","","while","کار کشدار استمراری و کار کوتاه ساده است."),
-     (P,"گفتار","Be careful on the stairs.","Be careful on the stairs.","","","careful","جمله را واضح تلفظ کنید.")],
+     (P,"گفتار","Be careful on the stairs.","Be careful on the stairs.","","","careful","جمله را واضح تلفظ کن.")],
 
  5: [(R,"چندگزینه‌ای","___ , the bus arrived.","Finally","","Finally | Suddenly | Then","finally","«سرانجام» پایان ماجرا را نشان می‌دهد."),
      (R,"تطبیق","nervous","مضطرب","","nervous | excited | strange","nervous","واژه را به معنی درست وصل کن."),
@@ -226,7 +226,7 @@ EX = {
      (P,"متن آزاد","کامل کنید: ___ the end, everything was fine.","In","","","end","«در پایان» یعنی in the end."),
      (P,"مرتب‌سازی","everything / she / explained","She explained everything.","","","explain","با فاعل شروع کن."),
      (P,"ترجمه به انگلیسی","متوجه شدم دیرم شده.","I realised I was late.","","","realise","گذشته realise با ed ساخته می‌شود."),
-     (P,"گفتار","In the end, everything was fine.","In the end, everything was fine.","","","end","جمله را واضح تلفظ کنید.")],
+     (P,"گفتار","In the end, everything was fine.","In the end, everything was fine.","","","end","جمله را واضح تلفظ کن.")],
 
  6: [(R,"چندگزینه‌ای","This is heavy. — I ___ carry it.","will","","will | am going to | was","carry","تصمیم همین لحظه با will می‌آید."),
      (R,"تطبیق","favour","لطف","","favour | help | promise","favour","واژه را به معنی درست وصل کن."),
@@ -235,7 +235,7 @@ EX = {
      (P,"متن آزاد","منفی کنید: I will forget.","I won't forget.","I will not forget.","","sure","منفی will همان won't است."),
      (P,"مرتب‌سازی","tea / bring / some / I'll","I'll bring some tea.","","","bring","با فاعل شروع کن."),
      (P,"ترجمه به انگلیسی","بعداً بهت زنگ می‌زنم.","I'll call you later.","I will call you later.","","later","تصمیم لحظه‌ای با will بیان می‌شود."),
-     (P,"گفتار","Of course I'll help you.","Of course I'll help you.","","","of course","جمله را واضح تلفظ کنید.")],
+     (P,"گفتار","Of course I'll help you.","Of course I'll help you.","","","of course","جمله را واضح تلفظ کن.")],
 
  7: [(R,"چندگزینه‌ای","I ___ Sara at six tomorrow.","'m meeting","","'m meeting | meet | met","meeting","قرار قطعی با حال استمراری بیان می‌شود."),
      (R,"تطبیق","guest","مهمان","","guest | party | plan","guest","واژه را به معنی درست وصل کن."),
@@ -244,7 +244,7 @@ EX = {
      (P,"متن آزاد","پیشنهاد بدهید با Let's: meet at six","Let's meet at six.","","","time","بعد از Let's فعل ساده می‌آید."),
      (P,"مرتب‌سازی","table / booking / a / I'm","I'm booking a table.","","","book","با فاعل شروع کن."),
      (P,"ترجمه به انگلیسی","آخر هفته آزادی؟","Are you free at the weekend?","","","weekend","با فعل to be شروع کن."),
-     (P,"گفتار","Please confirm the time tomorrow.","Please confirm the time tomorrow.","","","confirm","جمله را واضح تلفظ کنید.")],
+     (P,"گفتار","Please confirm the time tomorrow.","Please confirm the time tomorrow.","","","confirm","جمله را واضح تلفظ کن.")],
 
  8: [(R,"چندگزینه‌ای","It ___ rain tomorrow.","might","","might | might to | mights","might","بعد از might فعل ساده می‌آید."),
      (R,"تطبیق","forecast","پیش‌بینی هوا","","forecast | storm | delay","forecast","واژه را به معنی درست وصل کن."),
@@ -253,7 +253,7 @@ EX = {
      (P,"متن آزاد","منفی کنید: They might come.","They might not come.","","","expect","منفی might همان might not است."),
      (P,"مرتب‌سازی","case / an / take / just / umbrella / in","Take an umbrella just in case.","","","just in case","جمله امری با فعل شروع می‌شود."),
      (P,"ترجمه به انگلیسی","ممکن است تأخیر باشد.","There might be a delay.","","","delay","برای «هست» از there is استفاده کن."),
-     (P,"گفتار","There's a chance of rain today.","There's a chance of rain today.","","","chance","جمله را واضح تلفظ کنید.")],
+     (P,"گفتار","There's a chance of rain today.","There's a chance of rain today.","","","chance","جمله را واضح تلفظ کن.")],
 
  9: [(R,"چندگزینه‌ای","If it ___ , we'll stay at home.","rains","","rains | will rain | rained","if","بعد از if فعل حال ساده می‌آید."),
      (R,"تطبیق","decision","تصمیم","","decision | choice | reason","decision","واژه را به معنی درست وصل کن."),
@@ -262,7 +262,7 @@ EX = {
      (P,"متن آزاد","با unless بنویسید: We'll go if it doesn't rain.","We'll go unless it rains.","","","unless","unless خودش معنی منفی دارد."),
      (P,"مرتب‌سازی","late / hurry / otherwise / we'll / be","Hurry, otherwise we'll be late.","","","otherwise","جمله امری اول می‌آید."),
      (P,"ترجمه به انگلیسی","اگر دیر کنیم، از دستش می‌دهیم.","If we're late, we'll miss it.","","","miss","شرطی نوع اول: if + حال ساده، will + فعل ساده."),
-     (P,"گفتار","If it rains, we'll stay at home.","If it rains, we'll stay at home.","","","if","جمله را واضح تلفظ کنید.")],
+     (P,"گفتار","If it rains, we'll stay at home.","If it rains, we'll stay at home.","","","if","جمله را واضح تلفظ کن.")],
 
  10:[(R,"چندگزینه‌ای","I ___ the morning.","prefer","","prefer | prefers | preferring","prefer","با I فعل بدون s می‌آید."),
      (R,"تطبیق","budget","بودجه","","budget | option | schedule","budget","واژه را به معنی درست وصل کن."),
@@ -271,5 +271,5 @@ EX = {
      (P,"متن آزاد","با Let's بنویسید: share the cost","Let's share the cost.","","","share","بعد از Let's فعل ساده می‌آید."),
      (P,"مرتب‌سازی","idea / great / a / that's","That's a great idea.","","","idea","با فاعل شروع کن."),
      (P,"ترجمه به انگلیسی","چه کسی مسئول غذاست؟","Who is responsible for food?","Who's responsible for food?","","responsible","با کلمه پرسشی شروع کن."),
-     (P,"گفتار","Let's plan the trip together.","Let's plan the trip together.","","","together","جمله را واضح تلفظ کنید.")],
+     (P,"گفتار","Let's plan the trip together.","Let's plan the trip together.","","","together","جمله را واضح تلفظ کن.")],
 }

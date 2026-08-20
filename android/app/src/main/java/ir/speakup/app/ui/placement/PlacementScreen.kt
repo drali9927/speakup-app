@@ -101,7 +101,7 @@ fun PlacementScreen(
     ) {
         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
             Text(
-                "بیایید ببینیم از کجا شروع کنی",
+                "ببینیم از کجا شروع کنی",
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold,
             )

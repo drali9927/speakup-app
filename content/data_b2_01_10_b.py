@@ -292,7 +292,7 @@ EX = {
      (P,"متن آزاد","با bear in mind بنویسید: the deadline","Bear in mind the deadline.","","","bear in mind","جمله امری با فعل شروع می‌شود."),
      (P,"مرتب‌سازی","account / took / into / cost / we / the","We took the cost into account.","","","take into account","با فاعل شروع کن."),
      (P,"ترجمه به انگلیسی","علت زیربنایی متفاوت است.","The underlying cause is different.","","","underlying","با فاعل شروع کن."),
-     (P,"گفتار","It depends on your perspective.","It depends on your perspective.","","","perspective","جمله را واضح تلفظ کنید.")],
+     (P,"گفتار","It depends on your perspective.","It depends on your perspective.","","","perspective","جمله را واضح تلفظ کن.")],
 
  2: [(R,"چندگزینه‌ای","There was an increase ___ sales.","in","","in | of | for","increase","حرف اضافه ثابت in است."),
      (R,"تطبیق","proportion","نسبت","","proportion | majority | average","proportion","واژه را به معنی درست وصل کن."),
@@ -301,7 +301,7 @@ EX = {
      (P,"متن آزاد","با اسم بنویسید: Numbers declined slowly.","There was a slow decline in numbers.","","","decline","صفت جای قید را می‌گیرد."),
      (P,"مرتب‌سازی","off / growth / levelled","Growth levelled off.","","","level off","با فاعل شروع کن."),
      (P,"ترجمه به انگلیسی","روند کلی مثبت است.","The overall trend is positive.","","","overall trend","با فاعل شروع کن."),
-     (P,"گفتار","It peaked in summer, then stabilised.","It peaked in summer, then stabilised.","","","peak","جمله را واضح تلفظ کنید.")],
+     (P,"گفتار","It peaked in summer, then stabilised.","It peaked in summer, then stabilised.","","","peak","جمله را واضح تلفظ کن.")],
 
  3: [(R,"چندگزینه‌ای","It was cancelled ___ the storm.","due to","","due to | due | because","due to","بعد از due to اسم می‌آید."),
      (R,"تطبیق","factor","عامل","","factor | impact | outcome","factor","واژه را به معنی درست وصل کن."),
@@ -310,7 +310,7 @@ EX = {
      (P,"متن آزاد","با stem from بنویسید: the issue / cost","The issue stems from cost.","","","stem from","با فاعل شروع کن."),
      (P,"مرتب‌سازی","delay / resulted / a / it / in","It resulted in a delay.","","","result in","با فاعل شروع کن."),
      (P,"ترجمه به انگلیسی","در نتیجه قیمت‌ها بالا رفت.","As a consequence, prices rose.","","","as a consequence","با عبارت ثابت شروع کن."),
-     (P,"گفتار","We found the root cause.","We found the root cause.","","","root cause","جمله را واضح تلفظ کنید.")],
+     (P,"گفتار","We found the root cause.","We found the root cause.","","","root cause","جمله را واضح تلفظ کن.")],
 
  4: [(R,"چندگزینه‌ای","If I ___ known, I'd have come.","had","","had | would have | have","had known","بعد از if گذشته کامل می‌آید."),
      (R,"تطبیق","hindsight","نگاه به گذشته","","hindsight | missed opportunity | regretful","hindsight","واژه را به معنی درست وصل کن."),
@@ -319,7 +319,7 @@ EX = {
      (P,"متن آزاد","افسوس بنویسید با If only: I / ask","If only I had asked.","","","if only","برای گذشته had + قسمت سوم می‌آید."),
      (P,"مرتب‌سازی","it / on / dwell / don't","Don't dwell on it.","","","dwell on","جمله امری منفی با Don't شروع می‌شود."),
      (P,"ترجمه به انگلیسی","گذشته‌ها گذشته.","It's water under the bridge.","","","water under the bridge","با فاعل It شروع کن."),
-     (P,"گفتار","The mistake was entirely avoidable.","The mistake was entirely avoidable.","","","avoidable","جمله را واضح تلفظ کنید.")],
+     (P,"گفتار","The mistake was entirely avoidable.","The mistake was entirely avoidable.","","","avoidable","جمله را واضح تلفظ کن.")],
 
  5: [(R,"چندگزینه‌ای","___ that's true, we agree.","Assuming","","Assuming | Assume | Assumed","assuming","برای فرض، Assuming می‌آید."),
      (R,"تطبیق","contingency","پیش‌بینی احتیاطی","","contingency | likelihood | scenario","contingency","واژه را به معنی درست وصل کن."),
@@ -328,7 +328,7 @@ EX = {
      (P,"متن آزاد","شرطی سوم بسازید: we / leave earlier — we / not miss it","If we had left earlier, we wouldn't have missed it.","","","foresee","شرطی سوم: had + قسمت سوم، would have."),
      (P,"مرتب‌سازی","through / deal / fell / the","The deal fell through.","","","fall through","با فاعل شروع کن."),
      (P,"ترجمه به انگلیسی","نمی‌توانیم کنارش بگذاریم.","We can't rule it out.","","","rule out","با فاعل We شروع کن."),
-     (P,"گفتار","On reflection, it was right.","On reflection, it was right.","","","on reflection","جمله را واضح تلفظ کنید.")],
+     (P,"گفتار","On reflection, it was right.","On reflection, it was right.","","","on reflection","جمله را واضح تلفظ کن.")],
 
  6: [(R,"چندگزینه‌ای","If I had studied law, I ___ a lawyer now.","would be","","would be | would have been | will be","career path","با now نتیجه در حال است."),
      (R,"تطبیق","degree","مدرک دانشگاهی","","degree | qualification | turning point","degree","واژه را به معنی درست وصل کن."),
@@ -337,7 +337,7 @@ EX = {
      (P,"متن آزاد","شرطی مختلط بسازید: we / save — we / be better off today","If we had saved, we'd be better off today.","","","well off","نیمه دوم would + فعل ساده می‌گیرد."),
      (P,"مرتب‌سازی","here / up / I / ended","I ended up here.","","","end up","با فاعل شروع کن."),
      (P,"ترجمه به انگلیسی","نقطه عطف همان بود.","That was the turning point.","","","turning point","با فاعل That شروع کن."),
-     (P,"گفتار","I look back with gratitude.","I look back with gratitude.","","","look back with","جمله را واضح تلفظ کنید.")],
+     (P,"گفتار","I look back with gratitude.","I look back with gratitude.","","","look back with","جمله را واضح تلفظ کن.")],
 
  7: [(R,"چندگزینه‌ای","___ the rain, we'd have gone.","But for","","But for | But | Despite","but for","بعد از but for اسم می‌آید."),
      (R,"تطبیق","crucial","حیاتی","","crucial | essential | optional","crucial","واژه را به معنی درست وصل کن."),
@@ -346,7 +346,7 @@ EX = {
      (P,"متن آزاد","با Were it not for بنویسید: her / we fail","Were it not for her, we'd have failed.","","","were it not for","نیمه دوم would have می‌گیرد."),
      (P,"مرتب‌سازی","call / a / that / was / close","That was a close call.","","","close call","با فاعل شروع کن."),
      (P,"ترجمه به انگلیسی","به لطف او تمام کردیم.","Thanks to her, we finished.","","","thanks to","با عبارت ثابت شروع کن."),
-     (P,"گفتار","Failing that, we'll walk.","Failing that, we'll walk.","","","failing that","جمله را واضح تلفظ کنید.")],
+     (P,"گفتار","Failing that, we'll walk.","Failing that, we'll walk.","","","failing that","جمله را واضح تلفظ کن.")],
 
  8: [(R,"چندگزینه‌ای","You'd better ___ first.","ask","","ask | to ask | asking","had better","بعد از had better فعل ساده می‌آید."),
      (R,"تطبیق","reluctant","بی‌میل","","reluctant | keen | advisable","reluctant","واژه را به معنی درست وصل کن."),
@@ -355,7 +355,7 @@ EX = {
      (P,"متن آزاد","منفی کنید: You'd better be late.","You'd better not be late.","","","had better","منفی با better not ساخته می‌شود."),
      (P,"مرتب‌سازی","against / it / I'd / advise","I'd advise against it.","","","advise against","با فاعل شروع کن."),
      (P,"ترجمه به انگلیسی","قبل از پذیرفتن دو بار فکر کن.","Think twice before you accept.","","","think twice","جمله امری با فعل شروع می‌شود."),
-     (P,"گفتار","On second thoughts, let's wait.","On second thoughts, let's wait.","","","on second thoughts","جمله را واضح تلفظ کنید.")],
+     (P,"گفتار","On second thoughts, let's wait.","On second thoughts, let's wait.","","","on second thoughts","جمله را واضح تلفظ کن.")],
 
  9: [(R,"چندگزینه‌ای","I look forward to ___ from you.","hearing","","hearing | hear | to hear","look forward to","اینجا to حرف اضافه است."),
      (R,"تطبیق","frustration","کلافگی","","frustration | acceptance | patience","frustration","واژه را به معنی درست وصل کن."),
@@ -364,7 +364,7 @@ EX = {
      (P,"متن آزاد","با There's no point بنویسید: wait","There's no point in waiting.","","","there's no point","بعد از in فعل ing می‌آید."),
      (P,"مرتب‌سازی","it / with / terms / came / he / to","He came to terms with it.","","","come to terms with","با فاعل شروع کن."),
      (P,"ترجمه به انگلیسی","بیا بهترین استفاده را از آن بکنیم.","Let's make the best of it.","","","make the best of","با Let's شروع کن."),
-     (P,"گفتار","I understand your frustration.","I understand your frustration.","","","frustration","جمله را واضح تلفظ کنید.")],
+     (P,"گفتار","I understand your frustration.","I understand your frustration.","","","frustration","جمله را واضح تلفظ کن.")],
 
  10:[(R,"چندگزینه‌ای","It's ___ complex to explain.","too","","too | enough | very","too … to","ساختار too + صفت + to است."),
      (R,"تطبیق","ambiguity","ابهام","","ambiguity | clarity | terminology","ambiguity","واژه را به معنی درست وصل کن."),
@@ -373,5 +373,5 @@ EX = {
      (P,"متن آزاد","هدف بنویسید با in order to: we / split up — save time","In order to save time, we split up.","","","in order to","بعد از عبارت ابتدایی ویرگول می‌آید."),
      (P,"مرتب‌سازی","down / break / let's / it","Let's break it down.","","","break down","با Let's شروع کن."),
      (P,"ترجمه به انگلیسی","می‌شود به زبان ساده بگویید؟","Could you put it in layman's terms?","","","layman's terms","با Could you شروع کن."),
-     (P,"گفتار","Could you elaborate on that?","Could you elaborate on that?","","","elaborate","جمله را واضح تلفظ کنید.")],
+     (P,"گفتار","Could you elaborate on that?","Could you elaborate on that?","","","elaborate","جمله را واضح تلفظ کن.")],
 }

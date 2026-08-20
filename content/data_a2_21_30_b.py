@@ -307,7 +307,7 @@ EX = {
      (P,"متن آزاد","منفی کنید: You should work today.","You shouldn't work today.","You should not work today.","","should","منفی should همان shouldn't است."),
      (P,"مرتب‌سازی","today / finish / must / I / this","I must finish this today.","","","must","با فاعل شروع کن."),
      (P,"ترجمه به انگلیسی","باید استراحت کنی.","You should rest.","","","rest","برای توصیه should می‌آید."),
-     (P,"گفتار","You should see a doctor.","You should see a doctor.","","","advice","جمله را واضح تلفظ کنید.")],
+     (P,"گفتار","You should see a doctor.","You should see a doctor.","","","advice","جمله را واضح تلفظ کن.")],
 
  22:[(R,"چندگزینه‌ای","You ___ park here. (ممنوع است)","mustn't","","mustn't | don't have to | shouldn't","mustn't","برای ممنوعیت mustn't می‌آید."),
      (R,"تطبیق","forbidden","ممنوع","","forbidden | allowed | warning","forbidden","واژه را به معنی درست وصل کن."),
@@ -316,7 +316,7 @@ EX = {
      (P,"متن آزاد","با can't بنویسید: enter / you / here","You can't enter here.","","","enter","با فاعل شروع کن."),
      (P,"مرتب‌سازی","touch / please / don't / this","Please don't touch this.","","","touch","با Please شروع کن."),
      (P,"ترجمه به انگلیسی","اینجا سیگار کشیدن ممنوع است.","Smoking is forbidden here.","","","forbidden","با اسم فعل شروع کن."),
-     (P,"گفتار","It's for your safety.","It's for your safety.","","","safety","جمله را واضح تلفظ کنید.")],
+     (P,"گفتار","It's for your safety.","It's for your safety.","","","safety","جمله را واضح تلفظ کن.")],
 
  23:[(R,"چندگزینه‌ای","___ you help me, please?","Could","","Could | Should | Must","could","برای درخواست مؤدبانه could می‌آید."),
      (R,"تطبیق","borrow","قرض گرفتن","","borrow | lend | pass","borrow","واژه را به معنی درست وصل کن."),
@@ -325,7 +325,7 @@ EX = {
      (P,"متن آزاد","مؤدبانه کنید: Give me the salt.","Could you pass the salt, please?","Could you pass me the salt, please?","","pass","با Could you شروع کن."),
      (P,"مرتب‌سازی","pen / borrow / I / could / your","Could I borrow your pen?","","","borrow","با Could شروع کن."),
      (P,"ترجمه به انگلیسی","می‌شود بلندتر صحبت کنید؟","Could you speak up, please?","Could you speak up?","","speak up","با Could you شروع کن."),
-     (P,"گفتار","Excuse me, could I ask something?","Excuse me, could I ask something?","","","excuse me","جمله را واضح تلفظ کنید.")],
+     (P,"گفتار","Excuse me, could I ask something?","Excuse me, could I ask something?","","","excuse me","جمله را واضح تلفظ کن.")],
 
  24:[(R,"چندگزینه‌ای","I'd like ___ a room.","to book","","to book | book | booking","would like","بعد از would like فعل با to می‌آید."),
      (R,"تطبیق","reservation","رزرو","","reservation | luggage | bill","reservation","واژه را به معنی درست وصل کن."),
@@ -334,7 +334,7 @@ EX = {
      (P,"متن آزاد","مؤدبانه بخواهید: the bill","Could I have the bill, please?","","","bill","با Could I have شروع کن."),
      (P,"مرتب‌سازی","nights / a / for / room / three / double","A double room for three nights.","","","double room","با اسم شروع کن."),
      (P,"ترجمه به انگلیسی","مایلم اتاقی رزرو کنم.","I'd like to book a room.","I would like to book a room.","","reservation","با I'd like شروع کن."),
-     (P,"گفتار","Could we have extra towels?","Could we have extra towels?","","","towel","جمله را واضح تلفظ کنید.")],
+     (P,"گفتار","Could we have extra towels?","Could we have extra towels?","","","towel","جمله را واضح تلفظ کن.")],
 
  25:[(R,"چندگزینه‌ای","My back ___ .","hurts","","hurts | is hurt | hurting","hurt","hurt خودش فعل است."),
      (R,"تطبیق","prescription","نسخه","","prescription | pharmacy | treatment","prescription","واژه را به معنی درست وصل کن."),
@@ -343,7 +343,7 @@ EX = {
      (P,"متن آزاد","سوال بسازید: I've felt like this since Monday.","How long have you felt like this?","","","symptom","با How long شروع کن."),
      (P,"مرتب‌سازی","better / feel / much / I","I feel much better.","","","feel","با فاعل شروع کن."),
      (P,"ترجمه به انگلیسی","سرفه بدی دارم.","I have a bad cough.","","","cough","با فاعل I شروع کن."),
-     (P,"گفتار","I'll write you a prescription.","I'll write you a prescription.","","","prescription","جمله را واضح تلفظ کنید.")],
+     (P,"گفتار","I'll write you a prescription.","I'll write you a prescription.","","","prescription","جمله را واضح تلفظ کن.")],
 
  26:[(R,"چندگزینه‌ای","I enjoy ___ .","reading","","reading | to read | read","enjoy","بعد از enjoy فعل ing می‌گیرد."),
      (R,"تطبیق","enjoy","لذت بردن","","enjoy | avoid | practise","enjoy","واژه را به معنی درست وصل کن."),
@@ -352,7 +352,7 @@ EX = {
      (P,"متن آزاد","کامل کنید: She's good ___ languages.","at","","","good at","بعد از good حرف اضافه at می‌آید."),
      (P,"مرتب‌سازی","driving / avoid / night / I / at","I avoid driving at night.","","","avoid","با فاعل شروع کن."),
      (P,"ترجمه به انگلیسی","امیدوارم به‌زودی سفر کنم.","I hope to travel soon.","","","hope to","بعد از hope فعل با to می‌آید."),
-     (P,"گفتار","Reading helps me relax.","Reading helps me relax.","","","reading","جمله را واضح تلفظ کنید.")],
+     (P,"گفتار","Reading helps me relax.","Reading helps me relax.","","","reading","جمله را واضح تلفظ کن.")],
 
  27:[(R,"چندگزینه‌ای","He ___ me to wait.","told","","told | said | asked","told","told مخاطب می‌گیرد."),
      (R,"تطبیق","truth","حقیقت","","truth | lie | secret","truth","واژه را به معنی درست وصل کن."),
@@ -361,7 +361,7 @@ EX = {
      (P,"متن آزاد","بازگو کنید: \"I am tired.\" (he)","He said he was tired.","","","said","زمان یک پله عقب می‌رود."),
      (P,"مرتب‌سازی","back / come / told / to / me / she","She told me to come back.","","","told","با فاعل شروع کن."),
      (P,"ترجمه به انگلیسی","توضیح داد که دیر شده.","She explained that it was late.","He explained that it was late.","","explained that","با فاعل شروع کن."),
-     (P,"گفتار","According to Ali, it's closed.","According to Ali, it's closed.","","","according to","جمله را واضح تلفظ کنید.")],
+     (P,"گفتار","According to Ali, it's closed.","According to Ali, it's closed.","","","according to","جمله را واضح تلفظ کن.")],
 
  28:[(R,"چندگزینه‌ای","It isn't big ___ .","enough","","enough | too | very","enough","enough بعد از صفت می‌آید."),
      (R,"تطبیق","empty","خالی","","empty | full | extra","empty","واژه را به معنی درست وصل کن."),
@@ -370,7 +370,7 @@ EX = {
      (P,"متن آزاد","با too بنویسید: the soup / hot / drink","The soup is too hot to drink.","","","hot","ساختار too + صفت + to + فعل است."),
      (P,"مرتب‌سازی","tight / shoes / too / these / are","These shoes are too tight.","","","tight","با فاعل شروع کن."),
      (P,"ترجمه به انگلیسی","بیش از حد گران است.","It's too expensive.","","","too","«بیش از حد» یعنی too."),
-     (P,"گفتار","There isn't enough space.","There isn't enough space.","","","space","جمله را واضح تلفظ کنید.")],
+     (P,"گفتار","There isn't enough space.","There isn't enough space.","","","space","جمله را واضح تلفظ کن.")],
 
  29:[(R,"چندگزینه‌ای","I didn't buy ___ .","anything","","anything | nothing | something","anything","در جمله منفی any می‌آید."),
      (R,"تطبیق","nothing","هیچ‌چیز","","nothing | something | everything","nothing","واژه را به معنی درست وصل کن."),
@@ -379,7 +379,7 @@ EX = {
      (P,"متن آزاد","درست کنید: Everybody are here.","Everybody is here.","","","everybody","این ضمیرها فعل مفرد می‌گیرند."),
      (P,"مرتب‌سازی","everywhere / looked / I","I looked everywhere.","","","everywhere","با فاعل شروع کن."),
      (P,"ترجمه به انگلیسی","جایی برای نشستن نیست.","There's nowhere to sit.","There is nowhere to sit.","","nowhere","با There's شروع کن."),
-     (P,"گفتار","Did anyone see the owner?","Did anyone see the owner?","","","anyone","جمله را واضح تلفظ کنید.")],
+     (P,"گفتار","Did anyone see the owner?","Did anyone see the owner?","","","anyone","جمله را واضح تلفظ کن.")],
 
  30:[(R,"چندگزینه‌ای","I ___ here for six years.","have lived","","have lived | was living | live","level","برای مدتی که ادامه دارد حال کامل می‌آید."),
      (R,"تطبیق","goal","هدف","","goal | level | challenge","goal","واژه را به معنی درست وصل کن."),
@@ -388,5 +388,5 @@ EX = {
      (P,"متن آزاد","با although بنویسید: it was late / we continued","Although it was late, we continued.","","","challenge","بعد از نیمه اول ویرگول می‌آید."),
      (P,"مرتب‌سازی","step / by / learn / step","Learn step by step.","","","step by step","جمله امری با فعل شروع می‌شود."),
      (P,"ترجمه به انگلیسی","برای سطح بعد آماده‌ای.","You're ready for the next level.","You are ready for the next level.","","next level","با فاعل شروع کن."),
-     (P,"گفتار","Mistakes happen — keep going.","Mistakes happen — keep going.","","","keep going","جمله را واضح تلفظ کنید.")],
+     (P,"گفتار","Mistakes happen — keep going.","Mistakes happen — keep going.","","","keep going","جمله را واضح تلفظ کن.")],
 }

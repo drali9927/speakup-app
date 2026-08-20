@@ -235,7 +235,7 @@ EX = {
       (P,"متن آزاد","با ing بنویسید: run","running","","","run","فعل کوتاه است، حرف آخر دو بار می‌آید."),
       (P,"مرتب‌سازی","music / I / love / listening / to","I love listening to music.","","","music","با فاعل شروع کن."),
       (P,"ترجمه به انگلیسی","او از آشپزی متنفر است.","He hates cooking.","She hates cooking.","","cooking","بعد از hate فعل با ing می‌آید."),
-      (P,"گفتار","This film is very interesting.","This film is very interesting.","","","interesting","جمله را واضح تلفظ کنید.")],
+      (P,"گفتار","This film is very interesting.","This film is very interesting.","","","interesting","جمله را واضح تلفظ کن.")],
 
  12: [(R,"چندگزینه‌ای","There isn't ___ milk.","any","","some | any | a","any","در جمله منفی any می‌آید."),
       (R,"تطبیق","bread","نان","","bread | rice | meat","bread","واژه را به معنی درست وصل کن."),
@@ -244,7 +244,7 @@ EX = {
       (P,"متن آزاد","سوالی کنید: There are some apples.","Are there any apples?","","","apple","جای there و are عوض می‌شود."),
       (P,"مرتب‌سازی","water / some / can / have / I","Can I have some water?","","","water","سوال با فعل شروع می‌شود."),
       (P,"ترجمه به انگلیسی","هیچ شیری نیست.","There isn't any milk.","There is no milk.","","milk","برای منفی از any استفاده کن."),
-      (P,"گفتار","I'm very hungry and thirsty.","I'm very hungry and thirsty.","","","hungry","جمله را واضح تلفظ کنید.")],
+      (P,"گفتار","I'm very hungry and thirsty.","I'm very hungry and thirsty.","","","hungry","جمله را واضح تلفظ کن.")],
 
  13: [(R,"چندگزینه‌ای","___ like the soup, please.","I'd","","I'd | I'm | I've","soup","شکل کوتاه would like همان I'd like است."),
       (R,"تطبیق","bill","صورتحساب","","bill | menu | order","bill","واژه را به معنی درست وصل کن."),
@@ -253,7 +253,7 @@ EX = {
       (P,"متن آزاد","درخواست کنید: صورتحساب","Can I have the bill, please?","Could I have the bill, please?","","bill","با Can I have شروع کن."),
       (P,"مرتب‌سازی","two / a / for / table / please","A table for two, please.","","","table","با اسم شروع می‌شود."),
       (P,"ترجمه به انگلیسی","این سوپ خوشمزه است.","This soup is delicious.","","","delicious","صفت بعد از فعل to be می‌آید."),
-      (P,"گفتار","Can I have some water, please?","Can I have some water, please?","","","water","جمله را واضح تلفظ کنید.")],
+      (P,"گفتار","Can I have some water, please?","Can I have some water, please?","","","water","جمله را واضح تلفظ کن.")],
 
  14: [(R,"چندگزینه‌ای","___ three rooms in my flat.","There are","","There is | There are | It is","room","برای جمع there are می‌آید."),
       (R,"تطبیق","kitchen","آشپزخانه","","kitchen | bedroom | garden","kitchen","واژه را به معنی درست وصل کن."),
@@ -262,7 +262,7 @@ EX = {
       (P,"متن آزاد","سوالی کنید: There is a balcony.","Is there a balcony?","","","balcony","جای there و is عوض می‌شود."),
       (P,"مرتب‌سازی","two / are / windows / there","There are two windows.","","","window","با there شروع کن."),
       (P,"ترجمه به انگلیسی","یک آشپزخانه بزرگ هست.","There is a big kitchen.","There's a big kitchen.","","kitchen","برای «هست» از there is استفاده کن."),
-      (P,"گفتار","There are three rooms and a kitchen.","There are three rooms and a kitchen.","","","room","جمله را واضح تلفظ کنید.")],
+      (P,"گفتار","There are three rooms and a kitchen.","There are three rooms and a kitchen.","","","room","جمله را واضح تلفظ کن.")],
 
  15: [(R,"چندگزینه‌ای","The cat is ___ the table.","under","","in | on | under","under","«زیر» یعنی under."),
       (R,"تطبیق","shelf","قفسه","","shelf | desk | mirror","shelf","واژه را به معنی درست وصل کن."),
@@ -271,7 +271,7 @@ EX = {
       (P,"متن آزاد","سوال بسازید: It's under the sofa.","Where is it?","Where's it?","","sofa","برای پرسیدن جا از where استفاده کن."),
       (P,"مرتب‌سازی","the / on / book / is / table / the","The book is on the table.","","","book","با فاعل شروع کن."),
       (P,"ترجمه به انگلیسی","صندلی پشت در است.","The chair is behind the door.","","","chair","«پشت» یعنی behind."),
-      (P,"گفتار","The picture is on the wall.","The picture is on the wall.","","","picture","جمله را واضح تلفظ کنید.")],
+      (P,"گفتار","The picture is on the wall.","The picture is on the wall.","","","picture","جمله را واضح تلفظ کن.")],
 
  16: [(R,"چندگزینه‌ای","She ___ got a blue dress.","has","","have | has | is","dress","با she فعل has می‌آید."),
       (R,"تطبیق","scarf","شال گردن","","scarf | hat | coat","scarf","واژه را به معنی درست وصل کن."),
@@ -280,7 +280,7 @@ EX = {
       (P,"متن آزاد","درست بنویسید: a coat red","a red coat","","","coat","صفت پیش از اسم می‌آید."),
       (P,"مرتب‌سازی","white / has / a / he / shirt / got","He has got a white shirt.","He's got a white shirt.","","shirt","با فاعل شروع کن."),
       (P,"ترجمه به انگلیسی","کفش‌های من مشکی است.","My shoes are black.","","","shoes","shoes جمع است، پس are می‌آید."),
-      (P,"گفتار","I have got a green scarf.","I have got a green scarf.","","","scarf","جمله را واضح تلفظ کنید.")],
+      (P,"گفتار","I have got a green scarf.","I have got a green scarf.","","","scarf","جمله را واضح تلفظ کن.")],
 
  17: [(R,"چندگزینه‌ای","How much ___ these shoes?","are","","is | are | do","shoes","shoes جمع است، پس are می‌آید."),
       (R,"تطبیق","expensive","گران","","expensive | cheap | open","expensive","واژه را به معنی درست وصل کن."),
@@ -289,7 +289,7 @@ EX = {
       (P,"متن آزاد","جمع کنید: How much is this bag?","How much are these bags?","","","bag","this به these و is به are تبدیل می‌شود."),
       (P,"مرتب‌سازی","try / can / on / I / it","Can I try it on?","","","try on","سوال با فعل شروع می‌شود."),
       (P,"ترجمه به انگلیسی","این کفش‌ها ارزان هستند.","These shoes are cheap.","","","cheap","برای نزدیک و جمع these می‌آید."),
-      (P,"گفتار","How much is this, please?","How much is this, please?","","","price","جمله را واضح تلفظ کنید.")],
+      (P,"گفتار","How much is this, please?","How much is this, please?","","","price","جمله را واضح تلفظ کن.")],
 
  18: [(R,"چندگزینه‌ای","___ cold today.","It's","","It's | Is | There's","cold","جمله آب‌وهوا با it شروع می‌شود."),
       (R,"تطبیق","winter","زمستان","","winter | summer | spring","winter","واژه را به معنی درست وصل کن."),
@@ -298,7 +298,7 @@ EX = {
       (P,"متن آزاد","سوال بسازید: It's sunny.","How is the weather?","What's the weather like?","","weather","برای پرسش از هوا این دو ساختار به‌کار می‌رود."),
       (P,"مرتب‌سازی","umbrella / an / take","Take an umbrella.","","","umbrella","جمله امری با فعل شروع می‌شود."),
       (P,"ترجمه به انگلیسی","امروز ابری است.","It is cloudy today.","It's cloudy today.","","cloudy","با It is شروع کن."),
-      (P,"گفتار","It's sunny and warm today.","It's sunny and warm today.","","","sunny","جمله را واضح تلفظ کنید.")],
+      (P,"گفتار","It's sunny and warm today.","It's sunny and warm today.","","","sunny","جمله را واضح تلفظ کن.")],
 
  19: [(R,"چندگزینه‌ای","She ___ swim very well.","can","","can | cans | can to","swim","can با هیچ فاعلی s نمی‌گیرد."),
       (R,"تطبیق","drive","رانندگی کردن","","drive | ride | run","drive","واژه را به معنی درست وصل کن."),
@@ -307,7 +307,7 @@ EX = {
       (P,"متن آزاد","سوالی کنید: You can swim.","Can you swim?","","","swim","can به ابتدای جمله می‌رود."),
       (P,"مرتب‌سازی","me / you / help / can","Can you help me?","","","help","سوال با can شروع می‌شود."),
       (P,"ترجمه به انگلیسی","او نمی‌تواند آواز بخواند.","She can't sing.","He can't sing.","","sing","برای منفی can't به‌کار می‌رود."),
-      (P,"گفتار","I can speak a little English.","I can speak a little English.","","","speak","جمله را واضح تلفظ کنید.")],
+      (P,"گفتار","I can speak a little English.","I can speak a little English.","","","speak","جمله را واضح تلفظ کن.")],
 
  20: [(R,"چندگزینه‌ای","You ___ rest at home.","should","","should | should to | shoulds","should","بعد از should فعل ساده می‌آید."),
       (R,"تطبیق","fever","تب","","fever | headache | cold","fever","واژه را به معنی درست وصل کن."),
@@ -316,5 +316,5 @@ EX = {
       (P,"متن آزاد","با have got بنویسید: She has a cold.","She has got a cold.","She's got a cold.","","cold","has را به has got تبدیل کن."),
       (P,"مرتب‌سازی","doctor / should / a / he / see","He should see a doctor.","","","doctor","با فاعل شروع کن."),
       (P,"ترجمه به انگلیسی","خیلی خسته‌ام.","I am very tired.","I'm very tired.","","tired","با فعل to be شروع کن."),
-      (P,"گفتار","I have a headache and a fever.","I have a headache and a fever.","","","headache","جمله را واضح تلفظ کنید.")],
+      (P,"گفتار","I have a headache and a fever.","I have a headache and a fever.","","","headache","جمله را واضح تلفظ کن.")],
 }

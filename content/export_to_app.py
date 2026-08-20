@@ -168,7 +168,7 @@ def main():
             if not chunk:
                 continue
             aid = act(sid, part * 2 - 1, f"Vocabulary {part}",
-                      "لغات جدید درس را مرور کرده و معنای آن را بخاطر بسپارید.", "FLASHCARD")
+                      "واژه‌های تازه درس را ببین و معنی‌شان را به‌خاطر بسپار.", "FLASHCARD")
             for i, v in enumerate(chunk, 1):
                 items.append({
                     "id": f"{aid}-I{i:02d}", "activityId": aid, "sortOrder": i,
@@ -196,7 +196,7 @@ def main():
             # DIALOGUE و نه LISTENING: مکالمه صفحه گفتگو دارد، نه تمرین
             # دیکته. وقتی نوعش LISTENING بود، هر خط مکالمه به یک دیکته
             # چندجمله‌ای تبدیل می‌شد که نه شدنی بود نه هدف این بخش.
-            aid = act(sid, 1, "Conversation 1", "مکالمه درس را گوش کنید و دنبال کنید.", "DIALOGUE")
+            aid = act(sid, 1, "Conversation 1", "مکالمه درس را گوش کن و دنبال کن.", "DIALOGUE")
             for i, d in enumerate(dialog[n], 1):
                 items.append({
                     "id": f"{aid}-I{i:02d}", "activityId": aid, "sortOrder": i,
@@ -245,7 +245,7 @@ def main():
         order = 0
         for g in grammar.get(n, []):
             order += 1
-            aid = act(sid, order, g["کارت"], "گرامر درس را با دقت آموزش ببینید.", "TEACHING")
+            aid = act(sid, order, g["کارت"], "گرامر درس را با دقت یاد بگیر.", "TEACHING")
             # پرسش بررسی و نکته هر گزینه غلط، همراه خودِ کارت می‌روند تا
             # صفحه آموزش بتواند بلافاصله بعد از توضیح بپرسد.
             tips = {}
@@ -276,7 +276,7 @@ def main():
                 continue
             order += 1
             aid = act(sid, order, e["تمرین"],
-                      "پس از یادگیری گرامر، تمرینات مربوط به آن را انجام دهید.", atype)
+                      "بعد از گرامر، تمرین‌هایش را انجام بده.", atype)
             items.append({
                 "id": f"{aid}-I01", "activityId": aid, "sortOrder": 1,
                 "prompt": e["صورت سوال"],
@@ -299,7 +299,7 @@ def main():
         # انتخاب‌های شنیدار (۲، ۸، ۱۴) یکی نیست تا همان جمله دو بار نیاید.
         if speaking_rows:
             sid = sec(lesson_id, "SPEAKING", 4, 0)
-            aid = act(sid, 1, "Speaking 1", "در این بخش، گفتار انگلیسی خود را تقویت کنید.", "SPEAKING")
+            aid = act(sid, 1, "Speaking 1", "در این بخش، انگلیسی حرف زدنت را قوی‌تر کن.", "SPEAKING")
             order_s = 0
             for e in speaking_rows:
                 order_s += 1
@@ -381,7 +381,7 @@ def main():
                 continue
             aid = act(
                 sid, part, f"Vocabulary Review {part}",
-                "واژه‌های این درس را مرور کنید.", "TRANSLATE_TO_EN",
+                "واژه‌های این درس را مرور کن.", "TRANSLATE_TO_EN",
             )
             for i, v in enumerate(chunk, 1):
                 items.append({

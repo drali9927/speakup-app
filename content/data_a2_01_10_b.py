@@ -102,7 +102,7 @@ EX = {
      (P,"متن آزاد","قید را در جای درست بگذارید: I take the bus. (usually)","I usually take the bus.","","","usually","قید پیش از فعل اصلی می‌آید."),
      (P,"مرتب‌سازی","ever / she / out / hardly / eats","She hardly ever eats out.","","","hardly ever","قید پیش از فعل اصلی می‌آید."),
      (P,"ترجمه به انگلیسی","ساعت هفت بیدار می‌شوم.","I wake up at seven.","","","wake up","با I فعل بدون s می‌آید."),
-     (P,"گفتار","I usually leave home at eight.","I usually leave home at eight.","","","leave","جمله را واضح تلفظ کنید.")],
+     (P,"گفتار","I usually leave home at eight.","I usually leave home at eight.","","","leave","جمله را واضح تلفظ کن.")],
 
  2: [(R,"چندگزینه‌ای","She ___ dinner at the moment.","is cooking","","is cooking | cooks | cook","cook","at the moment یعنی همین حالا."),
      (R,"تطبیق","neighbour","همسایه","","neighbour | noise | laundry","neighbour","واژه را به معنی درست وصل کن."),
@@ -111,7 +111,7 @@ EX = {
      (P,"متن آزاد","سوالی کنید: You are tidying the room.","Are you tidying the room?","","","tidy","فعل to be به ابتدای جمله می‌رود."),
      (P,"مرتب‌سازی","still / is / working / he","He is still working.","He's still working.","","still","قید still پیش از فعل اصلی می‌آید."),
      (P,"ترجمه به انگلیسی","خانه الان ساکت است.","The house is quiet now.","","","quiet","با فعل to be شروع کن."),
-     (P,"گفتار","We are cooking together at the moment.","We are cooking together at the moment.","","","together","جمله را واضح تلفظ کنید.")],
+     (P,"گفتار","We are cooking together at the moment.","We are cooking together at the moment.","","","together","جمله را واضح تلفظ کن.")],
 
  3: [(R,"چندگزینه‌ای","We ___ at university ten years ago.","met","","met | meeted | meet","met","گذشته meet همان met است."),
      (R,"تطبیق","memory","خاطره","","memory | childhood | event","memory","واژه را به معنی درست وصل کن."),
@@ -120,5 +120,5 @@ EX = {
      (P,"متن آزاد","منفی کنید: I met him yesterday.","I didn't meet him yesterday.","I did not meet him yesterday.","","met","بعد از didn't فعل ساده می‌آید."),
      (P,"مرتب‌سازی","house / they / this / built","They built this house.","","","built","با فاعل شروع کن."),
      (P,"ترجمه به انگلیسی","گوشی‌ام را گم کردم.","I lost my phone.","","","lost","گذشته lose همان lost است."),
-     (P,"گفتار","It was a great day and a good memory.","It was a great day and a good memory.","","","great","جمله را واضح تلفظ کنید.")],
+     (P,"گفتار","It was a great day and a good memory.","It was a great day and a good memory.","","","great","جمله را واضح تلفظ کن.")],
 }

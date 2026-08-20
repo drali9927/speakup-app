@@ -102,7 +102,7 @@ fun WordListSheet(
             contentAlignment = Alignment.Center,
         ) {
             Text(
-                "برای واژه‌های بعدی، صفحه را به چپ یا راست بکشید.",
+                "برای واژه‌های بعدی، صفحه را به چپ یا راست بکش.",
                 style = MaterialTheme.typography.bodyMedium,
             )
         }

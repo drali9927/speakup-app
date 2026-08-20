@@ -395,7 +395,7 @@ fun PlayerScreen(
                 s.type == ActivityType.FLASHCARD || s.type == ActivityType.TEACHING -> "بعدی"
                 s.verdict != null -> if (s.isLast) "پایان" else "بعدی"
                 awaitingMicResult -> "با میکروفون صحبت کن"
-                else -> "تایید"
+                else -> "تأیید"
             },
             onClick = {
                 when {
@@ -633,7 +633,7 @@ private fun AnswerNormalizeEquals(a: String?, b: String?): Boolean =
 @Composable
 private fun Reorder(s: PlayerUiState, vm: PlayerViewModel) {
     Spacer(Modifier.size(32.dp))
-    Text("جمله را مرتب کنید", style = MaterialTheme.typography.bodyLarge,
+    Text("جمله را مرتب کن", style = MaterialTheme.typography.bodyLarge,
         color = MaterialTheme.colorScheme.onSurfaceVariant)
     Spacer(Modifier.size(20.dp))
 
@@ -910,7 +910,7 @@ private fun TextEntry(s: PlayerUiState, vm: PlayerViewModel) {
         enabled = s.verdict == null,
         singleLine = true,
         textStyle = MaterialTheme.typography.titleMedium.ltr(),
-        placeholder = { Text("پاسخ خود را بنویسید…", style = MaterialTheme.typography.bodyLarge) },
+        placeholder = { Text("پاسخت را بنویس…", style = MaterialTheme.typography.bodyLarge) },
         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
         shape = RoundedCornerShape(12.dp),
     )

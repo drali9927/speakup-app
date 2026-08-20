@@ -291,7 +291,7 @@ EX = {
      (P,"متن آزاد","رسمی کنید: Send me the report today.","I would be grateful if you could send me the report today.","","","prompt","با I would be grateful شروع کن."),
      (P,"مرتب‌سازی","receipt / please / acknowledge","Please acknowledge receipt.","","","acknowledge receipt","با Please شروع کن."),
      (P,"ترجمه به انگلیسی","لطفاً در اولین فرصت پاسخ دهید.","Please reply at your earliest convenience.","","","at your earliest convenience","با Please شروع کن."),
-     (P,"گفتار","Please find attached the report.","Please find attached the report.","","","please find attached","جمله را واضح تلفظ کنید.")],
+     (P,"گفتار","Please find attached the report.","Please find attached the report.","","","please find attached","جمله را واضح تلفظ کن.")],
 
  22:[(R,"چندگزینه‌ای","The data ___ a rise.","suggests","","suggests | suggest | is suggest","the data suggests","با data فعل مفرد به کار می‌رود."),
      (R,"تطبیق","methodology","روش‌شناسی","","methodology | sample | correlation","methodology","واژه را به معنی درست وصل کن."),
@@ -300,7 +300,7 @@ EX = {
      (P,"متن آزاد","محتاطانه بنویسید: results / not final","These are preliminary results.","","","preliminary","با These are شروع کن."),
      (P,"مرتب‌سازی","limitations / study / has / the","The study has limitations.","","","limitation","با فاعل شروع کن."),
      (P,"ترجمه به انگلیسی","خلاصه اینکه روند صعودی است.","In summary, the trend is upward.","","","in summary","با عبارت ثابت شروع کن."),
-     (P,"گفتار","The evidence isn't conclusive.","The evidence isn't conclusive.","","","conclusive","جمله را واضح تلفظ کنید.")],
+     (P,"گفتار","The evidence isn't conclusive.","The evidence isn't conclusive.","","","conclusive","جمله را واضح تلفظ کن.")],
 
  23:[(R,"چندگزینه‌ای","Keep the tone ___ .","neutral","","neutral | stiff | colloquial","neutral","لحن خنثی با neutral بیان می‌شود."),
      (R,"تطبیق","jargon","اصطلاحات صنفی","","jargon | slang | plain English","jargon","واژه را به معنی درست وصل کن."),
@@ -309,7 +309,7 @@ EX = {
      (P,"متن آزاد","رسمی کنید: Can you send it?","Could you send it, please?","I would be grateful if you could send it.","","formality","با Could you شروع کن."),
      (P,"مرتب‌سازی","English / plain / in / write","Write in plain English.","","","plain English","جمله امری با فعل شروع می‌شود."),
      (P,"ترجمه به انگلیسی","بیا نگارش را نرم کنیم.","Let's soften the wording.","","","soften","با Let's شروع کن."),
-     (P,"گفتار","The email strikes the right note.","The email strikes the right note.","","","strike the right note","جمله را واضح تلفظ کنید.")],
+     (P,"گفتار","The email strikes the right note.","The email strikes the right note.","","","strike the right note","جمله را واضح تلفظ کن.")],
 
  24:[(R,"چندگزینه‌ای","It was a ___ of cake.","piece","","piece | slice | part","a piece of cake","اجزای اصطلاح ثابت‌اند."),
      (R,"تطبیق","break the ice","یخ را شکستن","","break the ice | call it a day | cut corners","break the ice","اصطلاح را به معنی درست وصل کن."),
@@ -318,7 +318,7 @@ EX = {
      (P,"متن آزاد","با اصطلاح بنویسید: بیا کار امروز را تمام کنیم","Let's call it a day.","","","call it a day","با Let's شروع کن."),
      (P,"مرتب‌سازی","time / an / eye / on / keep / the","Keep an eye on the time.","","","keep an eye on","جمله امری با فعل شروع می‌شود."),
      (P,"ترجمه به انگلیسی","به نقطه اول برگشتیم.","We're back to square one.","","","back to square one","با فاعل We شروع کن."),
-     (P,"گفتار","In a nutshell, it worked.","In a nutshell, it worked.","","","in a nutshell","جمله را واضح تلفظ کنید.")],
+     (P,"گفتار","In a nutshell, it worked.","In a nutshell, it worked.","","","in a nutshell","جمله را واضح تلفظ کن.")],
 
  25:[(R,"چندگزینه‌ای","We ___ a decision quickly.","made","","made | did | took","make a decision","ترکیب درست make a decision است."),
      (R,"تطبیق","collocation","هم‌آیی واژگانی","","collocation | strong argument | heavy traffic","collocation","واژه را به معنی درست وصل کن."),
@@ -327,7 +327,7 @@ EX = {
      (P,"متن آزاد","با make بنویسید: she / a real effort","She made a real effort.","","","make an effort","ترکیب make an effort است."),
      (P,"مرتب‌سازی","deadline / met / we / the","We met the deadline.","","","meet a deadline","با فاعل شروع کن."),
      (P,"ترجمه به انگلیسی","به توافق رسیدند.","They reached an agreement.","","","reach an agreement","با فاعل They شروع کن."),
-     (P,"گفتار","That's a strong argument.","That's a strong argument.","","","strong argument","جمله را واضح تلفظ کنید.")],
+     (P,"گفتار","That's a strong argument.","That's a strong argument.","","","strong argument","جمله را واضح تلفظ کن.")],
 
  26:[(R,"چندگزینه‌ای","We put ___ off.","it","","it | off it | it off","put off","با ضمیر، مفعول وسط می‌آید."),
      (R,"تطبیق","take on","بر عهده گرفتن","","take on | take over | take up","take on","فعل عبارتی را به معنی درست وصل کن."),
@@ -336,7 +336,7 @@ EX = {
      (P,"متن آزاد","با come up with بنویسید: she / a solution","She came up with a solution.","","","come up with","با فاعل شروع کن."),
      (P,"مرتب‌سازی","problem / a / into / we / ran","We ran into a problem.","","","run into","با فاعل شروع کن."),
      (P,"ترجمه به انگلیسی","از برنامه عقب افتادیم.","We fell behind schedule.","","","fall behind","با فاعل We شروع کن."),
-     (P,"گفتار","Her work stands out.","Her work stands out.","","","stand out","جمله را واضح تلفظ کنید.")],
+     (P,"گفتار","Her work stands out.","Her work stands out.","","","stand out","جمله را واضح تلفظ کن.")],
 
  27:[(R,"چندگزینه‌ای","Learn words ___ context.","in","","in | on | at","in context","عبارت ثابت in context است."),
      (R,"تطبیق","intonation","آهنگ کلام","","intonation | stress pattern | chunk","intonation","واژه را به معنی درست وصل کن."),
@@ -345,7 +345,7 @@ EX = {
      (P,"متن آزاد","بنویسید: memorise / whole phrases","Memorise whole phrases.","","","memorise","جمله امری با فعل شروع می‌شود."),
      (P,"مرتب‌سازی","rhythm / the / imitate","Imitate the rhythm.","","","imitate","جمله امری با فعل شروع می‌شود."),
      (P,"ترجمه به انگلیسی","از فیلم‌ها یادش گرفتم.","I picked it up from films.","","","pick up","با فاعل I شروع کن."),
-     (P,"گفتار","It sounds natural now.","It sounds natural now.","","","sound natural","جمله را واضح تلفظ کنید.")],
+     (P,"گفتار","It sounds natural now.","It sounds natural now.","","","sound natural","جمله را واضح تلفظ کن.")],
 
  28:[(R,"چندگزینه‌ای","He persuaded ___ wait.","us to","","us to | to us | us for","persuade","ساختار persuade + مفعول + to است."),
      (R,"تطبیق","stakeholder","ذی‌نفع","","stakeholder | proposal | rebuttal","stakeholder","واژه را به معنی درست وصل کن."),
@@ -354,7 +354,7 @@ EX = {
      (P,"متن آزاد","با make a case for بنویسید: she / delay","She made a case for delay.","","","make a case for","با فاعل شروع کن."),
      (P,"مرتب‌سازی","sceptics / over / won / she / the","She won over the sceptics.","","","win over","با فاعل شروع کن."),
      (P,"ترجمه به انگلیسی","به فایده بلندمدت فکر کن.","Think about the long-term benefit.","","","long-term","جمله امری با فعل شروع می‌شود."),
-     (P,"گفتار","It's a compelling argument.","It's a compelling argument.","","","compelling","جمله را واضح تلفظ کنید.")],
+     (P,"گفتار","It's a compelling argument.","It's a compelling argument.","","","compelling","جمله را واضح تلفظ کن.")],
 
  29:[(R,"چندگزینه‌ای","___ , it's expensive. Nonetheless, it saves time.","Admittedly","","Admittedly | Nonetheless | That said","admittedly","پذیرش کوتاه با Admittedly بیان می‌شود."),
      (R,"تطبیق","concession","امتیاز دادن","","concession | objection | rebuttal","concession","واژه را به معنی درست وصل کن."),
@@ -363,7 +363,7 @@ EX = {
      (P,"متن آزاد","پذیرش و پاسخ بنویسید: it takes time / the result lasts","Granted, it takes time. That said, the result lasts.","","","granted","اول پذیرش، بعد پاسخ."),
      (P,"مرتب‌سازی","concern / a / that's / valid","That's a valid concern.","","","valid concern","با فاعل شروع کن."),
      (P,"ترجمه به انگلیسی","بگذارید به شما اطمینان بدهم.","Let me reassure you.","","","reassure","با Let me شروع کن."),
-     (P,"گفتار","Critics argue it's too slow.","Critics argue it's too slow.","","","critics argue","جمله را واضح تلفظ کنید.")],
+     (P,"گفتار","Critics argue it's too slow.","Critics argue it's too slow.","","","critics argue","جمله را واضح تلفظ کن.")],
 
  30:[(R,"چندگزینه‌ای","Never ___ such a change.","have I seen","","have I seen | I have seen | I saw","upper intermediate","با قید منفی آغازین وارونگی لازم است."),
      (R,"تطبیق","proficiency","تسلط","","proficiency | plateau | consolidation","proficiency","واژه را به معنی درست وصل کن."),
@@ -372,5 +372,5 @@ EX = {
      (P,"متن آزاد","شرطی سوم بنویسید: I / know — I / come","If I had known, I'd have come.","","","hold your own","شرطی سوم: had + قسمت سوم، would have."),
      (P,"مرتب‌سازی","through / plateau / push / the","Push through the plateau.","","","push through","جمله امری با فعل شروع می‌شود."),
      (P,"ترجمه به انگلیسی","مواجهه روزانه از همه مهم‌تر است.","Daily exposure matters most.","","","daily exposure","با فاعل شروع کن."),
-     (P,"گفتار","Congratulations on finishing the level.","Congratulations on finishing the level.","","","congratulations","جمله را واضح تلفظ کنید.")],
+     (P,"گفتار","Congratulations on finishing the level.","Congratulations on finishing the level.","","","congratulations","جمله را واضح تلفظ کن.")],
 }
