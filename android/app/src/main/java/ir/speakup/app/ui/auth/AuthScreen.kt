@@ -44,15 +44,33 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import coil.compose.AsyncImage
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.text.style.TextDecoration
+import ir.speakup.app.ui.common.TermsScreen
 
 @Composable
 fun AuthScreen(onDone: () -> Unit, vm: AuthViewModel = hiltViewModel()) {
     val s by vm.state.collectAsStateWithLifecycle()
+    var showTerms by rememberSaveable { mutableStateOf(false) }
 
     LaunchedEffect(s.done) { if (s.done) onDone() }
 
+    if (showTerms) {
+        TermsScreen(onBack = { showTerms = false })
+        return
+    }
+
+    // اسکرول‌پذیر، چون روی گوشی‌های کوتاه‌تر ته صفحه بریده می‌شد و بندِ
+    // «قوانین را می‌پذیری» — که کل رضایت کاربر به آن بند است — اصلاً
+    // دیده نمی‌شد. با باز شدن کیبورد هم همین اتفاق می‌افتد.
     Column(
         Modifier.fillMaxSize().statusBarsPadding().navigationBarsPadding().imePadding()
+            .verticalScroll(rememberScrollState())
             .padding(horizontal = 24.dp),
     ) {
         Spacer(Modifier.size(20.dp))
@@ -109,7 +127,7 @@ fun AuthScreen(onDone: () -> Unit, vm: AuthViewModel = hiltViewModel()) {
             Text(it, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.error)
         }
 
-        Spacer(Modifier.weight(1f))
+        Spacer(Modifier.size(28.dp))
 
         DuoButtonBox(
             onClick = { if (s.step == AuthStep.PHONE) vm.requestCode() else vm.verify() },
@@ -132,13 +150,32 @@ fun AuthScreen(onDone: () -> Unit, vm: AuthViewModel = hiltViewModel()) {
         }
 
         Spacer(Modifier.size(16.dp))
-        Text(
-            "با ورود، قوانین را می‌پذیری.",
-            style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-            textAlign = TextAlign.Center,
-            modifier = Modifier.fillMaxWidth(),
-        )
+        // «قوانین» خودش دکمه است، نه یک جمله تزئینی. کاربر باید بتواند
+        // پیش از دادن شماره‌اش بخواند که با آن شماره چه می‌کنیم.
+        Row(
+            Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Text(
+                "با ورود، ",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+            Text(
+                "قوانین",
+                style = MaterialTheme.typography.bodyMedium,
+                fontWeight = FontWeight.Bold,
+                textDecoration = TextDecoration.Underline,
+                color = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.clickable { showTerms = true },
+            )
+            Text(
+                " را می‌پذیری.",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+        }
         Spacer(Modifier.size(24.dp))
     }
 }

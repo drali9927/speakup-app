@@ -35,9 +35,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.border
+import androidx.compose.material3.TextButton
+import androidx.compose.runtime.saveable.rememberSaveable
 import ir.speakup.app.ui.common.AvatarImage
 import ir.speakup.app.ui.common.AvatarPicker
 import ir.speakup.app.ui.common.Avatars
+import ir.speakup.app.ui.common.TermsScreen
 import ir.speakup.app.ui.theme.ltr
 
 /**
@@ -52,7 +55,13 @@ fun ProfileScreen(vm: ProfileViewModel = hiltViewModel()) {
     val s by vm.state.collectAsStateWithLifecycle()
     val scheme = MaterialTheme.colorScheme
     var pickingFace by remember { mutableStateOf(false) }
+    var showTerms by rememberSaveable { mutableStateOf(false) }
     val face = Avatars.resolve(s.avatarId, s.phone)
+
+    if (showTerms) {
+        TermsScreen(onBack = { showTerms = false })
+        return
+    }
 
     if (pickingFace) {
         AvatarPicker(
@@ -174,6 +183,11 @@ fun ProfileScreen(vm: ProfileViewModel = hiltViewModel()) {
                     )
                 }
             }
+        }
+
+        Spacer(Modifier.height(24.dp))
+        TextButton(onClick = { showTerms = true }, modifier = Modifier.fillMaxWidth()) {
+            Text("قوانین و حریم خصوصی", style = MaterialTheme.typography.bodyMedium)
         }
         Spacer(Modifier.height(24.dp))
     }
