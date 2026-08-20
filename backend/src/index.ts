@@ -299,6 +299,14 @@ export function createApp(db: Db, config = loadConfig()) {
       res.status(304).end()
       return
     }
+    // نسخه فشرده فقط وقتی که کلاینت گفته باشد می‌پذیرد
+    const wantsGzip = /\bgzip\b/.test(req.header('accept-encoding') ?? '')
+    if (wantsGzip && b.gzip) {
+      res.setHeader('Content-Encoding', 'gzip')
+      res.setHeader('Vary', 'Accept-Encoding')
+      res.type('application/json').send(b.gzip)
+      return
+    }
     res.type('application/json').send(b.body)
   })
 

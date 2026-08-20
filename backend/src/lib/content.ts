@@ -48,13 +48,24 @@ export class ContentStore {
       .sort((a, b) => a.level.localeCompare(b.level))
   }
 
-  /** بسته یک سطح — یا null اگر وجود نداشت */
-  bundle(level: string): { body: string; version: string } | null {
+  /**
+   * بسته یک سطح — یا null اگر وجود نداشت.
+   *
+   * اگر نسخه فشرده کنارش باشد، همان هم برمی‌گردد تا لایه HTTP بتواند
+   * بدون هیچ کار CPUای بفرستدش. فشرده کردن در لحظه درخواست، در هر
+   * دانلود دوباره انجام می‌شد؛ محتوا فقط موقع خروجی‌گرفتن عوض می‌شود.
+   *
+   * نسخه همیشه از فایل **اصلی** حساب می‌شود، نه فشرده — وگرنه با هر بار
+   * فشرده‌سازی دوباره، ETag بی‌دلیل عوض می‌شد.
+   */
+  bundle(level: string): { body: string; gzip: Buffer | null; version: string } | null {
     const p = this.pathFor(level)
     if (!p) return null
     const raw = readFileSync(p)
+    const gzPath = `${p}.gz`
     return {
       body: raw.toString('utf8'),
+      gzip: existsSync(gzPath) ? readFileSync(gzPath) : null,
       version: createHash('sha256').update(raw).digest('hex').slice(0, 16),
     }
   }

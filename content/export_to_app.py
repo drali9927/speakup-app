@@ -427,9 +427,23 @@ def main():
     # کاربر بسته‌ای می‌گیرد که با APK هم‌خوان نیست.
     server_out = os.path.abspath(os.path.join(BASE, "..", "backend", "content", f"{LEVEL.lower()}.json"))
     if os.path.isdir(os.path.dirname(server_out)):
-        with open(server_out, "w", encoding="utf-8") as f:
-            json.dump(bundle, f, ensure_ascii=False, separators=(",", ":"))
+        raw = json.dumps(bundle, ensure_ascii=False, separators=(",", ":")).encode("utf-8")
+        with open(server_out, "wb") as f:
+            f.write(raw)
+
+        # نسخه فشرده، همین‌جا و یک بار برای همیشه.
+        #
+        # فشرده کردن در لحظه درخواست، CPU سرور را در هر بار می‌سوزاند و
+        # هزینه را بالا می‌برد. بسته محتوا فقط وقتی عوض می‌شود که ما
+        # خروجی بگیریم، پس فشرده‌اش را همان موقع می‌سازیم و سرور فقط
+        # فایل آماده را می‌فرستد.
+        import gzip
+        with gzip.open(server_out + ".gz", "wb", compresslevel=9) as f:
+            f.write(raw)
+        gz = os.path.getsize(server_out + ".gz")
         print(f"  نسخه سرور  : {server_out}")
+        print(f"  فشرده      : {gz / 1024:.0f} کیلوبایت "
+              f"({len(raw) / gz:.1f} برابر کوچک‌تر)")
 
     # --- بررسی سلامت خروجی
     prod = sum(1 for a in activities if a["activityType"] in PRODUCTIVE)
