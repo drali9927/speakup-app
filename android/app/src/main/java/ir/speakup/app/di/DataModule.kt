@@ -12,6 +12,7 @@ import ir.speakup.app.data.local.AnswerLogDao
 import ir.speakup.app.data.local.XpDao
 import ir.speakup.app.data.local.ContentDao
 import ir.speakup.app.data.local.DictionaryDao
+import ir.speakup.app.data.local.EventDao
 import ir.speakup.app.data.local.LeitnerDao
 import ir.speakup.app.data.local.ProgressDao
 import ir.speakup.app.data.local.SpeakUpDatabase
@@ -67,6 +68,7 @@ object DataModule {
     @Provides fun streakDao(db: SpeakUpDatabase): StreakDao = db.streakDao()
     @Provides fun answerLogDao(db: SpeakUpDatabase): AnswerLogDao = db.answerLogDao()
     @Provides fun xpDao(db: SpeakUpDatabase): XpDao = db.xpDao()
+    @Provides fun eventDao(db: SpeakUpDatabase): EventDao = db.eventDao()
 
     @Provides
     @Singleton

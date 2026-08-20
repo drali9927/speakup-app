@@ -21,11 +21,13 @@ import androidx.room.RoomDatabase
         AnswerLogEntity::class,
         XpEventEntity::class,
         ReadingProgressEntity::class,
+        EventEntity::class,
     ],
     // ۲: ستون‌های بررسی درک به activity_items اضافه شد
     // ۴: ستون voice — جنسیت گوینده مکالمه
     // ۵: ستون‌های ترمیم زنجیره
-    version = 5,
+    // ۶: صف رویدادهای محصول
+    version = 6,
     exportSchema = true,
 )
 abstract class SpeakUpDatabase : RoomDatabase() {
@@ -36,6 +38,7 @@ abstract class SpeakUpDatabase : RoomDatabase() {
     abstract fun streakDao(): StreakDao
     abstract fun answerLogDao(): AnswerLogDao
     abstract fun xpDao(): XpDao
+    abstract fun eventDao(): EventDao
 
     companion object {
         const val NAME = "speakup.db"

@@ -144,3 +144,30 @@ CREATE TABLE IF NOT EXISTS league_members (
 
 CREATE INDEX IF NOT EXISTS idx_league_rank
   ON league_members(week_id, cohort, xp DESC);
+
+-- ---------------------------------------------------------------- رویدادها
+--
+-- قیف محصول. بدون این، بعد از انتشار نمی‌دانیم کاربر کجا رها می‌کند و
+-- ممکن است ماه‌ها روی قیمت کار کنیم در حالی که نیمی از کاربران در درس
+-- اول رفته‌اند.
+--
+-- خودمیزبان و نه Firebase: کاربر ایرانی سرویس‌های گوگل را همیشه در
+-- دسترس ندارد و Firebase Analytics بدون Google Play Services کار
+-- نمی‌کند — یعنی همان کاربرانی که باید بشماریم، شمرده نمی‌شوند. ضمناً
+-- داده کاربر از دست ما بیرون نمی‌رود.
+--
+-- install_id: شناسه دستگاه، پیش از ورود ساخته می‌شود. قیف از نصب شروع
+-- می‌شود و در آن لحظه هنوز حساب کاربری وجود ندارد. user_id بعد از ورود
+-- پر می‌شود و همان install_id به حساب وصل می‌ماند.
+CREATE TABLE IF NOT EXISTS events (
+  id          INTEGER PRIMARY KEY AUTOINCREMENT,
+  install_id  TEXT    NOT NULL,
+  user_id     INTEGER REFERENCES users(id),
+  name        TEXT    NOT NULL,
+  props       TEXT,                        -- JSON، اختیاری
+  at          INTEGER NOT NULL,            -- ثانیه یونیکس، ساعت دستگاه
+  received_at INTEGER NOT NULL             -- ساعت سرور، برای وقتی ساعت دستگاه غلط است
+);
+CREATE INDEX IF NOT EXISTS idx_events_name_at ON events(name, at);
+CREATE INDEX IF NOT EXISTS idx_events_install ON events(install_id);
+CREATE INDEX IF NOT EXISTS idx_events_user ON events(user_id);

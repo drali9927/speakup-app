@@ -121,3 +121,19 @@ data class XpEventEntity(
     val dayKey: String,
     val syncedAt: Long? = null,
 )
+
+/**
+ * صف رویدادهای محصول.
+ *
+ * در دیتابیس صف می‌شوند و نه در حافظه: کاربری که آفلاین است یا اپ را
+ * می‌بندد، رویدادش نباید گم شود — و دقیقاً همان کاربر است که در قیف
+ * بیشتر از همه اهمیت دارد، چون احتمالاً همان‌جا رها می‌کند.
+ */
+@Entity(tableName = "event_queue")
+data class EventEntity(
+    @PrimaryKey(autoGenerate = true) val id: Long = 0,
+    val name: String,
+    val props: String? = null,
+    /** ثانیه یونیکس */
+    val at: Long,
+)

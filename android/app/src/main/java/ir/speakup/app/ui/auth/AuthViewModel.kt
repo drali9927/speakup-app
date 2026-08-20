@@ -32,6 +32,7 @@ data class AuthUiState(
 class AuthViewModel @Inject constructor(
     private val auth: AuthService,
     private val crm: ir.speakup.app.data.remote.CrmLead,
+    private val analytics: ir.speakup.app.domain.Analytics,
     private val prefs: AppPreferences,
     @dagger.hilt.android.qualifiers.ApplicationContext private val appContext: android.content.Context,
 ) : ViewModel() {
@@ -84,6 +85,7 @@ class AuthViewModel @Inject constructor(
         viewModelScope.launch {
             auth.verifyCode(s.phone, s.code)
                 .onSuccess { session ->
+                    analytics.trackAndFlush(ir.speakup.app.domain.Ev.AUTH_DONE)
                     prefs.saveSession(session.phone, session.token, session.referralCode)
                     // بلافاصله پس از ورود: پیشرفت قبلی کاربر از سرور برمی‌گردد
                     ir.speakup.app.data.remote.SyncWorker.syncNow(appContext)

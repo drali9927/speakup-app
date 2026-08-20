@@ -151,6 +151,7 @@ class PlayerViewModel @Inject constructor(
     val recognizer: ir.speakup.app.domain.SpeechRecognitionService,
     private val sound: ir.speakup.app.domain.FeedbackSound,
     savedState: SavedStateHandle,
+    private val analytics: ir.speakup.app.domain.Analytics,
 ) : ViewModel() {
 
     private val activityId: String = checkNotNull(savedState["activityId"])
@@ -175,6 +176,7 @@ class PlayerViewModel @Inject constructor(
     private var autoSpeakJob: Job? = null
 
     init {
+        analytics.track(ir.speakup.app.domain.Ev.ACTIVITY_START)
         viewModelScope.launch {
             val activity = contentDao.activity(activityId)
             var items = contentDao.items(activityId)

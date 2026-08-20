@@ -29,6 +29,9 @@ interface ContentDao {
     @Query("SELECT * FROM activities WHERE id = :id")
     suspend fun activity(id: String): ActivityEntity?
 
+    @Query("SELECT * FROM sections WHERE id = :id")
+    suspend fun section(id: String): SectionEntity?
+
     /** آیتم‌های همه فعالیت‌های یک بخش که نوع مشخصی دارند، به ترتیب */
     @Query("""
         SELECT i.* FROM activity_items i
@@ -158,6 +161,9 @@ interface ProgressDao {
 
     @Query("SELECT * FROM user_progress")
     fun observeAll(): Flow<List<UserProgressEntity>>
+
+    @Query("SELECT activityId FROM user_progress WHERE status = 'COMPLETED'")
+    suspend fun completedIds(): List<String>
 
     @Query("SELECT * FROM user_progress WHERE status = 'IN_PROGRESS' ORDER BY updatedAt DESC LIMIT 1")
     fun observeResumePoint(): Flow<UserProgressEntity?>
@@ -298,3 +304,18 @@ interface XpDao {
 }
 
 data class DayXp(val day: String, val xp: Int)
+
+@Dao
+interface EventDao {
+    @Insert
+    suspend fun insert(e: EventEntity)
+
+    @Query("SELECT * FROM event_queue ORDER BY id LIMIT :limit")
+    suspend fun oldest(limit: Int): List<EventEntity>
+
+    @Query("DELETE FROM event_queue WHERE id <= :id")
+    suspend fun deleteUpTo(id: Long)
+
+    @Query("SELECT COUNT(*) FROM event_queue")
+    suspend fun count(): Int
+}

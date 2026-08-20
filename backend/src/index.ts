@@ -32,6 +32,7 @@ import {
   usersCsv,
   bulkCreateUsers,
 } from './lib/admin.js'
+import { record as recordEvents, funnel, retention } from './lib/events.js'
 import { checkIn, getStreak } from './lib/streak.js'
 import { productiveAccuracy, pull, push } from './lib/sync.js'
 import { todayInAppTz } from './lib/time.js'
@@ -85,6 +86,21 @@ export function createApp(db: Db, config = loadConfig()) {
       return
     }
     req.userId = payload.sub
+    next()
+  }
+
+  /**
+   * ورود اختیاری — کاربر اگر توکن داشت شناخته می‌شود، وگرنه رد نمی‌شود.
+   *
+   * برای رویدادهاست: قیف از **نصب** شروع می‌شود و در آن لحظه هنوز
+   * حسابی وجود ندارد. اگر این مسیر توکن می‌خواست، دقیقاً همان ابتدای
+   * قیف — که بیشترین ریزش آن‌جاست — نامرئی می‌ماند.
+   */
+  function optionalAuth(req: AuthedRequest, _res: Response, next: NextFunction) {
+    const header = req.header('authorization') ?? ''
+    const token = header.startsWith('Bearer ') ? header.slice(7) : ''
+    const payload = token ? verifyToken(config.jwtSecret, token) : null
+    if (payload) req.userId = payload.sub
     next()
   }
 
@@ -372,6 +388,30 @@ export function createApp(db: Db, config = loadConfig()) {
    *
    * سقف‌ها عمدی‌اند: یک کلاینت خراب نباید بتواند حافظه سرور را پر کند.
    */
+  // ---------------------------------------------------------------- رویداد
+
+  app.post('/v1/events', optionalAuth, (req: AuthedRequest, res) => {
+    const data = body(
+      z.object({
+        installId: z.string().min(8).max(64),
+        events: z
+          .array(
+            z.object({
+              name: z.string().min(1).max(40),
+              at: z.number().int(),
+              props: z.record(z.unknown()).optional(),
+            }),
+          )
+          .max(200),
+      }),
+      req,
+      res,
+    )
+    if (!data) return
+    const n = recordEvents(db, data.installId, req.userId ?? null, data.events)
+    res.json({ ok: true, stored: n })
+  })
+
   app.post('/v1/sync', requireAuth, (req: AuthedRequest, res) => {
     const data = body(
       z.object({
@@ -482,6 +522,11 @@ export function createApp(db: Db, config = loadConfig()) {
       const data = body(z.object({ text: z.string().min(1).max(1_000_000) }), req, res)
       if (!data) return
       res.json(bulkCreateUsers(db, data.text))
+    })
+
+    app.get('/admin/api/funnel', adminOnly, (req, res) => {
+      const days = Math.min(90, Math.max(1, Number(req.query.days) || 30))
+      res.json({ days, steps: funnel(db, days), retention: retention(db, days) })
     })
 
     // خودِ صفحه — بدون توکن باز می‌شود و توکن را از کاربر می‌گیرد،

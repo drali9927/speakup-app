@@ -207,6 +207,7 @@ fun AppNav(nav: NavHostController = rememberNavController()) {
 
                 composable(Routes.ONBOARDING) {
                     OnboardingScreen(onFinish = {
+                        session.track(ir.speakup.app.domain.Ev.ONBOARDING_DONE)
                         scope.launch { prefs.setOnboarded() }
                         nav.navigate(Routes.AUTH) { popUpTo(Routes.ONBOARDING) { inclusive = true } }
                     })

@@ -54,12 +54,14 @@ class PaywallViewModel @Inject constructor(
     private val subscriptions: SubscriptionRepository,
     private val contentDao: ir.speakup.app.data.local.ContentDao,
     private val dictionaryDao: ir.speakup.app.data.local.DictionaryDao,
+    private val analytics: ir.speakup.app.domain.Analytics,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(PaywallUiState())
     val state: StateFlow<PaywallUiState> = _state.asStateFlow()
 
     init {
+        analytics.track(ir.speakup.app.domain.Ev.PAYWALL_VIEW)
         viewModelScope.launch {
             _state.value = _state.value.copy(
                 lessons = contentDao.lessonCount(),
@@ -101,7 +103,10 @@ class PaywallViewModel @Inject constructor(
             when (val r = billing.purchase(activity, plan.sku)) {
                 is BillingService.Result.Purchased ->
                     subscriptions.redeem(r.sku, r.purchaseToken)
-                        .onSuccess { _state.value = _state.value.copy(busy = false, purchased = true) }
+                        .onSuccess {
+                            analytics.trackAndFlush(ir.speakup.app.domain.Ev.PURCHASE_DONE)
+                            _state.value = _state.value.copy(busy = false, purchased = true)
+                        }
                         .onFailure {
                             // پول کم شده ولی اشتراک ثبت نشده — بدترین حالت ممکن.
                             // کاربر باید بداند که خریدش گم نشده و با اجرای بعدی

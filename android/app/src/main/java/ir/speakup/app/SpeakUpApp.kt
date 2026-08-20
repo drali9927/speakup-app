@@ -13,6 +13,7 @@ import javax.inject.Inject
 class SpeakUpApp : Application(), Configuration.Provider {
 
     @Inject lateinit var workerFactory: HiltWorkerFactory
+    @Inject lateinit var analytics: ir.speakup.app.domain.Analytics
 
     override val workManagerConfiguration: Configuration
         get() = Configuration.Builder().setWorkerFactory(workerFactory).build()
@@ -31,5 +32,19 @@ class SpeakUpApp : Application(), Configuration.Provider {
         // داده اپ یا نصب دوباره، تا نخستین چرخه با چیدمان خامِ خودش روی
         // صفحه می‌ماند. یک به‌روزرسانی در آغاز اپ آن فاصله را می‌بندد.
         ir.speakup.app.widget.StreakWidget.refreshAll(this)
+
+        // رویدادها هنگام رفتن اپ به پس‌زمینه فرستاده می‌شوند.
+        //
+        // بدون این، رویدادها تا **باز شدن بعدی** اپ در صف می‌مانند — و
+        // کاربری که نصب می‌کند، یک تمرین را نیمه‌کاره رها می‌کند و دیگر
+        // برنمی‌گردد، هرگز شمرده نمی‌شود. یعنی دقیقاً همان ریزشی که قیف
+        // برای دیدنش ساخته شده، نامرئی می‌ماند.
+        androidx.lifecycle.ProcessLifecycleOwner.get().lifecycle.addObserver(
+            object : androidx.lifecycle.DefaultLifecycleObserver {
+                override fun onStop(owner: androidx.lifecycle.LifecycleOwner) {
+                    analytics.flush()
+                }
+            },
+        )
     }
 }

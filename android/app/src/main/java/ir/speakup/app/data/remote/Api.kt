@@ -35,6 +35,9 @@ interface Api {
     @POST("v1/streak/check-in")
     suspend fun checkIn(): Response<CheckInResponse>
 
+    @POST("v1/events")
+    suspend fun sendEvents(@Body body: EventsRequest): Response<Unit>
+
     @POST("v1/sync")
     suspend fun sync(@Body body: SyncRequest): Response<SyncResponse>
 
@@ -167,6 +170,22 @@ data class CheckInResponse(
     val lastActiveDate: String? = null,
     val freezeCount: Int = 0,
     val today: String,
+)
+
+// ------------------------------------------------------------------ رویداد
+
+@Serializable
+data class EventDto(
+    val name: String,
+    /** ثانیه یونیکس */
+    val at: Long,
+    val props: Map<String, String>? = null,
+)
+
+@Serializable
+data class EventsRequest(
+    val installId: String,
+    val events: List<EventDto>,
 )
 
 // ---------------------------------------------------------------- همگام‌سازی

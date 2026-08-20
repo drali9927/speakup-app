@@ -9,6 +9,7 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -34,6 +35,7 @@ class AppPreferences @Inject constructor(
         val REMINDER_HOUR = intPreferencesKey("reminder_hour")
         val LAST_REMINDER_DAY = stringPreferencesKey("last_reminder_day")
         val AVATAR = intPreferencesKey("avatar_id")
+        val INSTALL_ID = stringPreferencesKey("install_id")
     }
 
     val onboarded: Flow<Boolean> = context.dataStore.data.map { it[Keys.ONBOARDED] ?: false }
@@ -78,6 +80,18 @@ class AppPreferences @Inject constructor(
 
     suspend fun setRemindersEnabled(on: Boolean) {
         context.dataStore.edit { it[Keys.REMINDERS_ON] = on }
+    }
+
+    /**
+     * شناسه نصب — تصادفی و ساخته خودمان، نه شناسه سخت‌افزاری.
+     *
+     * فقط برای شمردن قیف است. با پاک شدن اپ می‌رود، که درست است: آن نصب
+     * واقعاً تمام شده و نباید در آمار بازگشت شمرده شود.
+     */
+    suspend fun installId(): String? = context.dataStore.data.map { it[Keys.INSTALL_ID] }.first()
+
+    suspend fun setInstallId(id: String) {
+        context.dataStore.edit { it[Keys.INSTALL_ID] = id }
     }
 
     suspend fun setAvatar(id: Int) {

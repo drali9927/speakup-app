@@ -83,6 +83,29 @@
   </div>
 
   <div class="card">
+    <h2>قیف محصول</h2>
+    <p style="color:var(--dim);margin-top:0">
+      شمارش بر حسب <b>دستگاه یکتا</b> است و نه تعداد رویداد؛ وگرنه یک
+      کاربر پرمصرف نرخ عبور را بی‌معنا می‌کند. ستون «از قبلی» همان جایی
+      است که ریزش دیده می‌شود.
+    </p>
+    <div class="row" style="margin-bottom:12px">
+      <select id="fDays" onchange="loadFunnel()">
+        <option value="7">۷ روز</option>
+        <option value="30" selected>۳۰ روز</option>
+        <option value="90">۹۰ روز</option>
+      </select>
+    </div>
+    <div style="overflow-x:auto">
+      <table>
+        <thead><tr><th>گام</th><th>دستگاه</th><th>از قبلی</th><th>از گام اول</th></tr></thead>
+        <tbody id="fRows"></tbody>
+      </table>
+    </div>
+    <div id="fRet" style="margin-top:12px;color:var(--dim)"></div>
+  </div>
+
+  <div class="card">
     <h2>ثبت دستی اشتراک</h2>
     <p style="color:var(--dim);margin-top:0">
       شماره باید از قبل در اپ ثبت و تأیید شده باشد. مدت از انقضای فعلی
@@ -343,7 +366,41 @@ async function bulkCreate() {
   loadAll();
 }
 
-function loadAll() { loadOverview(); loadUsers(); }
+const STEP_FA = {
+  app_open: 'باز کردن اپ',
+  onboarding_done: 'پایان معرفی',
+  auth_done: 'ورود با شماره',
+  activity_start: 'شروع اولین فعالیت',
+  activity_done: 'اتمام فعالیت',
+  lesson_done: 'اتمام یک درس کامل',
+  paywall_view: 'دیدن صفحه اشتراک',
+  purchase_done: 'خرید',
+};
+
+async function loadFunnel() {
+  const days = document.getElementById('fDays').value;
+  const r = await api('/funnel?days=' + days);
+  document.getElementById('fRows').innerHTML = (r.steps || []).map((s, i) => {
+    // افت شدید را قرمز کن. ۴۰٪ آستانه دلبخواهی نیست: زیر آن، گام
+    // بعدی عملاً بیشتر کاربر را از دست می‌دهد تا نگه دارد.
+    const drop = i > 0 && s.pctOfPrev < 40;
+    return `<tr>
+      <td>${STEP_FA[s.name] || s.name}</td>
+      <td>${num(s.installs)}</td>
+      <td style="color:${drop ? 'var(--red)' : 'inherit'};font-weight:${drop ? '700' : '400'}">
+        ${i === 0 ? '—' : fa(s.pctOfPrev) + '٪'}</td>
+      <td style="color:var(--dim)">${fa(s.pctOfFirst)}٪</td>
+    </tr>`;
+  }).join('');
+  const t = r.retention || {};
+  document.getElementById('fRet').innerHTML = t.cohort
+    ? `از ${num(t.cohort)} دستگاهی که در این بازه شروع کردند: ` +
+      `${num(t.d1)} نفر روز دوم برگشتند (${fa(Math.round(t.d1 / t.cohort * 100))}٪) · ` +
+      `${num(t.d7)} نفر روز هفتم (${fa(Math.round(t.d7 / t.cohort * 100))}٪)`
+    : 'هنوز داده‌ای نیست.';
+}
+
+function loadAll() { loadOverview(); loadUsers(); loadFunnel(); }
 
 // فهرست پلن‌ها از همان جایی می‌آید که اپ می‌گیرد — یک منبع حقیقت
 fetch('/v1/plans').then(r => r.json()).then(d => {

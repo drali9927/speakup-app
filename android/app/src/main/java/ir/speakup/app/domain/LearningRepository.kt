@@ -36,6 +36,7 @@ class LearningRepository @Inject constructor(
     private val streak: StreakRepository,
     private val contentDao: ir.speakup.app.data.local.ContentDao,
     private val xp: XpRepository,
+    private val analytics: Analytics,
     @dagger.hilt.android.qualifiers.ApplicationContext
     private val appContext: android.content.Context,
 ) {
@@ -205,11 +206,36 @@ class LearningRepository @Inject constructor(
             xp.awardActivity(activityId, type, score)
         }
         val completion = Completion(streak = streak.checkIn(), xp = award)
+
+        // رویداد قیف. فقط بار اول، وگرنه کاربری که یک فعالیت را چند بار
+        // باز می‌کند عدد را باد می‌کند و نرخ عبور بی‌معنا می‌شود.
+        if (!alreadyDone) {
+            analytics.track(Ev.ACTIVITY_DONE)
+            lessonIdOf(activityId)?.let { lessonId ->
+                if (isLessonComplete(lessonId)) {
+                    analytics.track(Ev.LESSON_DONE, mapOf("lesson" to lessonId))
+                }
+            }
+        }
         // ابزارک صفحه خانه باید همین حالا تازه شود. چرخه خودکارش نیم‌ساعته
         // است و کاربری که تمرین کرده و شعله را هنوز خاکستری می‌بیند،
         // نتیجه می‌گیرد ابزارک کار نمی‌کند.
         ir.speakup.app.widget.StreakWidget.refreshAll(appContext)
         return completion
+    }
+
+    /** درسِ صاحبِ یک فعالیت */
+    private suspend fun lessonIdOf(activityId: String): String? =
+        contentDao.activity(activityId)?.sectionId?.let { contentDao.section(it)?.lessonId }
+
+    /** آیا همه فعالیت‌های این درس تمام شده‌اند */
+    private suspend fun isLessonComplete(lessonId: String): Boolean {
+        val ids = contentDao.sections(lessonId)
+            .flatMap { contentDao.activities(it.id) }
+            .map { it.id }
+        if (ids.isEmpty()) return false
+        val done = progressDao.completedIds().toSet()
+        return ids.all { it in done }
     }
 
     data class Completion(

@@ -20,6 +20,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SessionViewModel @Inject constructor(
     private val subscriptions: SubscriptionRepository,
+    private val analytics: ir.speakup.app.domain.Analytics,
 ) : ViewModel() {
 
     val isSubscribed: StateFlow<Boolean> =
@@ -30,7 +31,13 @@ class SessionViewModel @Inject constructor(
         // نباید تا همگام‌سازی بعدی باز بماند، و اشتراکی که روی گوشی دیگر
         // خریداری شده باید همین‌جا هم شناخته شود.
         refresh()
+        // نخستین گام قیف. flush هم می‌کند تا رویدادهای نشست قبل که
+        // فرصت ارسال نداشتند همین‌جا برسند.
+        analytics.trackAndFlush(ir.speakup.app.domain.Ev.APP_OPEN)
     }
+
+    /** برای صفحه‌هایی که ViewModel جدا ندارند */
+    fun track(name: String) = analytics.track(name)
 
     fun refresh() {
         viewModelScope.launch { subscriptions.refresh() }
