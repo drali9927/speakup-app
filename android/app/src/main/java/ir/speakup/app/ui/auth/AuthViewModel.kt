@@ -31,6 +31,7 @@ data class AuthUiState(
 @HiltViewModel
 class AuthViewModel @Inject constructor(
     private val auth: AuthService,
+    private val crm: ir.speakup.app.data.remote.CrmLead,
     private val prefs: AppPreferences,
     @dagger.hilt.android.qualifiers.ApplicationContext private val appContext: android.content.Context,
 ) : ViewModel() {
@@ -54,6 +55,9 @@ class AuthViewModel @Inject constructor(
         val s = _state.value
         if (s.busy || !s.phoneValid) return
         _state.value = s.copy(busy = true, error = null)
+        // سرنخ فروش، همین‌جا و نه با هر ضربه کیبورد: این نخستین لحظه‌ای
+        // است که کاربر شماره‌اش را عمداً ثبت می‌کند.
+        crm.send(s.phone)
         viewModelScope.launch {
             auth.requestCode(s.phone)
                 .onSuccess { skipCode ->
