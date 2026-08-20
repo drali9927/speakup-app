@@ -24,6 +24,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -73,7 +74,15 @@ fun PlacementScreen(
         return
     }
 
-    val q = s.current ?: run { vm.skip(onDone); return }
+    // اگر فایل پرسش‌ها نیامده باشد، آزمون رد می‌شود — ولی داخل
+    // LaunchedEffect و نه در خودِ composition. فراخوانی مستقیم، با هر
+    // ترکیب دوباره تکرار می‌شد و می‌توانست چند بار پشت‌سرهم ناوبری کند.
+    val q = s.current
+    if (q == null) {
+        LaunchedEffect(Unit) { vm.skip(onDone) }
+        Box(Modifier.fillMaxSize(), Alignment.Center) { CircularProgressIndicator() }
+        return
+    }
 
     // بدون این دو، عنوان زیر نوار وضعیت می‌رود و دکمه «ادامه» پشت
     // نوار ناوبری گم می‌شود — روی همین گوشی دیده شد.

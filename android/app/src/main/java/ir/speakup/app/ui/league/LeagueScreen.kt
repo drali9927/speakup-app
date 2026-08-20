@@ -2,6 +2,7 @@ package ir.speakup.app.ui.league
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -64,13 +65,37 @@ fun LeagueScreen(vm: LeagueViewModel = hiltViewModel()) {
                 style = MaterialTheme.typography.headlineMedium,
             )
             Spacer(Modifier.size(4.dp))
-            Text(
-                if (s.rows.isEmpty()) "این هفته هنوز کسی امتیازی نگرفته"
-                else "گروه ${s.cohort.toPersianDigits()} · " +
-                    "${s.rows.size.toPersianDigits()} نفر · ${remaining(s.endsAt)}",
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
+            // سه تکه در سه Text جدا، و جداکننده «،» و نه «·».
+            //
+            // دو اشکال جدا داشت. **یکم:** در یک رشته، الگوریتم دوسویه
+            // جداکننده را کنارِ عددها جابه‌جا می‌کرد و روی صفحه «گروه
+            // ۱۴۰۱ نفر ۳۰ · روز تا پایان» خوانده می‌شد — یعنی «۳۰ نفر»
+            // وارونه. همان اشکالی که پیش‌تر «۱۴ دقیقه» را «۱۴۰ دقیقه»
+            // می‌کرد؛ درمانش تکه‌تکه کردن Text است.
+            //
+            // **دوم:** صفر فارسی «۰» خودش یک نقطه است و از «·» تشخیص
+            // داده نمی‌شود. «گروه ۱ · ۱۶ نفر» روی صفحه شبیه یک عدد
+            // بلند دیده می‌شد. ویرگول فارسی این ابهام را ندارد.
+            if (s.rows.isEmpty()) {
+                Text(
+                    "این هفته هنوز کسی امتیازی نگرفته",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            } else {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(6.dp),
+                ) {
+                    val dim = MaterialTheme.colorScheme.onSurfaceVariant
+                    val body = MaterialTheme.typography.bodyMedium
+                    Text("گروه ${s.cohort.toPersianDigits()}", style = body, color = dim)
+                    Text("،", style = body, color = dim)
+                    Text("${s.rows.size.toPersianDigits()} نفر", style = body, color = dim)
+                    Text("،", style = body, color = dim)
+                    Text(remaining(s.endsAt), style = body, color = dim, maxLines = 1)
+                }
+            }
 
             // فاصله تا رتبه بعد — همان چیزی که باعث می‌شود کاربر یک درس
             // دیگر بزند. «رتبه هفتم» به‌تنهایی هیچ کاری با کسی نمی‌کند؛
