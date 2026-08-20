@@ -27,12 +27,13 @@
         android:orientation="horizontal"
         android:gravity="center_vertical">
 
-        <TextView
+        <!-- شعله برداری، نه اموجی: اموجی روی هر گوشی شکل دیگری دارد -->
+        <ImageView
             android:id="@+id/widget_flame"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="🔥"
-            android:textSize="24sp" />
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:contentDescription="@string/widget_description"
+            android:src="@drawable/ic_flame_dim" />
 
         <TextView
             android:id="@+id/widget_streak"

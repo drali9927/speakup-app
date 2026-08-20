@@ -102,9 +102,13 @@ class StreakWidget : AppWidgetProvider() {
                     R.id.widget_streak,
                     "${(streak?.currentLength ?: 0).toPersianDigits()} روز",
                 )
-                // شعله خاکستری = کارِ امروز مانده. تنها نشانه‌ای که از
-                // فاصله چند متری هم خوانده می‌شود.
-                setTextViewText(R.id.widget_flame, if (activeToday) "🔥" else "🕯")
+                // شعله خاموش = کارِ امروز مانده. تنها نشانه‌ای که از فاصله
+                // چند متری هم خوانده می‌شود، پس باید برداری و پررنگ باشد و
+                // نه اموجی که روی هر گوشی شکل دیگری دارد.
+                setImageViewResource(
+                    R.id.widget_flame,
+                    if (activeToday) R.drawable.ic_flame_lit else R.drawable.ic_flame_dim,
+                )
                 setTextViewText(R.id.widget_message, message(activeToday, todayXp, goal, due))
 
                 val pct = if (goal <= 0) 100 else (todayXp * 100 / goal).coerceIn(0, 100)

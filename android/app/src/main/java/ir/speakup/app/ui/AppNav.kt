@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.LocalFireDepartment
 import androidx.compose.material.icons.filled.Person
@@ -38,6 +39,7 @@ import ir.speakup.app.ui.onboarding.OnboardingScreen
 import ir.speakup.app.ui.paywall.PaywallScreen
 import kotlinx.coroutines.launch
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.LifecycleResumeEffect
@@ -175,7 +177,21 @@ fun AppNav(nav: NavHostController = rememberNavController()) {
             }
         }
     ) { inner ->
-        Box(Modifier.fillMaxSize().padding(if (showTabs) inner else PaddingValues())) {
+        // سقف عرض برای محتوا.
+        //
+        // این اپ روی گوشی تاشو و تبلت هم باز می‌شود. بدون سقف، هر صفحه تا
+        // لبه کشیده می‌شد: ردیف درس‌ها یک نوار خالیِ ۵۹۰dpی می‌شد که متنش
+        // به راست چسبیده بود، و نوار هفته زنجیره چنان پخش می‌شد که دایره‌ها
+        // در فاصله‌های بزرگ گم می‌شدند.
+        //
+        // ۴۸۰dp انتخاب شد و نه ۶۰۰: صفحه بازِ همین گوشی تاشو ۵۸۹dp است،
+        // پس سقف ۶۰۰ اصلاً فعال نمی‌شد. ۴۸۰ همان عرضی است که ستون متن در
+        // آن خوانا می‌ماند و روی گوشی معمولی (۳۶۰dp) هیچ اثری ندارد.
+        Box(
+            Modifier.fillMaxSize().padding(if (showTabs) inner else PaddingValues()),
+            contentAlignment = Alignment.TopCenter,
+        ) {
+          Box(Modifier.widthIn(max = 480.dp).fillMaxSize()) {
             NavHost(
                 navController = nav,
                 startDestination = start!!,
@@ -277,6 +293,7 @@ fun AppNav(nav: NavHostController = rememberNavController()) {
                     )
                 }
             }
+          }
         }
     }
 }

@@ -91,7 +91,18 @@ fun StreakScreen(vm: StreakViewModel = hiltViewModel()) {
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(14.dp),
                 ) {
-                    Text("🔥", fontSize = 72.sp)
+                    // همان شعله‌ی برداریِ ابزارک، نه اموجی.
+                    //
+                    // اموجی روی هر گوشی شکل و رنگ دیگری دارد و در ۷۲sp
+                    // تفاوتش با شعله ابزارک توی چشم می‌زد؛ این عدد بزرگ،
+                    // قلبِ این صفحه است و باید با بقیه اپ یکی باشد.
+                    androidx.compose.foundation.Image(
+                        painter = androidx.compose.ui.res.painterResource(
+                            ir.speakup.app.R.drawable.ic_flame_lit,
+                        ),
+                        contentDescription = null,
+                        modifier = Modifier.size(76.dp),
+                    )
                     // صفر بزرگ نشان نمی‌دهیم.
                     //
                     // دو دلیل: صفر فارسی («۰») در اندازه بزرگ فقط یک لکه
@@ -191,12 +202,21 @@ private fun WeekStrip(week: List<StreakRepository.DayCell>) {
             Spacer(Modifier.size(12.dp))
         }
 
+        // هر ستون وزن می‌گیرد و نه عرض ثابت.
+        //
+        // با هفت دایره ۴۴dp ثابت، مجموع می‌شد ۳۰۸dp در حالی که این صفحه
+        // روی نمایشگر ۳۲۰dp فقط ۲۸۰dp جا دارد؛ ردیف سرریز می‌کرد و آخرین
+        // خانه — یعنی جمعه — له می‌شد. تا وقتی «امروز» وسط هفته بود کسی
+        // نمی‌دیدش، اما روز جمعه که رسید، خانهٔ امروز باریک و بی‌تاریخ شد.
         Row(
             Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceEvenly,
         ) {
             week.forEach { d ->
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                Column(
+                    Modifier.weight(1f),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                ) {
                     Text(
                         // حرف اول روز، نه نام کاملش: «سه‌شنبه» در ستون باریک
                         // به دو خط می‌شکست و کل ردیف را به هم می‌ریخت.
@@ -233,7 +253,7 @@ private fun DayDot(d: StreakRepository.DayCell) {
     }
     Box(
         Modifier
-            .size(44.dp)
+            .size(36.dp)
             .clip(CircleShape)
             .background(bg)
             .then(
