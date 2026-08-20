@@ -30,6 +30,14 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import ir.speakup.app.domain.toPersianDigits
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.border
+import ir.speakup.app.ui.common.AvatarImage
+import ir.speakup.app.ui.common.AvatarPicker
+import ir.speakup.app.ui.common.Avatars
 import ir.speakup.app.ui.theme.ltr
 
 /**
@@ -43,24 +51,68 @@ import ir.speakup.app.ui.theme.ltr
 fun ProfileScreen(vm: ProfileViewModel = hiltViewModel()) {
     val s by vm.state.collectAsStateWithLifecycle()
     val scheme = MaterialTheme.colorScheme
+    var pickingFace by remember { mutableStateOf(false) }
+    val face = Avatars.resolve(s.avatarId, s.phone)
+
+    if (pickingFace) {
+        AvatarPicker(
+            current = face.id,
+            onPick = { vm.setAvatar(it) },
+            onDismiss = { pickingFace = false },
+        )
+    }
 
     Column(
         Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Spacer(Modifier.height(8.dp))
-        Box(
-            Modifier.size(84.dp).clip(CircleShape).background(scheme.primaryContainer),
-            contentAlignment = Alignment.Center,
-        ) {
-            Text(
-                "سطح ${s.level.toPersianDigits()}",
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.Bold,
-                color = scheme.onPrimaryContainer,
-            )
+        // چهره جای دایره «سطح ۳» را گرفت. آن دایره تنها جای شخصی‌سازی
+        // صفحه بود و هیچ چیز شخصی‌ای نداشت؛ سطح هم اطلاعاتی است که در
+        // نشان کوچک گوشه به همان خوبی خوانده می‌شود.
+        Box(contentAlignment = Alignment.BottomEnd) {
+            Box(
+                Modifier
+                    .size(96.dp)
+                    .clip(CircleShape)
+                    .clickable { pickingFace = true },
+                contentAlignment = Alignment.Center,
+            ) {
+                AvatarImage(face, size = 96)
+            }
+            // نشان سطح، با حلقه هم‌رنگ پس‌زمینه تا از خود چهره جدا بیفتد
+            Box(
+                Modifier
+                    .clip(CircleShape)
+                    .background(scheme.background)
+                    .padding(3.dp),
+            ) {
+                Box(
+                    Modifier
+                        .clip(CircleShape)
+                        .background(scheme.primary)
+                        .padding(horizontal = 9.dp, vertical = 3.dp),
+                ) {
+                    Text(
+                        "سطح ${s.level.toPersianDigits()}",
+                        style = MaterialTheme.typography.labelMedium,
+                        fontWeight = FontWeight.Bold,
+                        color = scheme.onPrimary,
+                    )
+                }
+            }
         }
-        Spacer(Modifier.height(10.dp))
+        Spacer(Modifier.height(6.dp))
+        Text(
+            "تغییر چهره",
+            style = MaterialTheme.typography.labelLarge,
+            color = scheme.primary,
+            modifier = Modifier
+                .clip(RoundedCornerShape(8.dp))
+                .clickable { pickingFace = true }
+                .padding(horizontal = 10.dp, vertical = 4.dp),
+        )
+        Spacer(Modifier.height(6.dp))
         Text(
             s.phone ?: "کاربر",
             style = MaterialTheme.typography.titleMedium.ltr(),

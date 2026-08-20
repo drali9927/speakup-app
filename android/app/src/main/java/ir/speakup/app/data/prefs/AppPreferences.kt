@@ -33,11 +33,22 @@ class AppPreferences @Inject constructor(
         val REMINDERS_ON = booleanPreferencesKey("reminders_enabled")
         val REMINDER_HOUR = intPreferencesKey("reminder_hour")
         val LAST_REMINDER_DAY = stringPreferencesKey("last_reminder_day")
+        val AVATAR = intPreferencesKey("avatar_id")
     }
 
     val onboarded: Flow<Boolean> = context.dataStore.data.map { it[Keys.ONBOARDED] ?: false }
     val token: Flow<String?> = context.dataStore.data.map { it[Keys.TOKEN] }
     val phone: Flow<String?> = context.dataStore.data.map { it[Keys.PHONE] }
+
+    /**
+     * شناسه چهره انتخابی، یا صفر یعنی هنوز انتخاب نکرده.
+     *
+     * صفر را «بدون چهره» نمی‌گیریم: صفحه کارنامه با یک جای خالی شروع
+     * شود، هم بی‌ریخت است و هم کاربر تازه‌وارد را می‌فرستد سراغ کاری که
+     * حالا حوصله‌اش را ندارد. به‌جایش از شماره‌اش یکی را برمی‌داریم که
+     * ثابت بماند و هر بار عوض نشود — بعداً هر وقت خواست تغییرش می‌دهد.
+     */
+    val avatarId: Flow<Int> = context.dataStore.data.map { it[Keys.AVATAR] ?: 0 }
     val referralCode: Flow<String?> = context.dataStore.data.map { it[Keys.REFERRAL] }
     /**
      * تاریخ انقضای اشتراک، به ثانیه. صفر یعنی اشتراکی نیست.
@@ -67,6 +78,10 @@ class AppPreferences @Inject constructor(
 
     suspend fun setRemindersEnabled(on: Boolean) {
         context.dataStore.edit { it[Keys.REMINDERS_ON] = on }
+    }
+
+    suspend fun setAvatar(id: Int) {
+        context.dataStore.edit { it[Keys.AVATAR] = id }
     }
 
     suspend fun setReminderHour(hour: Int) {

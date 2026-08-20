@@ -46,6 +46,7 @@ class ProfileViewModel @Inject constructor(
         val remindersEnabled: Boolean = true,
         val reminderHour: Int = 20,
         val accuracy: Float? = null,
+        val avatarId: Int = 0,
     )
 
     private val _state = MutableStateFlow(UiState())
@@ -70,6 +71,9 @@ class ProfileViewModel @Inject constructor(
                     streakDays = base.streakDays,
                 )
             }
+        }
+        viewModelScope.launch {
+            prefs.avatarId.collect { _state.value = _state.value.copy(avatarId = it) }
         }
         viewModelScope.launch { loadSlowStats() }
         viewModelScope.launch {
@@ -116,6 +120,8 @@ class ProfileViewModel @Inject constructor(
             accuracy = answerLogDao.productiveAccuracy(since),
         )
     }
+
+    fun setAvatar(id: Int) = viewModelScope.launch { prefs.setAvatar(id) }
 
     fun setReminders(on: Boolean) = viewModelScope.launch {
         prefs.setRemindersEnabled(on)
