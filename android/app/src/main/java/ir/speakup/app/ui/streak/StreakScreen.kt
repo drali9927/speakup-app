@@ -1,6 +1,7 @@
 package ir.speakup.app.ui.streak
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -43,10 +44,27 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.draw.alpha
 
 private val Flame = Color(0xFFE58A00)
-/** کرمی گرم سرصفحه — همان نقشی که در الگوی مرجع دارد: جدا کردن ناحیه جشن */
-private val StreakCream = Color(0xFFFFF4D6)
 private val FreezeBlue = Color(0xFF42A5F5)
 private val RepairGreen = Color(0xFF43A047)
+
+/**
+ * رنگ‌های این صفحه، وابسته به تم.
+ *
+ * پیش‌تر کرمیِ سرصفحه و سفیدِ کارت **ثابت** بودند. در حالت شب نتیجه‌اش
+ * این می‌شد که کارت سفید می‌ماند ولی متن‌ها که رنگشان را از تم
+ * می‌گرفتند سفید می‌شدند — یعنی **متن سفید روی کارت سفید** و «فریزی
+ * نداری» عملاً نامرئی.
+ *
+ * روی گوشی با حالت شب دیده شد. این همان دسته اشکالی است که در حالت
+ * روز هیچ نشانه‌ای ندارد.
+ */
+@Composable
+private fun streakCream(): Color =
+    if (isSystemInDarkTheme()) Color(0xFF2A2113) else Color(0xFFFFF4D6)
+
+@Composable
+private fun streakCard(): Color =
+    if (isSystemInDarkTheme()) Color(0xFF14110B) else Color.White
 
 /**
  * صفحه زنجیره — بازنویسی‌شده روی الگوی دولینگو.
@@ -73,7 +91,7 @@ fun StreakScreen(vm: StreakViewModel = hiltViewModel()) {
     ) {
         // --- ناحیه گرم
         Box(
-            Modifier.fillMaxWidth().background(StreakCream)
+            Modifier.fillMaxWidth().background(streakCream())
                 .statusBarsPadding().padding(horizontal = 20.dp)
                 .padding(top = 12.dp, bottom = 22.dp)
         ) {
@@ -143,11 +161,11 @@ fun StreakScreen(vm: StreakViewModel = hiltViewModel()) {
                 }
 
                 Spacer(Modifier.size(20.dp))
-                // کارت فریز — سفید روی کرمی، پس خودش را نشان می‌دهد
+                // کارت فریز — روشن‌تر از زمینه، پس خودش را نشان می‌دهد
                 Surface(
                     Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(16.dp),
-                    color = Color.White,
+                    color = streakCard(),
                 ) {
                     Column(Modifier.padding(16.dp)) {
                         Row(
@@ -327,7 +345,7 @@ private fun FreezeSlots(count: Int) {
                     .clip(RoundedCornerShape(12.dp))
                     .background(
                         if (filled) FreezeBlue.copy(alpha = 0.18f)
-                        else MaterialTheme.colorScheme.surface
+                        else MaterialTheme.colorScheme.surfaceVariant
                     ),
                 contentAlignment = Alignment.Center,
             ) {

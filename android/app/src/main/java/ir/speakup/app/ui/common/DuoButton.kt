@@ -89,7 +89,20 @@ fun DuoButtonBox(
     val depth: Dp = if (!enabled) 0.dp else DEPTH
     val drop by animateDpAsState(if (pressed && enabled) depth else 0.dp, label = "duo-press")
 
-    val c = style.colors(enabled)
+    // دکمه خنثی، پرکنندهٔ سفیدِ ثابت داشت. در حالت شب یک دکمه سفیدِ
+    // روشن وسط صفحه تیره می‌نشست و بیرون از تم دیده می‌شد. رنگش از
+    // خودِ تم گرفته می‌شود؛ بقیه سبک‌ها روی زمینه رنگی‌اند و متن سفیدشان
+    // در هر دو تم درست است.
+    val base = style.colors(enabled)
+    val c = if (enabled && style == DuoButtonStyle.Neutral) {
+        base.copy(
+            fill = MaterialTheme.colorScheme.surface,
+            content = MaterialTheme.colorScheme.onSurfaceVariant,
+            border = MaterialTheme.colorScheme.outlineVariant,
+        )
+    } else {
+        base
+    }
 
     Box(modifier.height(height + depth)) {
         // لایه زیرین — همان چیزی که هنگام فشردن دیده می‌شود

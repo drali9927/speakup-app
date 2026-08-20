@@ -138,6 +138,9 @@ fun ProfileScreen(vm: ProfileViewModel = hiltViewModel()) {
         }
 
         Spacer(Modifier.height(24.dp))
+        ThemePicker(current = s.themeMode, onPick = vm::setTheme)
+
+        Spacer(Modifier.height(24.dp))
         ReminderSettings(
             enabled = s.remindersEnabled,
             hour = s.reminderHour,
@@ -238,6 +241,58 @@ private fun WeeklyChart(days: List<ProfileViewModel.DayBar>) {
                         )
                         Spacer(Modifier.height(6.dp))
                         Text(d.label, style = MaterialTheme.typography.bodyMedium)
+                    }
+                }
+            }
+        }
+    }
+}
+
+/**
+ * حالت نمایش — سه گزینه، نه یک کلید دوحالته.
+ *
+ * کلید دوحالته کاربر را مجبور می‌کند یکی را انتخاب کند و «مثل سیستم»
+ * را از دست می‌دهد؛ کسی که گوشی‌اش شب خودکار تیره می‌شود، انتظار دارد
+ * اپ هم همان کار را بکند.
+ */
+@Composable
+private fun ThemePicker(current: String, onPick: (String) -> Unit) {
+    val scheme = MaterialTheme.colorScheme
+    val options = listOf(
+        "SYSTEM" to "مثل سیستم",
+        "LIGHT" to "روشن",
+        "DARK" to "تیره",
+    )
+    Surface(
+        Modifier.fillMaxWidth(),
+        shape = RoundedCornerShape(16.dp),
+        color = scheme.surfaceVariant,
+    ) {
+        Column(Modifier.padding(16.dp)) {
+            Text("حالت نمایش", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+            Spacer(Modifier.height(12.dp))
+            Row(
+                Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+            ) {
+                options.forEach { (key, label) ->
+                    val on = key == current
+                    Surface(
+                        Modifier
+                            .weight(1f)
+                            .clip(RoundedCornerShape(12.dp))
+                            .clickable { onPick(key) },
+                        shape = RoundedCornerShape(12.dp),
+                        color = if (on) scheme.primary else scheme.surface,
+                    ) {
+                        Text(
+                            label,
+                            style = MaterialTheme.typography.bodyMedium,
+                            fontWeight = if (on) FontWeight.Bold else FontWeight.Normal,
+                            color = if (on) scheme.onPrimary else scheme.onSurfaceVariant,
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier.padding(vertical = 12.dp).fillMaxWidth(),
+                        )
                     }
                 }
             }

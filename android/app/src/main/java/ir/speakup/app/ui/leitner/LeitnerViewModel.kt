@@ -48,6 +48,13 @@ data class LeitnerUiState(
     val typed: String = "",
     val correctCount: Int = 0,
     val finished: Boolean = false,
+    // --- واژه‌نامه ---
+    val query: String = "",
+    val results: List<DictionaryEntryEntity> = emptyList(),
+    /** واژه‌ای که کاربر از نتایج واژه‌نامه انتخاب کرده — جدا از `picked` که پاسخ مرور است */
+    val pickedWord: DictionaryEntryEntity? = null,
+    /** واژه‌های داخل جعبه لایتنر — برای وضعیت دکمه افزودن */
+    val inBox: Set<String> = emptySet(),
 ) {
     val current: ReviewCard? get() = session.getOrNull(index)
     val inSession: Boolean get() = session.isNotEmpty() && !finished
@@ -177,6 +184,44 @@ class LeitnerViewModel @Inject constructor(
             )
         }
         if (next >= s.session.size) refresh()
+    }
+
+    // ---------------------------------------------------------- واژه‌نامه
+
+    private var searchJob: kotlinx.coroutines.Job? = null
+
+    fun search(q: String) {
+        _state.value = _state.value.copy(query = q, pickedWord = null)
+        searchJob?.cancel()
+        if (q.isBlank()) {
+            _state.value = _state.value.copy(results = emptyList())
+            return
+        }
+        // مکث کوتاه: با هر حرفی که تایپ می‌شود یک پرس‌وجو نزنیم
+        searchJob = viewModelScope.launch {
+            kotlinx.coroutines.delay(180)
+            val rows = dictionaryDao.lookup(q.trim())
+            _state.value = _state.value.copy(results = rows)
+        }
+    }
+
+    fun pickWord(e: DictionaryEntryEntity) {
+        _state.value = _state.value.copy(pickedWord = e)
+        viewModelScope.launch {
+            _state.value = _state.value.copy(inBox = repo.leitnerWords())
+        }
+    }
+
+    fun closeWord() { _state.value = _state.value.copy(pickedWord = null) }
+
+    /** افزودن واژه‌نامه‌ای به جعبه لایتنر */
+    fun addPicked() {
+        val e = _state.value.pickedWord ?: return
+        viewModelScope.launch {
+            repo.addToLeitnerByWord(e.word)
+            _state.value = _state.value.copy(inBox = repo.leitnerWords())
+            refresh()
+        }
     }
 
     fun exitSession() {

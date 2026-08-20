@@ -67,6 +67,20 @@ fun LeitnerScreen(vm: LeitnerViewModel = hiltViewModel()) {
         )
     }
 
+    // برگه جزئیات واژه — روی هر نمای این تب باز می‌شود
+    s.pickedWord?.let { e ->
+        WordSheet(
+            entry = e,
+            inBox = e.word.lowercase() in s.inBox,
+            speechStatus = speechStatus,
+            speakingId = speakingId,
+            onSpeak = { t, id -> vm.speech.speak(t, id) },
+            onUnavailable = { showSpeechHelp = true },
+            onAdd = vm::addPicked,
+            onDismiss = vm::closeWord,
+        )
+    }
+
     when {
         s.finished -> SessionFinished(s.correctCount, s.session.size) { vm.exitSession() }
         s.inSession -> ReviewSession(
@@ -74,18 +88,41 @@ fun LeitnerScreen(vm: LeitnerViewModel = hiltViewModel()) {
             onSpeak = { t, id -> vm.speech.speak(t, id) },
             onUnavailable = { showSpeechHelp = true },
         )
-        else -> Summary(s) { vm.startSession() }
+        else -> Summary(
+            s = s,
+            onStart = { vm.startSession() },
+            onSearch = vm::search,
+            onPickWord = vm::pickWord,
+        )
     }
 }
 
 // ---------- خلاصه جعبه ----------
 
 @Composable
-private fun Summary(s: LeitnerUiState, onStart: () -> Unit) {
+private fun Summary(
+    s: LeitnerUiState,
+    onStart: () -> Unit,
+    onSearch: (String) -> Unit,
+    onPickWord: (ir.speakup.app.data.local.DictionaryEntryEntity) -> Unit,
+) {
     Column(
         Modifier.fillMaxSize().statusBarsPadding().navigationBarsPadding().padding(20.dp),
     ) {
-        Text("جعبه لایتنر", style = MaterialTheme.typography.headlineMedium, fontWeight = FontWeight.Bold)
+        Text("واژه‌نامه", style = MaterialTheme.typography.headlineMedium, fontWeight = FontWeight.Bold)
+
+        Spacer(Modifier.size(14.dp))
+        GlossarySearch(
+            query = s.query,
+            results = s.results,
+            onQueryChange = onSearch,
+            onPick = onPickWord,
+        )
+
+        // وقتی کاربر در حال جست‌وجوست، جعبه لایتنر پایین می‌ماند ولی
+        // نتایج جلویش را نمی‌گیرند — سقف ارتفاع فهرست همین کار را می‌کند.
+        Spacer(Modifier.size(22.dp))
+        Text("جعبه لایتنر", style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
         Text(
             "واژه‌هایی که در تمرین‌ها اشتباه جواب دادی، خودکار اینجا جمع می‌شوند.",
             style = MaterialTheme.typography.bodyMedium,
@@ -93,7 +130,7 @@ private fun Summary(s: LeitnerUiState, onStart: () -> Unit) {
             modifier = Modifier.padding(top = 6.dp),
         )
 
-        Spacer(Modifier.size(24.dp))
+        Spacer(Modifier.size(18.dp))
         Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
             Counter("آموخته شده", s.learnedCount, Modifier.weight(1f))
             Counter("کارت‌های امروز", s.dueCount, Modifier.weight(1f))

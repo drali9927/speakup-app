@@ -37,6 +37,7 @@ class AppPreferences @Inject constructor(
         val AVATAR = intPreferencesKey("avatar_id")
         val INSTALL_ID = stringPreferencesKey("install_id")
         val PLACED = booleanPreferencesKey("placement_done")
+        val THEME = stringPreferencesKey("theme_mode")
     }
 
     val onboarded: Flow<Boolean> = context.dataStore.data.map { it[Keys.ONBOARDED] ?: false }
@@ -93,6 +94,19 @@ class AppPreferences @Inject constructor(
 
     /** آزمون تعیین سطح انجام یا رد شده — تا دوباره جلوی کاربر سبز نشود */
     val placed: Flow<Boolean> = context.dataStore.data.map { it[Keys.PLACED] ?: false }
+
+    /**
+     * حالت نمایش: SYSTEM | LIGHT | DARK.
+     *
+     * چرا فقط «مثل سیستم» کافی نبود: خیلی‌ها گوشی را روشن نگه می‌دارند
+     * ولی اپی را که شب باهاش کار می‌کنند تیره می‌خواهند — و برعکس.
+     * رقیب هم کلید مستقل دارد.
+     */
+    val themeMode: Flow<String> = context.dataStore.data.map { it[Keys.THEME] ?: "SYSTEM" }
+
+    suspend fun setThemeMode(mode: String) {
+        context.dataStore.edit { it[Keys.THEME] = mode }
+    }
 
     suspend fun setPlaced() {
         context.dataStore.edit { it[Keys.PLACED] = true }

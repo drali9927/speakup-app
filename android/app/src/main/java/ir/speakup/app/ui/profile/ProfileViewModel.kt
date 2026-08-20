@@ -47,6 +47,8 @@ class ProfileViewModel @Inject constructor(
         val reminderHour: Int = 20,
         val accuracy: Float? = null,
         val avatarId: Int = 0,
+        /** SYSTEM | LIGHT | DARK */
+        val themeMode: String = "SYSTEM",
     )
 
     private val _state = MutableStateFlow(UiState())
@@ -74,6 +76,9 @@ class ProfileViewModel @Inject constructor(
         }
         viewModelScope.launch {
             prefs.avatarId.collect { _state.value = _state.value.copy(avatarId = it) }
+        }
+        viewModelScope.launch {
+            prefs.themeMode.collect { _state.value = _state.value.copy(themeMode = it) }
         }
         viewModelScope.launch { loadSlowStats() }
         viewModelScope.launch {
@@ -126,6 +131,8 @@ class ProfileViewModel @Inject constructor(
     }
 
     fun setAvatar(id: Int) = viewModelScope.launch { prefs.setAvatar(id) }
+
+    fun setTheme(mode: String) = viewModelScope.launch { prefs.setThemeMode(mode) }
 
     fun setReminders(on: Boolean) = viewModelScope.launch {
         prefs.setRemindersEnabled(on)

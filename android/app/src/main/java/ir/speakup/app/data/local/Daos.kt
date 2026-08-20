@@ -124,6 +124,32 @@ interface DictionaryDao {
     @Query("SELECT * FROM dictionary_entries WHERE word LIKE :prefix || '%' ORDER BY frequencyRank, word LIMIT :limit")
     suspend fun search(prefix: String, limit: Int = 50): List<DictionaryEntryEntity>
 
+    /**
+     * جست‌وجوی دوسویه — انگلیسی و فارسی با هم.
+     *
+     * کاربر فارسی‌زبان همیشه واژه انگلیسی را نمی‌داند؛ گاهی معنی را
+     * می‌داند و دنبال خودِ واژه می‌گردد. جست‌وجویی که فقط انگلیسی را
+     * بپذیرد، نیمی از کاربردش را از دست می‌دهد.
+     *
+     * ترتیب نتایج عمدی است: نخست واژه‌هایی که **با** عبارت شروع
+     * می‌شوند، بعد بقیه. کسی که «boo» می‌زند «book» را می‌خواهد، نه
+     * «bamboo».
+     */
+    @Query(
+        """
+        SELECT * FROM dictionary_entries
+         WHERE word LIKE :q || '%'
+            OR word LIKE '%' || :q || '%'
+            OR translationFa LIKE '%' || :q || '%'
+         ORDER BY
+            CASE WHEN word LIKE :q || '%' THEN 0 ELSE 1 END,
+            frequencyRank,
+            word
+         LIMIT :limit
+        """,
+    )
+    suspend fun lookup(q: String, limit: Int = 40): List<DictionaryEntryEntity>
+
     @Query("SELECT * FROM dictionary_entries WHERE word = :word LIMIT 1")
     suspend fun byWord(word: String): DictionaryEntryEntity?
 
