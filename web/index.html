@@ -2,8 +2,23 @@
 <html lang="fa" dir="rtl">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover" />
     <meta name="theme-color" content="#58CC02" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="icon" href="/favicon.png" type="image/png" />
+
+    <!--
+      متا‌های اختصاصی iOS.
+      سافاری از manifest.webmanifest برای «Add to Home Screen» پیروی
+      نمی‌کند — این خط‌ها هستند که آیکون، اسپلش، و اجرای تمام‌صفحه (بدون
+      نوار آدرس) را روی آیفون فعال می‌کنند. بدونشان، آیکون روی خانه
+      می‌نشیند ولی باز شدنش داخل سافاری با نوار آدرس است، نه شبیه اپ.
+    -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="اسپیک‌آپ" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
     <title>اسپیک‌آپ — انگلیسی یاد بگیر</title>
   </head>
   <body>
