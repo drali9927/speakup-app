@@ -17,4 +17,14 @@ export default defineConfig({
       '/images': 'http://localhost:8090',
     },
   },
+  // `vite preview` نسخه ساخته‌شده را سرو می‌کند — همان چیزی که روی سرور
+  // می‌رود. پروکسی این‌جا نقش nginx را بازی می‌کند تا بشود پیش از انتشار،
+  // خروجی واقعی را تست کرد و نه فقط حالت توسعه را.
+  preview: {
+    port: 4173,
+    proxy: {
+      '/v1': 'http://localhost:8090',
+      '/images': 'http://localhost:8090',
+    },
+  },
 })

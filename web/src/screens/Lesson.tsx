@@ -125,12 +125,22 @@ export function Lesson({
         {wrongWords.length > 0 && (
           <div className="summary-wrong">
             <p>این واژه‌ها برای مرور برمی‌گردند:</p>
+            {/*
+              سقف نمایش. کاربری که بد عمل کرده با دیواری از ۲۰ واژه
+              روبه‌رو می‌شود و همان لحظه دلسرد می‌شود — در حالی که پیام
+              اصلی («خودشان برمی‌گردند») با چند نمونه هم منتقل می‌شود.
+            */}
             <div className="wrong-chips">
-              {wrongWords.map((w) => (
+              {wrongWords.slice(0, 8).map((w) => (
                 <span key={w} className="chip ltr">
                   {w}
                 </span>
               ))}
+              {wrongWords.length > 8 && (
+                <span className="chip">
+                  و {toPersianDigits(wrongWords.length - 8)} واژه دیگر
+                </span>
+              )}
             </div>
           </div>
         )}

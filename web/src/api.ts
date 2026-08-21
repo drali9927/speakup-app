@@ -23,14 +23,29 @@ export class ApiError extends Error {
   }
 }
 
-/** پیام‌های خطای سرور به فارسی — کاربر نباید کد انگلیسی ببیند */
+/**
+ * پیام‌های خطای سرور به فارسی — کاربر نباید کد انگلیسی ببیند.
+ *
+ * ⚠️ کلیدها باید دقیقاً همان رشته‌هایی باشند که `backend/src/lib/auth.ts`
+ * برمی‌گرداند. اولین‌بار حدسشان زدم و نتیجه این شد که کاربرِ کدِ اشتباه،
+ * به‌جای «کد درست نیست»، پیام مبهم «مشکلی پیش آمد» می‌دید — یعنی
+ * نمی‌فهمید باید کد را دوباره تایپ کند یا کد تازه بخواهد.
+ */
 const MESSAGES: Record<string, string> = {
-  invalid_code: 'کد وارد‌شده درست نیست',
-  code_expired: 'کد منقضی شده — دوباره درخواست بده',
-  too_many_requests: 'تعداد درخواست‌ها زیاد بود؛ کمی صبر کن',
-  sms_daily_limit: 'امروز چند بار کد خواستی. فردا دوباره امتحان کن',
-  unauthorized: 'باید دوباره وارد شوی',
+  // ورود
+  wrong_code: 'کد وارد‌شده درست نیست',
+  expired: 'کد منقضی شده — کد تازه بگیر',
+  no_code: 'کدی برای این شماره نفرستادیم — دوباره درخواست بده',
+  too_many_attempts: 'چند بار اشتباه زدی. کد تازه بگیر',
+  too_soon: 'کمی صبر کن، بعد دوباره کد بخواه',
+  daily_limit: 'امروز چند بار کد خواستی. فردا دوباره امتحان کن',
   invalid_phone: 'شماره موبایل درست نیست',
+  sms_failed: 'پیامک فرستاده نشد. کمی بعد دوباره تلاش کن',
+  // عمومی
+  invalid_body: 'اطلاعات فرستاده‌شده درست نیست',
+  unauthorized: 'باید دوباره وارد شوی',
+  not_found: 'پیدا نشد',
+  internal_error: 'خطای سرور. کمی بعد دوباره تلاش کن',
 }
 
 async function request<T>(path: string, init?: RequestInit): Promise<T> {
@@ -241,8 +256,20 @@ export type SyncResult = {
 export const sync = (body: SyncPayload) =>
   request<SyncResult>('/v1/sync', { method: 'POST', body: JSON.stringify(body) })
 
+/**
+ * ثبت فعالیت امروز.
+ *
+ * ⚠️ پاسخ این اندپوینت **تخت** است، نه پیچیده‌شده در `{streak}` — برخلاف
+ * ‏`/v1/sync` که میدان `streak` دارد. یک‌بار همین را اشتباه فرض کردم و
+ * شمارنده زنجیره بی‌آنکه خطایی بدهد صفر ماند.
+ */
+export type CheckInResult = Streak & {
+  /** چه اتفاقی افتاد: ثبت عادی، استفاده از فریز، ترمیم، یا شکستن */
+  result: string
+}
+
 export const checkIn = () =>
-  request<{ streak: Streak }>('/v1/streak/check-in', { method: 'POST', body: '{}' })
+  request<CheckInResult>('/v1/streak/check-in', { method: 'POST', body: '{}' })
 
 export type Stats = {
   productiveAccuracy: number | null

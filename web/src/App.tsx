@@ -83,8 +83,8 @@ export function App() {
     if (r.total > 0) {
       // زنجیره را سرور تصمیم می‌گیرد، نه دستگاه — با ساعت گوشی نمی‌شود ساختش
       try {
-        const res = await checkIn()
-        setStreak(res.streak)
+        // پاسخ تخت است؛ خودش همان زنجیره است
+        setStreak(await checkIn())
       } catch {
         /* آفلاین — دفعه بعد ثبت می‌شود */
       }
