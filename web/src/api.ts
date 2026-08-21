@@ -177,13 +177,25 @@ export const getBundle = (level: string) => request<Bundle>(`/v1/content/${level
 
 // --- زنجیره
 
+/**
+ * زنجیره — نام میدان‌ها عیناً همان چیزی است که سرور می‌دهد
+ * (`lib/streak.ts`). حدس زدنشان باعث شده بود شمارنده همیشه صفر بماند
+ * بی‌آنکه خطایی دیده شود.
+ */
 export type Streak = {
-  current: number
-  longest: number
-  todayDone: boolean
+  currentLength: number
+  longestLength: number
+  lastActiveDate: string | null
+  freezeCount: number
+  /** فقط در پاسخ خودِ سرور می‌آید؛ برای مقایسه با lastActiveDate */
+  today?: string
 }
 
 export const getStreak = () => request<Streak>('/v1/streak')
+
+/** آیا امروز فعالیتی ثبت شده — سرور تاریخ را به وقت اپ می‌دهد */
+export const isTodayDone = (s: Streak | null) =>
+  !!s?.today && s.lastActiveDate === s.today
 
 // --- اشتراک
 
@@ -201,3 +213,40 @@ export const getPlans = () => request<{ plans: Plan[] }>('/v1/plans')
 
 /** نشانی تصویر یک آیتم؛ تصاویر را سرور بک‌اند سرو می‌کند نه وب‌اپ */
 export const imageUrl = (file: string) => `/images/${file.replace(/\.png$/, '.webp')}`
+
+// --- همگام‌سازی
+
+import type { AnswerRow, LeitnerRow, ProgressRow } from './store'
+
+export type SyncPayload = {
+  /**
+   * مرزِ زمانی آخرین همگام‌سازی — همان عددی که سرور در پاسخ قبلی داد.
+   * سرور آن را بر حسب ثانیه می‌دهد، در حالی که `updatedAt` سطرها بر حسب
+   * میلی‌ثانیه است (اپ اندروید هم همین‌طور رفتار می‌کند).
+   */
+  since: number
+  progress?: ProgressRow[]
+  leitner?: LeitnerRow[]
+  answers?: AnswerRow[]
+}
+
+export type SyncResult = {
+  now: number
+  progress: ProgressRow[]
+  leitner: LeitnerRow[]
+  applied: Record<string, number>
+  streak: Streak
+}
+
+export const sync = (body: SyncPayload) =>
+  request<SyncResult>('/v1/sync', { method: 'POST', body: JSON.stringify(body) })
+
+export const checkIn = () =>
+  request<{ streak: Streak }>('/v1/streak/check-in', { method: 'POST', body: '{}' })
+
+export type Stats = {
+  productiveAccuracy: number | null
+  [k: string]: unknown
+}
+
+export const getStats = (since = 0) => request<Stats>(`/v1/stats?since=${since}`)

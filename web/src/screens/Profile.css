@@ -1,0 +1,88 @@
+.profile {
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 16px 20px 40px;
+}
+
+.profile-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.profile-head h1 {
+  margin: 0;
+  font-size: 22px;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.pcard {
+  padding: 18px 16px;
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  text-align: center;
+}
+
+.pcard strong {
+  display: block;
+  font-size: 28px;
+  color: var(--green);
+}
+
+.pcard span {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+/* متریک داوری — عمداً برجسته‌تر از بقیه، چون مهم‌ترینشان است */
+.accuracy {
+  margin-top: 16px;
+  padding: 18px;
+  border-radius: var(--radius);
+  background: var(--blue-soft);
+  border: 2px solid var(--blue);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.accuracy strong {
+  font-size: 24px;
+}
+
+.profile-rows {
+  margin-top: 24px;
+}
+
+.prow {
+  display: flex;
+  justify-content: space-between;
+  padding: 14px 4px;
+  border-bottom: 2px solid var(--border);
+}
+
+.prow span {
+  color: var(--muted);
+}
+
+.profile-cta {
+  margin-top: 24px;
+}
+
+.logout {
+  display: block;
+  width: 100%;
+  margin-top: 28px;
+  padding: 12px;
+  border: none;
+  background: none;
+  color: var(--red);
+  font-weight: 700;
+  font-size: 15px;
+}

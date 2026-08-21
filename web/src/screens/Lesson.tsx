@@ -4,6 +4,8 @@ import { Exercise, type ItemResult } from './Exercise'
 import { WordMatch } from './WordMatch'
 import { Button } from '../components/Button'
 import { toPersianDigits } from '../format'
+import { addWrongWord, logAnswer, putProgress } from '../store'
+import { PRODUCTIVE, SCORED } from '../activity'
 import './Lesson.css'
 
 /**
@@ -53,6 +55,40 @@ export function Lesson({
   const [done, setDone] = useState(false)
 
   function handleDone(r: ItemResult) {
+    const step = steps[at]
+    const now = Date.now()
+
+    // هر واژه‌ای که غلط جواب داده شده خودکار وارد لایتنر می‌شود —
+    // سند ۰۷ تمایز ۲. کاربر لازم نیست کاری بکند و اصلاً خبردار هم نمی‌شود.
+    if (!r.correct && r.targetWord) addWrongWord(r.targetWord)
+
+    // گزارش پاسخ برای متریک «نرخ تولید صحیح» (سند ۰۷ بخش ۷.۷).
+    // فقط تمرین‌های نمره‌دار؛ کارت واژه و گفت‌وگو سوالی نمی‌پرسند.
+    if (SCORED.has(step.type)) {
+      logAnswer({
+        itemId: r.itemId,
+        activityId: step.items[0].activityId,
+        isProductive: PRODUCTIVE.has(step.type),
+        userAnswer: r.correct ? 'ok' : 'wrong',
+        isCorrect: r.correct,
+        targetWord: r.targetWord ?? null,
+        answeredAt: now,
+      })
+    }
+
+    // پیشرفت هر فعالیت وقتی ثبت می‌شود که آخرین آیتمش رد شده باشد
+    const lastOfActivity =
+      at + 1 >= steps.length ||
+      steps[at + 1].items[0].activityId !== step.items[0].activityId
+    if (lastOfActivity) {
+      putProgress({
+        activityId: step.items[0].activityId,
+        status: 'COMPLETED',
+        completedAt: now,
+        updatedAt: now,
+      })
+    }
+
     const next = [...results, r]
     setResults(next)
     if (at + 1 >= steps.length) {

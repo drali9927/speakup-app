@@ -1,0 +1,49 @@
+.leitner-empty {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 70px 24px;
+  text-align: center;
+}
+
+.big-emoji {
+  font-size: 60px;
+}
+
+.leitner-empty h1 {
+  margin: 12px 0 8px;
+  font-size: 24px;
+}
+
+.leitner-empty p {
+  margin: 0 0 28px;
+  line-height: 1.8;
+}
+
+.leitner-score {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--purple);
+}
+
+.leitner-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+/* بنفش = بخش مرور، همان رنگی که در اپ برای لایتنر است */
+.box-chip {
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: var(--purple);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.leitner-word {
+  font-size: 30px;
+  font-weight: 800;
+  margin: 0 0 24px;
+}

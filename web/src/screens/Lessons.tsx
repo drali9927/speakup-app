@@ -14,14 +14,20 @@ export function Lessons({
   me,
   streak,
   doneIds,
+  dueCount,
   onOpen,
+  onReview,
+  onProfile,
   onPaywall,
 }: {
   bundle: Bundle
   me: Me
   streak: Streak | null
   doneIds: Set<string>
+  dueCount: number
   onOpen: (lessonId: string) => void
+  onReview: () => void
+  onProfile: () => void
   onPaywall: () => void
 }) {
   const lessons = [...bundle.lessons].sort((a, b) => a.number - b.number)
@@ -42,14 +48,16 @@ export function Lessons({
       <header className="lessons-head">
         <div className="stat">
           <span className="stat-icon">🔥</span>
-          <strong>{toPersianDigits(streak?.current ?? 0)}</strong>
+          <strong>{toPersianDigits(streak?.currentLength ?? 0)}</strong>
           <span className="stat-label">روز</span>
         </div>
         <div className="stat">
           <span className="stat-icon">📘</span>
           <strong>{me.currentLevel}</strong>
-          <span className="stat-label">سطح</span>
         </div>
+        <button className="avatar" onClick={onProfile} aria-label="پروفایل">
+          👤
+        </button>
         {!hasSub && (
           <button className="upgrade" onClick={onPaywall}>
             ارتقا
@@ -65,6 +73,27 @@ export function Lessons({
           </strong>
         </button>
       )}
+
+      {/*
+        ایستگاه مرور — سند ۰۷، تمایز ۳.
+        شکلش عمداً با ردیف درس فرق دارد تا با درس اشتباه گرفته نشود. سرِ
+        راه است چون تا وقتی کاربر باید خودش سراغ لایتنر برود، عملاً
+        نمی‌رود — در حساب تست رقیب هر سه شمارنده روی صفر مانده بود.
+      */}
+      <button
+        className={`review-station ${dueCount > 0 ? 'active' : ''}`}
+        onClick={onReview}
+      >
+        <span className="rs-icon">🔁</span>
+        <span className="rs-text">
+          <strong>مرور واژه‌ها</strong>
+          <span>
+            {dueCount > 0
+              ? `${toPersianDigits(dueCount)} کارت آماده مرور`
+              : 'فعلاً کارتی سررسید نشده'}
+          </span>
+        </span>
+      </button>
 
       <ol className="lesson-list">
         {lessons.map((l, i) => {
