@@ -1,0 +1,259 @@
+.ex {
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 16px 24px 24px;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* نوار پیشرفت — کاربر باید بداند چقدر مانده، وگرنه وسط درس رها می‌کند */
+.ex-progress {
+  height: 12px;
+  border-radius: 6px;
+  background: var(--border);
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+
+.ex-bar {
+  height: 100%;
+  background: var(--green);
+  border-radius: 6px;
+  transition: width 0.25s ease-out;
+}
+
+.ex-q {
+  font-size: 19px;
+  font-weight: 700;
+  line-height: 1.7;
+  margin: 0 0 20px;
+}
+
+.ex-target {
+  font-size: 24px;
+  font-weight: 800;
+  margin: 0 0 16px;
+}
+
+.ex-input {
+  width: 100%;
+  padding: 14px 16px;
+  font-size: 18px;
+  border: 2px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--ink);
+  outline: none;
+}
+
+.ex-input:focus {
+  border-color: var(--blue);
+}
+
+.ex-actions {
+  margin-top: auto;
+  padding-top: 24px;
+}
+
+/* --- فلش‌کارت */
+.card-view {
+  text-align: center;
+}
+
+.ex-image {
+  width: 100%;
+  max-width: 260px;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: var(--radius);
+  background: var(--surface-alt);
+}
+
+.card-view h2 {
+  margin: 16px 0 4px;
+  font-size: 30px;
+}
+
+.ex-ipa {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.ex-fa {
+  margin: 10px 0;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.ex-example {
+  margin: 16px 0;
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  background: var(--surface-alt);
+}
+
+.ex-example p {
+  margin: 2px 0;
+}
+
+.ex-speak,
+.ex-listen {
+  margin-top: 8px;
+  padding: 10px 18px;
+  border: 2px solid var(--blue);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--blue);
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.ex-listen {
+  display: block;
+  width: 100%;
+  margin: 0 0 20px;
+  padding: 22px;
+  font-size: 18px;
+  border-radius: var(--radius);
+}
+
+/* --- گفت‌وگو */
+.bubble {
+  padding: 16px 18px;
+  border-radius: var(--radius);
+  border: 2px solid var(--border);
+  max-width: 90%;
+}
+
+.bubble.her {
+  background: var(--blue-soft);
+  border-color: var(--blue);
+  margin-left: auto;
+}
+
+.bubble.him {
+  background: var(--surface-alt);
+  margin-right: auto;
+}
+
+.bubble-who {
+  display: block;
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+
+.bubble p {
+  margin: 2px 0;
+  font-size: 17px;
+}
+
+/* --- آموزش */
+.teach h2 {
+  font-size: 22px;
+  margin: 0 0 14px;
+}
+
+.teach p {
+  line-height: 1.9;
+  margin: 0 0 8px;
+}
+
+.teach-examples {
+  margin-top: 16px;
+  padding: 14px 18px;
+  border-radius: var(--radius-sm);
+  background: var(--green-soft);
+  border: 2px solid var(--green);
+}
+
+.teach-examples p {
+  margin: 4px 0;
+  font-weight: 600;
+}
+
+/* --- گزینه‌ها */
+.choices {
+  display: grid;
+  gap: 10px;
+}
+
+.choice {
+  padding: 16px;
+  font-size: 17px;
+  font-weight: 600;
+  border: 2px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--ink);
+  text-align: center;
+}
+
+.choice:not(:disabled):hover {
+  border-color: var(--blue);
+}
+
+.choice.ok {
+  background: var(--green-soft);
+  border-color: var(--green);
+}
+
+.choice.bad {
+  background: var(--red-soft);
+  border-color: var(--red);
+}
+
+/* --- مرتب‌سازی */
+.reorder-slot {
+  min-height: 60px;
+  padding: 16px;
+  margin-bottom: 20px;
+  border: 2px dashed var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.tiles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  direction: ltr;
+}
+
+.tile {
+  padding: 10px 16px;
+  font-size: 16px;
+  font-weight: 600;
+  border: 2px solid var(--border);
+  border-bottom-width: 4px;
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--ink);
+}
+
+.tile:active:not(:disabled) {
+  border-bottom-width: 2px;
+  transform: translateY(2px);
+}
+
+.muted {
+  color: var(--muted);
+}
+
+/* --- داستان */
+.story-en {
+  font-size: 19px;
+  line-height: 2;
+  margin: 0 0 16px;
+}
+
+.story-fa {
+  font-size: 16px;
+  line-height: 2;
+  color: var(--muted);
+  padding-top: 16px;
+  border-top: 2px solid var(--border);
+}

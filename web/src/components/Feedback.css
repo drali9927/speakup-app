@@ -1,0 +1,67 @@
+.feedback {
+  position: sticky;
+  bottom: 0;
+  margin: 0 -24px -24px;
+  padding: 16px 24px calc(20px + env(safe-area-inset-bottom));
+  border-top: 2px solid;
+  animation: rise 0.18s ease-out;
+}
+
+@keyframes rise {
+  from {
+    transform: translateY(12px);
+    opacity: 0;
+  }
+}
+
+/* حرکت برای کسی که حرکت را نمی‌خواهد، خاموش می‌شود */
+@media (prefers-reduced-motion: reduce) {
+  .feedback {
+    animation: none;
+  }
+}
+
+.feedback.ok {
+  background: var(--green-soft);
+  border-color: var(--green);
+  color: #2b6a00;
+}
+
+.feedback.bad {
+  background: var(--red-soft);
+  border-color: var(--red);
+  color: #8e1b1b;
+}
+
+:root[data-theme='dark'] .feedback.ok,
+:root[data-theme='dark'] .feedback.bad {
+  color: var(--ink);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) .feedback.ok,
+  :root:not([data-theme='light']) .feedback.bad {
+    color: var(--ink);
+  }
+}
+
+.feedback-body {
+  margin-bottom: 12px;
+}
+
+.feedback-body strong {
+  font-size: 17px;
+}
+
+.feedback-body p {
+  margin: 6px 0 0;
+  font-size: 15px;
+}
+
+.feedback-hint {
+  opacity: 0.85;
+}
+
+.strong {
+  font-weight: 700;
+}

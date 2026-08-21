@@ -1,0 +1,74 @@
+.lesson {
+  position: relative;
+  min-height: 100%;
+}
+
+.lesson-close {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 2;
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 50%;
+  background: var(--surface-alt);
+  color: var(--muted);
+  font-size: 16px;
+}
+
+.lesson-empty,
+.summary {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 60px 24px;
+  text-align: center;
+}
+
+.summary-emoji {
+  font-size: 64px;
+}
+
+.summary h1 {
+  margin: 12px 0 8px;
+  font-size: 26px;
+}
+
+.summary-score {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--green);
+  margin: 0 0 24px;
+}
+
+/*
+  واژه‌های اشتباه اینجا نشان داده می‌شوند چون همان‌ها خودکار وارد لایتنر
+  می‌شوند (تمایز ۲ سند ۰۷). دیدنشان به کاربر می‌گوید چرا بعداً برمی‌گردند.
+*/
+.summary-wrong {
+  margin-bottom: 28px;
+  padding: 16px;
+  border-radius: var(--radius);
+  background: var(--purple);
+  color: #fff;
+}
+
+.summary-wrong p {
+  margin: 0 0 10px;
+  font-size: 14px;
+}
+
+.wrong-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+}
+
+.chip {
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.25);
+  font-size: 14px;
+  font-weight: 600;
+}
