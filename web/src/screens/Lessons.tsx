@@ -18,6 +18,7 @@ export function Lessons({
   onOpen,
   onReview,
   onProfile,
+  onLeague,
   onPaywall,
 }: {
   bundle: Bundle
@@ -28,6 +29,7 @@ export function Lessons({
   onOpen: (lessonId: string) => void
   onReview: () => void
   onProfile: () => void
+  onLeague: () => void
   onPaywall: () => void
 }) {
   const lessons = [...bundle.lessons].sort((a, b) => a.number - b.number)
@@ -55,6 +57,9 @@ export function Lessons({
           <span className="stat-icon">📘</span>
           <strong>{me.currentLevel}</strong>
         </div>
+        <button className="avatar" onClick={onLeague} aria-label="لیگ">
+          🏆
+        </button>
         <button className="avatar" onClick={onProfile} aria-label="پروفایل">
           👤
         </button>

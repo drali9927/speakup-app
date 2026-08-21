@@ -250,3 +250,30 @@ export type Stats = {
 }
 
 export const getStats = (since = 0) => request<Stats>(`/v1/stats?since=${since}`)
+
+// --- لیگ
+
+export type LeagueRow = {
+  rank: number
+  userId: number
+  name: string
+  xp: number
+  isMe: boolean
+  /** کاربر نمایشی — جدولِ خالی در هفته اول انگیزه‌ای نمی‌سازد */
+  isDemo: boolean
+}
+
+export type LeagueStandings = {
+  tier: number
+  tierName: string
+  nextTierName: string | null
+  cohort: number
+  weekStart: string
+  /** ثانیه — پایان هفته لیگ */
+  endsAt: number
+  promoteCount: number
+  relegateCount: number
+  rows: LeagueRow[]
+}
+
+export const getLeague = () => request<LeagueStandings>('/v1/league')

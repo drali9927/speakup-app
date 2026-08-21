@@ -4,6 +4,8 @@ import { Lessons } from './screens/Lessons'
 import { Lesson } from './screens/Lesson'
 import { Leitner } from './screens/Leitner'
 import { Profile } from './screens/Profile'
+import { Paywall } from './screens/Paywall'
+import { League } from './screens/League'
 import { Preview } from './screens/Preview'
 import {
   checkIn,
@@ -19,7 +21,7 @@ import {
 import { runSync } from './sync'
 import { allProgress, clearAll, dueCards } from './store'
 
-type View = 'lessons' | 'lesson' | 'leitner' | 'profile'
+type View = 'lessons' | 'lesson' | 'leitner' | 'profile' | 'paywall' | 'league'
 
 export function App() {
   const [me, setMe] = useState<Me | null>(null)
@@ -133,9 +135,17 @@ export function App() {
         streak={streak}
         onExit={() => setView('lessons')}
         onLogout={logout}
-        onPaywall={() => alert('صفحه خرید در گام بعد ساخته می‌شود')}
+        onPaywall={() => setView('paywall')}
       />
     )
+  }
+
+  if (view === 'paywall') {
+    return <Paywall me={me} onExit={() => setView('lessons')} />
+  }
+
+  if (view === 'league') {
+    return <League onExit={() => setView('lessons')} />
   }
 
   // درس‌های تمام‌شده از انبار محلی می‌آیند — که خودش با سرور همگام است
@@ -165,7 +175,8 @@ export function App() {
       }}
       onReview={() => setView('leitner')}
       onProfile={() => setView('profile')}
-      onPaywall={() => alert('صفحه خرید در گام بعد ساخته می‌شود')}
+      onLeague={() => setView('league')}
+      onPaywall={() => setView('paywall')}
     />
   )
 }

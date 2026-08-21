@@ -1,0 +1,114 @@
+.league {
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 16px 20px 40px;
+}
+
+.lg-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.lg-head h1 {
+  margin: 0;
+  font-size: 22px;
+}
+
+.lg-sub {
+  margin: 6px 0 22px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.8;
+  text-align: left;
+}
+
+.lg-rows {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.lg-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.lg-row:last-child {
+  border-bottom: none;
+}
+
+.lg-rank {
+  flex: none;
+  width: 28px;
+  font-weight: 800;
+  color: var(--muted);
+}
+
+.lg-name {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.lg-xp {
+  flex: none;
+  font-weight: 700;
+}
+
+/* ردیف خودِ کاربر باید بدون جست‌وجو پیدا شود */
+.lg-row.me {
+  background: var(--blue-soft);
+  font-weight: 700;
+}
+
+/* منطقه صعود و سقوط با نوار کناری، نه با رنگِ کلِ ردیف —
+   وگرنه با ردیف «تو» رقابت رنگی پیدا می‌کند */
+.lg-row.up {
+  box-shadow: inset 3px 0 0 var(--green);
+}
+
+.lg-row.down {
+  box-shadow: inset 3px 0 0 var(--red);
+}
+
+.lg-row.me.up {
+  box-shadow: inset 3px 0 0 var(--green);
+}
+
+.lg-legend {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 12px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.dot.up {
+  background: var(--green);
+}
+
+.dot.down {
+  background: var(--red);
+  margin-right: 12px;
+}
+
+.lg-actions {
+  margin-top: 24px;
+}
