@@ -51,7 +51,7 @@ import ir.speakup.app.ui.theme.ltr
  * انگیزه‌اش بر انباشت پیشرفت بنا شده، این صفحه خودش یک قلاب نگهداشت است.
  */
 @Composable
-fun ProfileScreen(vm: ProfileViewModel = hiltViewModel()) {
+fun ProfileScreen(onLoggedOut: () -> Unit, vm: ProfileViewModel = hiltViewModel()) {
     val s by vm.state.collectAsStateWithLifecycle()
     val scheme = MaterialTheme.colorScheme
     var pickingFace by remember { mutableStateOf(false) }
@@ -188,6 +188,36 @@ fun ProfileScreen(vm: ProfileViewModel = hiltViewModel()) {
         Spacer(Modifier.height(24.dp))
         TextButton(onClick = { showTerms = true }, modifier = Modifier.fillMaxWidth()) {
             Text("قوانین و حریم خصوصی", style = MaterialTheme.typography.bodyMedium)
+        }
+
+        var confirmingLogout by rememberSaveable { mutableStateOf(false) }
+        TextButton(onClick = { confirmingLogout = true }, modifier = Modifier.fillMaxWidth()) {
+            Text(
+                "خروج از حساب",
+                style = MaterialTheme.typography.bodyMedium,
+                color = scheme.error,
+            )
+        }
+        if (confirmingLogout) {
+            androidx.compose.material3.AlertDialog(
+                onDismissRequest = { confirmingLogout = false },
+                title = { Text("خروج از حساب") },
+                text = { Text("دوباره باید با شماره موبایلت وارد شوی. مطمئنی؟") },
+                confirmButton = {
+                    // مستقیم با NavController به AUTH می‌رویم — نه با
+                    // activity.recreate(). آن راه امتحان شد و روی گوشی
+                    // واقعی باگ داشت: Navigation Compose پشته را از حالت
+                    // ذخیره‌شده بازیابی می‌کند، پس بعد از بازسازی Activity
+                    // کاربر دقیقاً همین صفحه پروفایل را دوباره می‌دید — با
+                    // جلسه‌ای که واقعاً پاک شده بود ولی هیچ نشانه‌ای نداشت.
+                    TextButton(onClick = { vm.logout(onLoggedOut) }) {
+                        Text("خروج", color = scheme.error)
+                    }
+                },
+                dismissButton = {
+                    TextButton(onClick = { confirmingLogout = false }) { Text("انصراف") }
+                },
+            )
         }
         Spacer(Modifier.height(24.dp))
     }
