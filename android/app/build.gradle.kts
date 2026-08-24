@@ -14,9 +14,13 @@ plugins {
  * اشتباه مشخص را می‌گیرد: انتشار نسخه‌ای که هنوز به لپ‌تاپ برنامه‌نویس
  * وصل است. چنین نسخه‌ای روی گوشی کاربر بی‌صدا کار نمی‌کند و علتش هم
  * از بیرون پیدا نیست.
+ *
+ * پیش‌فرض قبلی `api.speakup.ir` بود — دامنه‌ای که هیچ‌وقت واقعاً بالا
+ * نیامد (سند ۰۸). Backend واقعی روی `spkupacademy.com` است.
  */
 val releaseApiBaseUrl: String =
-    (project.findProperty("speakup.apiBaseUrl") as String? ?: "https://api.speakup.ir/").also {
+    (project.findProperty("speakup.apiBaseUrl") as String?
+        ?: "https://spkup-app-back.spkupacademy.com/").also {
         if (!it.startsWith("https://") || it.contains("localhost") || it.contains("127.0.0.1")) {
             throw GradleException("speakup.apiBaseUrl باید یک نشانی https واقعی باشد — مقدار فعلی: $it")
         }
@@ -51,8 +55,10 @@ android {
         applicationId = "ir.speakup.app"
         minSdk = 24
         targetSdk = 35
-        versionCode = 1
-        versionName = "0.1.0"
+        // کافه‌بازار برای هر به‌روزرسانی versionCode بزرگ‌تر می‌خواهد؛
+        // نسخه‌ای با شمارهٔ تکراری را اصلاً نمی‌پذیرد.
+        versionCode = 2
+        versionName = "0.2.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         // اسکیمای Room برای بررسی نسخه‌بندی مهاجرت‌ها ذخیره می‌شود
         ksp { arg("room.schemaLocation", "$projectDir/schemas") }

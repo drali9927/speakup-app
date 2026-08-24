@@ -175,6 +175,35 @@ interface DictionaryDao {
         return null
     }
 
+    /**
+     * حواس‌پرت‌کن برای پرسش چندگزینه‌ای مرور.
+     *
+     * مرتب‌سازی بر پایه نزدیکیِ رتبه بسامد است، نه تصادف: واژه‌ای هم‌ردهٔ
+     * خودِ کارت، گزینهٔ باورپذیری است. اگر «کتاب» را با «فتوسنتز» بسنجیم
+     * پرسش بی‌اهمیت می‌شود و کاربر بدون دانستن چیزی درست جواب می‌دهد.
+     *
+     * هم‌بخشِ کلام بودن اولویت اول است — «خودکار» برای «کتاب» گزینهٔ
+     * بهتری است تا «دویدن».
+     */
+    @Query(
+        """
+        SELECT * FROM dictionary_entries
+         WHERE id != :excludeId
+           AND translationFa != ''
+         ORDER BY
+            CASE WHEN pos = :pos THEN 0 ELSE 1 END,
+            ABS(frequencyRank - :rank),
+            id
+         LIMIT :limit
+        """,
+    )
+    suspend fun distractors(
+        excludeId: String,
+        pos: String,
+        rank: Int,
+        limit: Int = 12,
+    ): List<DictionaryEntryEntity>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE) suspend fun insertEntries(x: List<DictionaryEntryEntity>)
     @Insert(onConflict = OnConflictStrategy.REPLACE) suspend fun insertForms(x: List<WordFormEntity>)
 }

@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="brand">#2F3E7E</color>
+    <!-- پس‌زمینه آیکون: سفید، چون خودِ نماد گرادیان رنگی دارد و
+         روی زمینهٔ رنگی خوانا نمی‌ماند -->
+    <color name="ic_launcher_background">#FFFFFF</color>
 </resources>

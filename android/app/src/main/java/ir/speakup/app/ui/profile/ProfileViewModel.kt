@@ -141,4 +141,16 @@ class ProfileViewModel @Inject constructor(
     fun setReminderHour(hour: Int) = viewModelScope.launch {
         prefs.setReminderHour(hour)
     }
+
+    /**
+     * خروج دستی.
+     *
+     * تا پیش از این، `AppPreferences.clearSession()` هیچ‌جا صدا زده
+     * نمی‌شد — نه دکمه‌ای برایش بود، نه مسیر خودکاری. کاربری که می‌خواست
+     * با شماره دیگری وارد شود، راهی جز پاک کردن داده اپ نداشت.
+     */
+    fun logout(onDone: () -> Unit) = viewModelScope.launch {
+        prefs.clearSession()
+        onDone()
+    }
 }

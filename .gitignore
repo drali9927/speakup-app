@@ -46,3 +46,10 @@ _analysis/screens/
 _analysis/ui/
 
 .DS_Store
+
+# وب‌اپ
+web/node_modules/
+web/dist/
+
+# نشست‌های کامپایلر کاتلین — موقتی، هر بار ساخته می‌شوند
+android/.kotlin/

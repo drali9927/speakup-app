@@ -1,0 +1,221 @@
+.lessons {
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 16px 16px 40px;
+}
+
+.lessons-head {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 8px 8px 20px;
+}
+
+.stat {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.stat-icon {
+  font-size: 20px;
+}
+
+.stat strong {
+  font-size: 18px;
+}
+
+.stat-label {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.upgrade {
+  margin-right: auto;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 999px;
+  background: var(--gold);
+  color: #4b3b00;
+  font-weight: 700;
+  font-size: 14px;
+  box-shadow: 0 3px 0 var(--gold-dark);
+}
+
+/*
+  «ادامه بده» بالای صفحه — اصلاح ۵ سند ۰۷.
+  رقیب این را ندارد و کاربر هر بار باید در فهرست دنبال جای خودش بگردد.
+*/
+.continue {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  padding: 16px 18px;
+  margin-bottom: 24px;
+  border: none;
+  border-radius: var(--radius);
+  background: var(--green);
+  color: #fff;
+  text-align: right;
+  box-shadow: 0 var(--press) 0 var(--green-dark);
+}
+
+.continue:active {
+  transform: translateY(var(--press));
+  box-shadow: none;
+}
+
+.continue span {
+  font-size: 13px;
+  opacity: 0.9;
+}
+
+.continue strong {
+  font-size: 17px;
+}
+
+.lesson-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.node {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--ink);
+  text-align: right;
+}
+
+.node-num {
+  flex: none;
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--node, var(--surface-alt));
+  color: #fff;
+  font-weight: 800;
+  font-size: 17px;
+}
+
+.node-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.node-text strong {
+  display: block;
+  font-size: 16px;
+}
+
+.node-sub {
+  display: block;
+  color: var(--muted);
+  font-size: 13px;
+  margin-top: 2px;
+}
+
+.node-min {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.node-done .node-num {
+  background: var(--green);
+}
+
+/* درس فعلی — تنها چیزی که باید چشم را بگیرد */
+.node-current {
+  border-color: var(--green);
+  border-width: 3px;
+}
+
+/* قفل نوبتی: خاکستری و غیرفعال */
+.node-locked {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.node-locked .node-num {
+  background: var(--disabled);
+}
+
+/*
+  قفل اشتراکی با قفل نوبتی فرق دارد و باید هم فرق داشته باشد:
+  این یکی قابل باز شدن است و کلیک کردنش کاربر را به صفحه خرید می‌برد.
+*/
+.node-paid {
+  border-color: var(--gold);
+}
+
+.node-paid .node-num {
+  background: var(--gold);
+  color: #4b3b00;
+}
+
+.avatar {
+  width: 38px;
+  height: 38px;
+  border: 2px solid var(--border);
+  border-radius: 50%;
+  background: var(--surface);
+  font-size: 17px;
+}
+
+/*
+  ایستگاه مرور — شکلش عمداً با ردیف درس فرق دارد (بنفش، گوشه‌های گردتر)
+  تا کاربر آن را با درس اشتباه نگیرد.
+*/
+.review-station {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 18px;
+  margin-bottom: 24px;
+  border: 2px dashed var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--muted);
+  text-align: right;
+}
+
+/* وقتی کارتی سررسید شده، دیگر خنثی نیست */
+.review-station.active {
+  border-style: solid;
+  border-color: var(--purple);
+  background: var(--purple);
+  color: #fff;
+  box-shadow: 0 var(--press) 0 var(--purple-dark);
+}
+
+.review-station.active:active {
+  transform: translateY(var(--press));
+  box-shadow: none;
+}
+
+.rs-icon {
+  font-size: 22px;
+}
+
+.rs-text strong {
+  display: block;
+  font-size: 15px;
+}
+
+.rs-text span {
+  font-size: 13px;
+  opacity: 0.85;
+}

@@ -293,7 +293,25 @@ fun AppNav(nav: NavHostController = rememberNavController()) {
                     )
                 }
 
-                composable(Routes.PROFILE) { ir.speakup.app.ui.profile.ProfileScreen() }
+                composable(Routes.PROFILE) {
+                    ir.speakup.app.ui.profile.ProfileScreen(
+                        onLoggedOut = {
+                            // پشته کامل پاک می‌شود، نه popBackStack ساده — وگرنه
+                            // دکمه برگشت کاربرِ خارج‌شده را به صفحه‌ی قبلیِ
+                            // اپ (که پیشرفتِ حساب خالی‌شده را نشان می‌دهد) برمی‌گرداند.
+                            //
+                            // این‌جا عمداً `activity.recreate()` استفاده نشد:
+                            // آن راه امتحان شد و باگ داشت — Navigation Compose
+                            // پشته را از حالت ذخیره‌شده بازیابی می‌کند و کاربر را
+                            // دقیقاً به همان صفحه پروفایل برمی‌گرداند، چون بازسازی
+                            // Activity به‌معنای بازسازی مقصد نیست وقتی پشته‌ی
+                            // ناوبری خودش وضعیتش را نگه داشته. روی گوشی واقعی
+                            // دیده شد: بعد از تأیید خروج، هیچ‌چیز عوض نمی‌شد —
+                            // فقط با force-stop معلوم شد جلسه واقعاً پاک شده بود.
+                            nav.navigate(Routes.AUTH) { popUpTo(0) { inclusive = true } }
+                        },
+                    )
+                }
 
                 composable(Routes.LEITNER) { e ->
                     val vm: LeitnerViewModel = hiltViewModel(e)

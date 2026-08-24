@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  آیکون تطبیقی اندروید ۸ به بعد.
+
+  پس‌زمینه سفید است و نه رنگ برند: نماد خودش گرادیان آبی-فیروزه‌ای پررنگی
+  دارد و روی پس‌زمینهٔ تیره، مرزهایش گم می‌شود.
+
+  نماد داخل ۶۲٪ مرکز نشسته چون سیستم لبه‌ها را می‌برد — روی گوشی‌هایی که
+  آیکون را دایره‌ای می‌کنند، نوک فلش بیرون از این ناحیه بریده می‌شد.
+-->
 <adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
-    <background android:drawable="@color/brand" />
-    <foreground android:drawable="@drawable/ic_launcher_foreground" />
+    <background android:drawable="@android:color/white" />
+    <foreground android:drawable="@drawable/ic_launcher_fg" />
 </adaptive-icon>

@@ -43,6 +43,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -114,8 +115,25 @@ fun PlayerScreen(
     }
     // آیا الان باید صفحه توضیح پیش از دیالوگ سیستم را نشان دهیم؟
     val showMicPriming = s.type == ActivityType.SPEAKING && !s.loading && !micGranted && !primingSkipped
-    // آیا کاربر واقعاً از میکروفون استفاده می‌کند (مجوز هست و موتور هم روی گوشی نصب است)؟
-    val usingMic = s.type == ActivityType.SPEAKING && micGranted && recognizerAvailable
+
+    /**
+     * تشخیص گفتار روی این آیتم شکست خورد و راه دیگری نمانده.
+     *
+     * چرا لازم شد: دکمه پایین صفحه تا رسیدن رونوشت **غیرفعال** است. اگر
+     * موتور همیشه خطا بدهد، کاربر هیچ راهی جز رها کردن کل درس ندارد — و
+     * روی گوشی واقعی دقیقاً همین دیده شد: «مشکل شبکه» و صفحهٔ قفل.
+     *
+     * موتور آنلاین گوگل در ایران معمولاً در دسترس نیست و بستهٔ آفلاین
+     * انگلیسی هم روی بیشتر گوشی‌ها نصب نیست؛ یعنی این بن‌بست حالت نادر
+     * نیست، حالت رایج است. با این پرچم، تمرین به شکل «بشنو و بنویس»
+     * برمی‌گردد که از قبل ساخته شده بود و کاربر می‌تواند ادامه دهد.
+     *
+     * با هر آیتم تازه صفر می‌شود تا یک شکست، بقیهٔ درس را تایپی نکند.
+     */
+    var micFailed by remember(s.current?.id) { mutableStateOf(false) }
+
+    // آیا کاربر واقعاً از میکروفون استفاده می‌کند (مجوز هست، موتور نصب است، و هنوز شکست نخورده)
+    val usingMic = s.type == ActivityType.SPEAKING && micGranted && recognizerAvailable && !micFailed
     // تا وقتی رونوشت گفتار نرسیده، دکمه پایین صفحه کاری برای انجام دادن ندارد
     val awaitingMicResult = usingMic && s.verdict == null
 
@@ -348,6 +366,7 @@ fun PlayerScreen(
                 ActivityType.MULTIPLE_CHOICE, ActivityType.MATCHING -> Choice(s, vm)
                 ActivityType.REORDER -> Reorder(s, vm)
                 ActivityType.SPEAKING -> Speaking(
+                    onRecognitionFailed = { micFailed = true },
                     s = s, vm = vm, item = item, usingMic = usingMic,
                     speechStatus = speechStatus, speakingId = speakingId,
                     onSpeak = { t, id -> vm.speech.speak(t, id) },
@@ -689,6 +708,7 @@ private fun Chip(text: String, enabled: Boolean, onClick: () -> Unit) {
  */
 @Composable
 private fun Speaking(
+    onRecognitionFailed: () -> Unit,
     s: PlayerUiState,
     vm: PlayerViewModel,
     item: ActivityItemEntity,
@@ -700,7 +720,7 @@ private fun Speaking(
     onRecognizerUnavailable: () -> Unit,
 ) {
     if (usingMic) {
-        SpeakingMic(item, s, vm, speechStatus, speakingId, onSpeak, onSpeechUnavailable)
+        SpeakingMic(item, s, vm, speechStatus, speakingId, onSpeak, onSpeechUnavailable, onRecognitionFailed)
     } else {
         SpeakingFallback(
             item, s, vm, speechStatus, speakingId, onSpeak, onSpeechUnavailable,
@@ -719,6 +739,7 @@ private fun SpeakingMic(
     speakingId: String?,
     onSpeak: (String, String) -> Unit,
     onSpeechUnavailable: () -> Unit,
+    onRecognitionFailed: () -> Unit,
 ) {
     val recState by vm.recognizer.state.collectAsStateWithLifecycle()
     val locked = s.verdict != null
@@ -727,6 +748,21 @@ private fun SpeakingMic(
     LaunchedEffect(recState, s.index) {
         val r = recState
         if (r is RecognitionState.Result && !locked) vm.submitSpeech(r.transcript)
+    }
+
+    /**
+     * دو شکست پیاپی → تمرین به «بشنو و بنویس» برمی‌گردد.
+     *
+     * یک شکست ممکن است واقعاً گذرا باشد (کاربر چیزی نگفت)، پس بلافاصله
+     * حالت را عوض نمی‌کنیم. ولی بار دوم یعنی موتور روی این گوشی کار
+     * نمی‌کند و اصرار بیشتر فقط کاربر را در صفحهٔ قفل نگه می‌دارد.
+     */
+    var failures by remember(s.index) { mutableIntStateOf(0) }
+    LaunchedEffect(recState, s.index) {
+        if (recState is RecognitionState.Error && !locked) {
+            failures += 1
+            if (failures >= 2) onRecognitionFailed()
+        }
     }
 
     Spacer(Modifier.size(20.dp))

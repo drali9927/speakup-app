@@ -1,0 +1,45 @@
+.match-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  align-items: start;
+}
+
+.match-col {
+  display: grid;
+  gap: 10px;
+}
+
+.match-tile {
+  padding: 16px 12px;
+  min-height: 60px;
+  font-size: 16px;
+  font-weight: 600;
+  border: 2px solid var(--border);
+  border-bottom-width: 4px;
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--ink);
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.match-tile:active {
+  border-bottom-width: 2px;
+  transform: translateY(2px);
+}
+
+/* انتخاب‌شده — منتظر کاشی دوم */
+.match-tile.sel {
+  border-color: var(--blue);
+  background: var(--blue-soft);
+}
+
+.match-tile.ok {
+  border-color: var(--green);
+  background: var(--green-soft);
+}
+
+.match-tile.bad {
+  border-color: var(--red);
+  background: var(--red-soft);
+}

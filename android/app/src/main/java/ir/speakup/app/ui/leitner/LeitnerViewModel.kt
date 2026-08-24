@@ -95,26 +95,55 @@ class LeitnerViewModel @Inject constructor(
             val cards = leitnerDao.due(time.nowMillis(), limit = SESSION_SIZE)
             val entries = cards.map { dictionaryDao.byId(it.entryId) }
 
-            // حواس‌پرت‌کن‌ها از خودِ همین جلسه می‌آیند، نه از کل دیکشنری:
-            // معنی‌های بی‌ربط پرسش را بی‌اهمیت می‌کنند.
-            val meanings = entries.mapNotNull { it?.translationFa?.takeIf(String::isNotBlank) }
-            val words = cards.map { it.word }
+            // حواس‌پرت‌کن‌ها نخست از خودِ جلسه می‌آیند — واژه‌هایی که کاربر
+            // همین حالا دارد مرورشان می‌کند، باورپذیرترین گزینه‌اند.
+            val sessionMeanings = entries.mapNotNull { it?.translationFa?.takeIf(String::isNotBlank) }
+            val sessionWords = cards.map { it.word }
 
             val session = cards.mapIndexed { i, card ->
                 val entry = entries[i]
                 val mode = ReviewMode.forBox(card.box, ReviewMode.typable(card.word))
+
+                // جلسهٔ کوچک به‌تنهایی گزینه کم دارد و همان دو-سه معنی در
+                // همهٔ پرسش‌ها تکرار می‌شوند — روی گوشی دیده شد: سه کارتِ
+                // book/pen/pencil هر سه دقیقاً یک مجموعه گزینه داشتند.
+                // پس پول را با واژه‌های هم‌ردهٔ دیکشنری محلی پُر می‌کنیم.
+                val extra = if (sessionMeanings.size >= MIN_POOL) emptyList() else
+                    dictionaryDao.distractors(
+                        excludeId = card.entryId,
+                        pos = entry?.pos.orEmpty(),
+                        rank = entry?.frequencyRank ?: 0,
+                    )
+
+                // ترتیب پول مهم است: واژه‌های دیکشنری **جلوتر** می‌آیند.
+                // اگر معنی‌های جلسه اول باشند، در جلسهٔ سه‌کارتی هر پرسش
+                // باز هم به همان دو معنیِ همسایه می‌رسد و تکرار حل نمی‌شود.
+                // فهرست دیکشنری برای هر کارت جداست (هم‌بخشِ کلام و
+                // هم‌ردهٔ بسامدِ خودش)، پس هر پرسش گزینه‌های خودش را دارد.
+                val meaningPool = extra.map { it.translationFa } + sessionMeanings
+                val wordPool = extra.map { it.word } + sessionWords
+
                 val options = when (mode) {
                     ReviewMode.MEANING ->
-                        ReviewOptions.build(entry?.translationFa.orEmpty(), meanings, i)
-                    ReviewMode.WORD -> ReviewOptions.build(card.word, words, i)
+                        ReviewOptions.build(entry?.translationFa.orEmpty(), meaningPool, i)
+                    ReviewMode.WORD ->
+                        ReviewOptions.build(card.word, wordPool, i)
                     ReviewMode.TYPING -> emptyList()
                 }
-                // اگر گزینه ساخته نشد (جلسه تک‌کارتی)، به شکل ساده برگرد
+
+                // مدخل دیکشنری گم‌شده یعنی معنی فارسی‌ای وجود ندارد، پس
+                // پرسشِ «معنی کدام است؟» گزینهٔ درست ندارد. حالت WORD تنها
+                // شکلی است که بدون دیکشنری هم پاسخ درست دارد (خودِ واژه)،
+                // و برخلاف TYPING عبارت‌های چندکلمه‌ای را جریمه نمی‌کند.
+                val fallback = mode == ReviewMode.MEANING && options.isEmpty()
+                val safeMode = if (fallback) ReviewMode.WORD else mode
+                val safeOptions =
+                    if (!fallback) options else ReviewOptions.build(card.word, wordPool, i)
                 ReviewCard(
                     card = card,
                     entry = entry,
-                    mode = if (mode != ReviewMode.TYPING && options.isEmpty()) ReviewMode.MEANING else mode,
-                    options = options,
+                    mode = safeMode,
+                    options = safeOptions,
                 )
             }
 
@@ -229,5 +258,9 @@ class LeitnerViewModel @Inject constructor(
         refresh()
     }
 
-    private companion object { const val SESSION_SIZE = 20 }
+    private companion object {
+        const val SESSION_SIZE = 20
+        /** زیر این تعداد، پول جلسه برای ساختن گزینه‌های متنوع کافی نیست */
+        const val MIN_POOL = 8
+    }
 }

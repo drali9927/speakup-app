@@ -41,8 +41,30 @@ object NetworkModule {
             chain.proceed(req)
         }
 
+        /**
+         * توکن نامعتبر — سرور ۴۰۱ داده، جلسه محلی پاک می‌شود.
+         *
+         * پیش از این، `AppPreferences.clearSession()` وجود داشت ولی هیچ‌جا
+         * صدا زده نمی‌شد — نه در خروج دستی (دکمه‌اش هم نبود)، نه اینجا.
+         * نتیجه: توکنی که منقضی شود یا سرور رازش عوض شود (که خود چک‌لیست
+         * انتشار هم هشدار داده «همه از حساب خارج می‌شوند»)، کاربر تا ابد
+         * با پیام مبهم «مشکلی پیش آمد» گیر می‌کرد، چون توکن باطل هر بار
+         * دوباره فرستاده می‌شد و هیچ‌کس پاکش نمی‌کرد.
+         *
+         * پاک شدن اینجا کافی است تا اجرای بعدی اپ کاربر را به‌درستی به
+         * صفحه ورود ببرد (`AppNav` مقصد اولیه را از `prefs.token` تعیین
+         * می‌کند). برای بازگشت فوریِ داخل همان جلسه، دکمه خروج در پروفایل
+         * جلسه را پاک می‌کند و Activity را دوباره می‌سازد.
+         */
+        val sessionGuard = Interceptor { chain ->
+            val res = chain.proceed(chain.request())
+            if (res.code == 401) runBlocking { prefs.clearSession() }
+            res
+        }
+
         return OkHttpClient.Builder()
             .addInterceptor(auth)
+            .addInterceptor(sessionGuard)
             .apply {
                 if (BuildConfig.DEBUG) {
                     addInterceptor(
