@@ -55,8 +55,10 @@ android {
         applicationId = "ir.speakup.app"
         minSdk = 24
         targetSdk = 35
-        versionCode = 1
-        versionName = "0.1.0"
+        // کافه‌بازار برای هر به‌روزرسانی versionCode بزرگ‌تر می‌خواهد؛
+        // نسخه‌ای با شمارهٔ تکراری را اصلاً نمی‌پذیرد.
+        versionCode = 2
+        versionName = "0.2.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         // اسکیمای Room برای بررسی نسخه‌بندی مهاجرت‌ها ذخیره می‌شود
         ksp { arg("room.schemaLocation", "$projectDir/schemas") }
