@@ -39,11 +39,21 @@ export type Plan = {
   note?: string
 }
 
+/**
+ * طرح‌های اشتراک.
+ *
+ * ⚠️ `sku` باید **دقیقاً** همان شناسه‌ای باشد که در پنل کافه‌بازار ساخته
+ * شده. اگر یکی نباشند، خرید در همان گام اول شکست می‌خورد: بازار می‌گوید
+ * چنین محصولی ندارم. و اگر به‌هر شکل رسیدی برسد، `planBySku` آن را پیدا
+ * نمی‌کند و سرور ردش می‌کند.
+ *
+ * فهرست زیر با محصولات واقعی پنل هم‌تراز شده (۳۰d / ۹۰d / ۳۶۵d).
+ * فهرست قبلی چهار طرح فرضی داشت که هیچ‌کدام در پنل ساخته نشده بودند.
+ */
 export const PLANS: readonly Plan[] = [
-  { code: 'weekly', sku: 'speakup_1w', title: 'اشتراک هفتگی', days: 7, priceRial: 990_000, note: 'برای امتحان کردن' },
-  { code: 'monthly', sku: 'speakup_1m', title: 'اشتراک ۱ ماهه', days: 30, priceRial: 2_990_000 },
-  { code: 'halfyear', sku: 'speakup_6m', title: 'اشتراک ۶ ماهه', days: 180, priceRial: 7_900_000, badge: 'پرطرفدارترین' },
-  { code: 'yearly', sku: 'speakup_12m', title: 'اشتراک ۱۲ ماهه', days: 365, priceRial: 11_900_000, badge: 'به‌صرفه‌ترین' },
+  { code: 'monthly', sku: '30d', title: 'اشتراک ۳۰ روزه', days: 30, priceRial: 3_990_000, note: 'برای شروع' },
+  { code: 'quarterly', sku: '90d', title: 'اشتراک ۹۰ روزه', days: 90, priceRial: 5_990_000, badge: 'پرطرفدارترین' },
+  { code: 'yearly', sku: '365d', title: 'اشتراک یک‌ساله', days: 365, priceRial: 7_990_000, badge: 'به‌صرفه‌ترین' },
 ] as const
 
 export const planBySku = (sku: string): Plan | undefined => PLANS.find((p) => p.sku === sku)
