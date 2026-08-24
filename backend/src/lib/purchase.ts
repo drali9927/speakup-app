@@ -52,8 +52,8 @@ export type Plan = {
  */
 export const PLANS: readonly Plan[] = [
   { code: 'monthly', sku: '30d', title: 'اشتراک ۳۰ روزه', days: 30, priceRial: 3_990_000, note: 'برای شروع' },
-  { code: 'quarterly', sku: '90d', title: 'اشتراک ۹۰ روزه', days: 90, priceRial: 5_990_000, badge: 'پرطرفدارترین' },
-  { code: 'yearly', sku: '365d', title: 'اشتراک یک‌ساله', days: 365, priceRial: 7_990_000, badge: 'به‌صرفه‌ترین' },
+  { code: 'quarterly', sku: '90d', title: 'اشتراک ۹۰ روزه', days: 90, priceRial: 6_490_000, badge: 'پرطرفدارترین' },
+  { code: 'yearly', sku: '365d', title: 'اشتراک یک‌ساله', days: 365, priceRial: 9_990_000, badge: 'به‌صرفه‌ترین' },
 ] as const
 
 export const planBySku = (sku: string): Plan | undefined => PLANS.find((p) => p.sku === sku)

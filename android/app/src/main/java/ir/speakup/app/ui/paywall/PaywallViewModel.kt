@@ -28,8 +28,8 @@ import javax.inject.Inject
  */
 private val FALLBACK_PLANS = listOf(
     RemotePlan("monthly", "30d", "اشتراک ۳۰ روزه", 30, 3_990_000, null, "برای شروع"),
-    RemotePlan("quarterly", "90d", "اشتراک ۹۰ روزه", 90, 5_990_000, "پرطرفدارترین", null),
-    RemotePlan("yearly", "365d", "اشتراک یک‌ساله", 365, 7_990_000, "به‌صرفه‌ترین", null),
+    RemotePlan("quarterly", "90d", "اشتراک ۹۰ روزه", 90, 6_490_000, "پرطرفدارترین", null),
+    RemotePlan("yearly", "365d", "اشتراک یک‌ساله", 365, 9_990_000, "به‌صرفه‌ترین", null),
 )
 
 data class PaywallUiState(
