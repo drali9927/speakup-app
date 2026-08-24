@@ -50,3 +50,6 @@ _analysis/ui/
 # وب‌اپ
 web/node_modules/
 web/dist/
+
+# نشست‌های کامپایلر کاتلین — موقتی، هر بار ساخته می‌شوند
+android/.kotlin/
